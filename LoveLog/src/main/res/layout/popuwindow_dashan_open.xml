@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="200dp"
+    android:gravity="right|"
+    android:id="@+id/popuLinear"
+    android:orientation="horizontal" >
+
+    <ImageView
+        android:visibility="invisible"
+        android:layout_marginTop="105dp"
+        android:layout_marginRight="@dimen/space_10"
+        android:background="@mipmap/integral01"
+        android:layout_width="75dp"
+        android:layout_height="75dp" />
+
+
+
+
+             <ImageView
+                 android:id="@+id/integral01"
+                 android:layout_marginTop="55dp"
+                 android:layout_marginRight="@dimen/space_10"
+                 android:background="@mipmap/integral01"
+                 android:layout_width="45dp"
+                 android:layout_height="45dp" />
+             <ImageView
+                 android:id="@+id/integral02"
+                 android:layout_marginTop="65dp"
+                 android:layout_marginRight="@dimen/space_10"
+                 android:background="@mipmap/integral02"
+                 android:layout_width="55dp"
+                 android:layout_height="55dp" />
+             <ImageView
+                 android:id="@+id/integral03"
+                 android:layout_marginTop="85dp"
+                 android:layout_marginRight="@dimen/space_10"
+                 android:background="@mipmap/integral03"
+                 android:layout_width="65dp"
+                 android:layout_height="65dp" />
+
+
+
+         
+          
+
+
+</LinearLayout>

@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/CommunityItem"
+    android:layout_marginBottom="15dp"
+    android:background="@drawable/button_press_gray_white_select">
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/white"
+        card_view:cardCornerRadius="10dp">
+
+     <LinearLayout
+          android:orientation="vertical"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_marginLeft="@dimen/space_8"
+                android:layout_marginRight="@dimen/space_8"
+                android:layout_marginBottom="@dimen/space_8"
+                android:layout_height="wrap_content">
+                   <LinearLayout
+                       android:id="@+id/toLayout"
+                       android:orientation="horizontal"
+                       android:layout_width="fill_parent"
+                       android:layout_height="wrap_content">
+                       <com.smarter.LoveLog.ui.CircleNetworkImage
+                           android:id="@+id/imageTitle"
+                           android:src="@drawable/loading"
+                           android:layout_width="40dp"
+                           android:layout_marginTop="@dimen/space_5"
+                           android:layout_marginBottom="@dimen/space_5"
+                           app:civ_border_width="0dp"
+                           app:civ_border_color="@color/red"
+                           android:layout_height="40dp" />
+
+                       <LinearLayout
+                           android:orientation="vertical"
+                           android:layout_marginLeft="@dimen/space_10"
+                           android:layout_gravity="center_vertical"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content">
+                           <TextView
+                               android:id="@+id/userName"
+                               android:text="不会游泳的鱼"
+                               android:textSize="15sp"
+                               android:textColor="#989898"
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content" />
+                           <TextView
+                               android:id="@+id/userTime"
+                               android:text="今天 12：45"
+                               android:textSize="13sp"
+                               android:textColor="#989898"
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content" />
+                       </LinearLayout>
+
+                       <LinearLayout
+                           android:layout_width="fill_parent"
+                           android:orientation="horizontal"
+                           android:layout_weight="1"
+                           android:gravity="right"
+                           android:layout_gravity="top"
+                           android:layout_height="wrap_content">
+                           <LinearLayout
+                               android:id="@+id/isJinghua"
+                               android:visibility="gone"
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:orientation="vertical"
+                               android:gravity="center_horizontal"
+                               android:background="@mipmap/yellow_vertical">
+                               <TextView
+                                   android:layout_width="wrap_content"
+                                   android:text="精"
+                                   android:textColor="@color/white"
+                                   android:textSize="13sp"
+                                   android:layout_marginTop="@dimen/space_3"
+                                   android:paddingRight="@dimen/space_3"
+                                   android:paddingLeft="@dimen/space_3"
+                                   android:gravity="center_vertical|top"
+                                   android:layout_height="wrap_content" />
+                               <TextView
+                                   android:layout_width="wrap_content"
+                                   android:text="华"
+                                   android:textColor="@color/white"
+                                   android:textSize="13sp"
+                                   android:paddingRight="@dimen/space_3"
+                                   android:paddingLeft="@dimen/space_3"
+                                   android:gravity="center_vertical|top"
+                                   android:layout_height="wrap_content" />
+                           </LinearLayout>
+                           <LinearLayout
+                               android:id="@+id/isHot"
+                               android:visibility="gone"
+                               android:layout_marginLeft="@dimen/space_10"
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:orientation="vertical"
+                               android:gravity="center_horizontal"
+                               android:background="@mipmap/red_vertical">
+                               <TextView
+                                   android:layout_width="wrap_content"
+                                   android:text="热"
+                                   android:textColor="@color/white"
+                                   android:textSize="13sp"
+                                   android:layout_marginTop="@dimen/space_3"
+                                   android:paddingRight="@dimen/space_3"
+                                   android:paddingLeft="@dimen/space_3"
+                                   android:gravity="center_vertical|top"
+                                   android:layout_height="wrap_content" />
+                               <TextView
+                                   android:layout_width="wrap_content"
+                                   android:text="门"
+                                   android:textColor="@color/white"
+                                   android:textSize="13sp"
+                                   android:paddingRight="@dimen/space_3"
+                                   android:paddingLeft="@dimen/space_3"
+                                   android:gravity="center_vertical|top"
+                                   android:layout_height="wrap_content" />
+                           </LinearLayout>
+
+
+                       </LinearLayout>
+                   </LinearLayout>
+
+
+
+                   <LinearLayout
+                        android:layout_below="@+id/toLayout"
+                        android:layout_width="fill_parent"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:text="好喜欢这款爱的日志面膜啊，么么"
+                            android:textSize="15sp"
+                            android:textColor="#353535"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/title" />
+                       <TextView
+                           android:layout_marginTop="@dimen/space_5"
+                           android:text="好喜欢这款爱的日志面膜啊，一定要要推荐给我的闺蜜。补水杠杆的好喜欢这款爱的日志面膜啊，一定要要推荐给我的闺蜜。补水杠杆的。水补杠杆的。"
+                           android:textSize="13sp"
+                           android:textColor="#989898"
+                           android:lineSpacingMultiplier="1.5"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:id="@+id/brief" />
+                    </LinearLayout>
+            </RelativeLayout>
+
+
+
+
+
+          <!--android:background="@mipmap/list1"-->
+           <LinearLayout
+                  android:orientation="vertical"
+                   android:id="@+id/imglist"
+                   android:layout_width="fill_parent"
+                   android:layout_height="wrap_content"/>
+
+
+
+
+           <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_marginLeft="@dimen/space_10"
+            android:layout_marginRight="@dimen/space_10"
+            android:layout_marginTop="@dimen/space_12"
+            android:layout_marginBottom="@dimen/space_12"
+            android:gravity="center_vertical"
+            android:layout_height="wrap_content">
+
+
+               <com.smarter.LoveLog.ui.QCheckBox
+                   android:button="@null"
+                   android:id="@+id/zanBut"
+                   android:layout_width="wrap_content"
+                   android:layout_height="match_parent"
+                   android:gravity="center"
+                   android:text="0"
+
+                   android:drawablePadding="10dp"
+                   android:drawableLeft="@drawable/zan_checkbox_button"
+                   android:textColor="#929292"
+                   android:textSize="14sp" />
+               <TextView
+                   android:id="@+id/pinglunNum"
+                   android:layout_marginLeft="@dimen/space_20"
+                   android:layout_width="wrap_content"
+                   android:layout_height="match_parent"
+                   android:gravity="center"
+                   android:drawablePadding="10dp"
+                   android:text="0"
+                   android:drawableLeft="@mipmap/message_tiezi"
+                   android:textColor="#929292"
+                   android:textSize="14sp" />
+           <!-- <TextView
+                android:id="@+id/pinglunNum"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="2"
+                android:drawablePadding="5dp"
+                android:drawableLeft="@mipmap/commont"
+                android:textColor="#929292"
+                android:textSize="14sp" />-->
+          <!--  <TextView
+                android:id="@+id/likeNum"
+                android:layout_marginLeft="@dimen/space_20"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="3"
+                android:drawablePadding="5dp"
+                android:drawableLeft="@mipmap/community_love"
+                android:textColor="#929292"
+                android:textSize="14sp" />-->
+           <!-- <TextView
+                android:id="@+id/sharePic"
+                android:layout_marginLeft="@dimen/space_20"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:drawablePadding="5dp"
+                android:text="分享"
+                android:drawableLeft="@mipmap/community_share"
+                android:textColor="#929292"
+                android:textSize="14sp" />-->
+               <TextView
+                   android:id="@+id/sharePic"
+                   android:layout_marginLeft="@dimen/space_20"
+                   android:layout_width="wrap_content"
+                   android:layout_height="match_parent"
+                   android:gravity="center"
+                   android:drawablePadding="5dp"
+                   android:text="分享"
+                   android:drawableLeft="@mipmap/share_tiezi"
+                   android:textColor="#929292"
+                   android:textSize="13sp" />
+
+            <FrameLayout
+                android:layout_weight="1"
+                android:gravity="right"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+               <ImageView
+                   android:id="@+id/reword"
+                    android:background="@mipmap/reword"
+                    android:layout_gravity="right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+
+
+        <!-- <LinearLayout
+                   android:id="@+id/view"
+                   android:orientation="horizontal"
+                   android:layout_width="fill_parent" android:layout_height="15dp"
+           android:background="@color/connet_bgColor"></LinearLayout>-->
+      </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

@@ -1,0 +1,58 @@
+<!-- [ Mirror metadata ] generatedAt: 1458178605100 -->
+<!-- Generated screen file. Fill the id tags below with content with
+which to populate your previewed layout. For a complete specification
+of sample data, please see http://jimulabs.com/sample-data-specifications/ 
+
+Valid attributes on <screen> tag: theme="@style/someTheme" inEditMode="false" overlay="@drawable/mockup" -->
+<screen>
+    <_content layout="@layout/mcoy_produt_detail_layout">
+        <pager>
+            <!-- Add pages to your ViewPager here like so:
+            <_page title="page title" icon="@drawable/my_icon"/>
+            <_page layout="@layout/my_page_layout">
+                <my_image_view src="@drawable/my_image"/>
+            </_page>
+            -->
+        </pager>
+        <!-- TextView Examples:
+        <isLike text="@string/string_resource" />
+        <isLike text="Text literal" textSize="14sp" /> -->
+        <isLike />
+        <isShoping />
+        <goodsName />
+        <goodsBrief />
+        <shopPrice />
+        <price_shanchu />
+        <!-- ImageView Examples:
+        <phone_shop src="@drawable/image_resource" />
+        <phone_shop src="relative_path/image.jpg" /> -->
+        <phone_shop />
+        <goods_number />
+        <recyclerview layoutManager="linear:vertical">
+        <!-- Examples of valid layoutManager values: "linear", "staggeredGrid:5:horizontal", "staggeredGrid:4" -->
+            <items layout="@android:layout/simple_list_item_1" >
+                <_item>
+                    <text1>Dalmatian</text1>
+                </_item>
+                <_item>
+                    <text1>Great Dane</text1>
+                </_item>
+                <_item>
+                    <text1>Shi Tzu</text1>
+                </_item>
+                <_item>
+                    <text1>Corgi</text1>
+                </_item>
+                <_item>
+                    <text1>Labrador</text1>
+                </_item>
+                <_item>
+                    <text1>Doberman</text1>
+                </_item>
+                <_item>
+                    <text1>Chihuahua</text1>
+                </_item>
+            </items>
+                </recyclerview>
+    </_content>
+</screen>

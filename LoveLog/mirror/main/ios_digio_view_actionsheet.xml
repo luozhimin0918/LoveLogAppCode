@@ -1,0 +1,15 @@
+<!-- [ Mirror metadata ] generatedAt: 1458178605095 -->
+<!-- Generated screen file. Fill the id tags below with content with
+which to populate your previewed layout. For a complete specification
+of sample data, please see http://jimulabs.com/sample-data-specifications/ 
+
+Valid attributes on <screen> tag: theme="@style/someTheme" inEditMode="false" overlay="@drawable/mockup" -->
+<screen>
+    <_content layout="@layout/ios_digio_view_actionsheet">
+        <!-- TextView Examples:
+        <txt_title text="@string/string_resource" />
+        <txt_title text="Text literal" textSize="14sp" /> -->
+        <txt_title />
+        <txt_cancel />
+    </_content>
+</screen>

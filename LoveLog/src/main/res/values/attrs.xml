@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   <!-- start  circleNetworkImage-->
+    <declare-styleable name="CircleImageView">
+        <attr name="civ_border_width" format="dimension" />
+        <attr name="civ_border_color" format="color" />
+        <attr name="civ_border_overlay" format="boolean" />
+        <attr name="civ_fill_color" format="color" />
+    </declare-styleable>
+    <!-- end  circleNetworkImage-->
+
+
+
+    <attr name="flash_blow" format="reference|color" />
+    <attr name="flash_blow_bg" format="reference|color" />
+    <attr name="flash_bg" format="reference|color" />
+    <attr name="flash_tv" format="reference|color" />
+    <attr name="flash_top" format="reference|color" />
+
+	
+</resources>

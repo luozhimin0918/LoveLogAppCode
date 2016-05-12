@@ -1,0 +1,294 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+
+
+//主体内容
+
+
+      <!--  <com.smarter.LoveLog.ui.McoySnapPageLayout.McoyScrollView
+            android:layout_weight="1"
+            android:id="@+id/invitation_Detail_scrollview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:fadeScrollbars="true"
+            android:scrollbars="none"
+            android:focusable="true"
+            android:fillViewport="true"
+            >-->
+            <LinearLayout
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:id="@+id/imglist"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"/>
+                <com.android.volley.toolbox.NetworkImageView
+                    android:id="@+id/imgTop"
+                    android:visibility="gone"
+                    android:layout_width="fill_parent"
+                    android:layout_height="180dp"
+                    android:scaleType="fitXY"
+                    android:contentDescription="@string/app_name" />
+
+                <LinearLayout
+                    android:layout_marginTop="@dimen/space_10"
+                    android:layout_marginLeft="@dimen/space_14"
+                    android:layout_marginRight="@dimen/space_10"
+                    android:layout_marginBottom="@dimen/space_10"
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
+
+                   <LinearLayout
+                       android:orientation="vertical"
+                       android:gravity="center"
+                       android:layout_width="fill_parent"
+                       android:layout_height="wrap_content">
+                       <TextView
+                           android:id="@+id/titleText"
+                           android:lineSpacingMultiplier="1.2"
+                           android:text="好喜欢这款爱的日志面膜啊，么么好喜欢"
+                           android:textSize="18sp"
+                           android:maxLines="2"
+                           android:textStyle="bold"
+                           android:textColor="#353535"
+                           android:layout_width="fill_parent"
+                           android:layout_height="wrap_content" />
+
+                   </LinearLayout>
+
+
+
+                    <LinearLayout
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="@dimen/space_5"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.smarter.LoveLog.ui.CircleNetworkImage
+                            android:id="@+id/imageTitle"
+                            android:background="@mipmap/takeout_ic_avatar_default"
+                            android:layout_width="40dp"
+                            app:civ_border_width="0dp"
+                            app:civ_border_color="@color/red"
+                            android:layout_height="40dp" />
+                             <TextView
+                                    android:id="@+id/userName"
+                                    android:text="买家家"
+                                    android:textSize="16sp"
+                                    android:layout_marginLeft="@dimen/space_10"
+                                    android:textColor="#989898"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+
+                            <LinearLayout
+                                android:layout_width="fill_parent"
+                                android:orientation="horizontal"
+                                android:layout_weight="1"
+                                android:gravity="right"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:id="@+id/AddTime"
+                                    android:text="2015—12—26"
+                                    android:textSize="12sp"
+                                    android:layout_marginRight="@dimen/space_5"
+                                    android:textColor="#989898"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+                            </LinearLayout>
+                    </LinearLayout>
+
+
+
+
+
+
+                </LinearLayout>
+
+              <!--  <com.smarter.LoveLog.ui.ProgressWebView
+                    android:id="@+id/webview"
+                    android:layout_marginLeft="@dimen/space_2"
+                    android:layout_marginRight="@dimen/space_2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    />-->
+                <WebView
+                    android:id="@+id/webview"
+                    android:layout_marginLeft="@dimen/space_2"
+                    android:layout_marginRight="@dimen/space_2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+
+             <!--   <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:gravity="center"
+                    android:layout_marginTop="@dimen/space_15"
+                    android:layout_marginBottom="@dimen/space_15"
+                    android:layout_height="wrap_content">
+                       <TextView
+                           android:text="23"
+                           android:textColor="#989898"
+                           android:textSize="12sp"
+                           android:gravity="center|bottom"
+                           android:paddingBottom="@dimen/space_8"
+                           android:background="@mipmap/love_circle"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content" />
+
+                        <TextView
+
+                            android:layout_marginLeft="@dimen/space_30"
+                            android:text="分享"
+                            android:textColor="#989898"
+                            android:textSize="12sp"
+                            android:gravity="center|bottom"
+                            android:paddingBottom="@dimen/space_8"
+                            android:background="@mipmap/share_circle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                </LinearLayout>-->
+
+
+                <RelativeLayout
+                    android:layout_marginLeft="@dimen/space_10"
+                    android:layout_marginRight="@dimen/space_10"
+                    android:layout_width="fill_parent"
+                    android:gravity="center_vertical"
+                    android:layout_height="45dp">
+                    <TextView
+                        android:id="@+id/fabuyu"
+                        android:text="热门评论"
+                        android:gravity="center_vertical"
+                        android:textColor="#000000"
+                        android:textSize="16sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent" />
+
+                    <TextView
+                        android:id="@+id/allPinglun"
+                        android:text="查看全部评论"
+                        android:layout_alignParentRight="true"
+                        android:textColor="#989898"
+                        android:layout_gravity="right"
+                        android:gravity="center_vertical"
+                        android:textSize="14sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent" />
+                </RelativeLayout>
+                <View
+                    android:background="@color/connet_bgColor"
+                    android:layout_width="fill_parent"
+                    android:layout_height="1sp"></View>
+
+
+
+
+
+                //评论
+             <!--   <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/pinglun"
+                        android:layout_width="fill_parent"
+                        android:layout_marginLeft="@dimen/space_10"
+                        android:layout_marginTop="@dimen/space_15"
+                        android:text="评论(50876)"
+                        android:textColor="#989898"
+                        android:textSize="15sp"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>-->
+
+               <!-- <LinearLayout
+                    android:layout_marginTop="@dimen/space_3"
+                   android:orientation="horizontal"
+                   android:layout_width="fill_parent"
+                   android:gravity="bottom"
+                   android:layout_height="10dp">
+                   <View
+                       android:background="@color/connet_bgColor"
+                       android:layout_width="26dp"
+
+                       android:layout_height="1sp"></View>
+                   <ImageView
+                       android:background="@mipmap/icon_zhexian"
+                       android:layout_width="15dp"
+                       android:layout_height="10dp" />
+                    <View
+                        android:background="@color/connet_bgColor"
+                        android:layout_weight="1"
+                        android:layout_width="fill_parent"
+                        android:layout_height="1sp"></View>
+               </LinearLayout>-->
+
+                //下拉评论
+<!--
+                <android.support.v4.widget.SwipeRefreshLayout
+                    android:id="@+id/swipe_refresh_widget"
+                    android:layout_width="fill_parent"
+                    android:layout_weight="1"
+                    android:layout_height="200dp" >
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/recyclerView"
+                            android:overScrollMode="never"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:scrollbars="vertical" />
+                </android.support.v4.widget.SwipeRefreshLayout>-->
+
+              <!--  <LinearLayout
+                    android:visibility="gone"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_10"
+                    android:paddingBottom="@dimen/space_15"
+                    android:paddingTop="@dimen/space_15"
+                    android:background="@color/connet_bgColor"
+                    android:orientation="horizontal" android:gravity="center">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:background="@mipmap/top" />
+                    <TextView
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="下拉加载"
+                        android:textColor="#aaaaaa" />
+                </LinearLayout>-->
+
+
+
+            </LinearLayout>
+       <!--  </com.smarter.LoveLog.ui.McoySnapPageLayout.McoyScrollView>-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</LinearLayout>

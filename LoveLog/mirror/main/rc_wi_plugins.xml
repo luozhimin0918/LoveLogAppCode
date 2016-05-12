@@ -1,0 +1,18 @@
+<!-- [ Mirror metadata ] generatedAt: 1458178605035 -->
+<!-- Generated screen file. Fill the id tags below with content with
+which to populate your previewed layout. For a complete specification
+of sample data, please see http://jimulabs.com/sample-data-specifications/ 
+
+Valid attributes on <screen> tag: theme="@style/someTheme" inEditMode="false" overlay="@drawable/mockup" -->
+<screen>
+    <_content layout="@layout/rc_wi_plugins">
+        <!-- ImageView Examples:
+        <android-icon src="@drawable/image_resource" />
+        <android-icon src="relative_path/image.jpg" /> -->
+        <android-icon />
+        <!-- TextView Examples:
+        <android-title text="@string/string_resource" />
+        <android-title text="Text literal" textSize="14sp" /> -->
+        <android-title />
+    </_content>
+</screen>

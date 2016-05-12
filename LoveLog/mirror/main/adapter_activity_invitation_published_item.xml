@@ -1,0 +1,17 @@
+<!-- [ Mirror metadata ] generatedAt: 1458178605073 -->
+<!-- Generated screen file. Fill the id tags below with content with
+which to populate your previewed layout. For a complete specification
+of sample data, please see http://jimulabs.com/sample-data-specifications/ 
+
+Valid attributes on <screen> tag: theme="@style/someTheme" inEditMode="false" overlay="@drawable/mockup" -->
+<screen>
+    <_content layout="@layout/adapter_activity_invitation_published_item">
+        <!-- TextView Examples:
+        <pinglunTitle text="@string/string_resource" />
+        <pinglunTitle text="Text literal" textSize="14sp" /> -->
+        <pinglunTitle />
+        <pinglunConnet />
+        <addTime />
+        <pinglunNum />
+    </_content>
+</screen>

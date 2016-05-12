@@ -1,0 +1,23 @@
+<!-- [ Mirror metadata ] generatedAt: 1458178605089 -->
+<!-- Generated screen file. Fill the id tags below with content with
+which to populate your previewed layout. For a complete specification
+of sample data, please see http://jimulabs.com/sample-data-specifications/ 
+
+Valid attributes on <screen> tag: theme="@style/someTheme" inEditMode="false" overlay="@drawable/mockup" -->
+<screen>
+    <_content layout="@layout/community_xrecy_item">
+        <!-- TextView Examples:
+        <userName text="@string/string_resource" />
+        <userName text="Text literal" textSize="14sp" /> -->
+        <userName />
+        <userTime />
+        <title />
+        <brief />
+        <pinglunNum />
+        <sharePic />
+        <!-- ImageView Examples:
+        <reword src="@drawable/image_resource" />
+        <reword src="relative_path/image.jpg" /> -->
+        <reword />
+    </_content>
+</screen>

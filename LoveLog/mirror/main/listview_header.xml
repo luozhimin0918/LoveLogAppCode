@@ -1,0 +1,19 @@
+<!-- [ Mirror metadata ] generatedAt: 1458178605110 -->
+<!-- Generated screen file. Fill the id tags below with content with
+which to populate your previewed layout. For a complete specification
+of sample data, please see http://jimulabs.com/sample-data-specifications/ 
+
+Valid attributes on <screen> tag: theme="@style/someTheme" inEditMode="false" overlay="@drawable/mockup" -->
+<screen>
+    <_content layout="@layout/listview_header">
+        <!-- TextView Examples:
+        <refresh_status_textview text="@string/string_resource" />
+        <refresh_status_textview text="Text literal" textSize="14sp" /> -->
+        <refresh_status_textview />
+        <last_refresh_time />
+        <!-- ImageView Examples:
+        <listview_header_arrow src="@drawable/image_resource" />
+        <listview_header_arrow src="relative_path/image.jpg" /> -->
+        <listview_header_arrow />
+    </_content>
+</screen>

@@ -1,0 +1,392 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.smarter.LoveLog">
+    <!-- 允许应用程序联网，以便向我们的服务器端发送数据 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name = "android.permission.RECEIVE_SMS" />
+    <uses-permission android:name = "android.permission.SEND_SMS" />
+
+    <!--shareSdk所用权限-->
+    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    　<uses-permission android:name="android.permission.SET_WALLPAPER"/>
+    <!--友盟所用权限-->
+
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.SET_DEBUG_APP" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+
+    <!-- 银联支付-->
+
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.NFC" />
+    <uses-feature android:name="android.hardware.nfc.hce"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+    <uses-permission android:name="org.simalliance.openmobileapi.SMARTCARD" />
+
+
+
+
+
+
+
+
+
+
+    <application android:allowBackup="true"
+                 android:name=".db.AppContextApplication"
+                 android:label="@string/app_name"
+                 android:icon="@mipmap/ic_launcher"
+                 android:theme="@style/AppTheme">
+
+
+        <activity android:name=".activity.SplashActivity"
+            android:theme="@style/AppThemeTwo"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+
+        </activity>
+      <!--  android:windowSoftInputMode="stateVisible|adjustResize"-->
+            <activity android:name="com.smarter.LoveLog.activity.MainActivity"
+                      android:configChanges="orientation|keyboardHidden|screenSize"
+                      android:screenOrientation="portrait">
+
+
+            </activity>
+
+           <activity android:name="com.smarter.LoveLog.activity.LoginActivity"
+                      android:configChanges="orientation|keyboardHidden|screenSize"
+                      android:screenOrientation="portrait">
+
+            </activity>
+            <activity android:name="com.smarter.LoveLog.activity.FindPasswordActivity"
+                      android:configChanges="orientation|keyboardHidden|screenSize"
+                      android:screenOrientation="portrait">
+
+            </activity>
+            <activity android:name="com.smarter.LoveLog.activity.QuaiRegitedActivity"
+                      android:configChanges="orientation|keyboardHidden|screenSize"
+                      android:screenOrientation="portrait">
+
+            </activity>
+            <activity android:name="com.smarter.LoveLog.activity.PersonalDataActivity"
+                android:configChanges="orientation|keyboardHidden|screenSize"
+                android:screenOrientation="portrait">
+
+            </activity>
+            <activity android:name=".activity.ProductDeatilActivity"
+                android:configChanges="orientation|keyboardHidden|screenSize"
+                android:screenOrientation="portrait">
+            </activity>
+            <activity android:name=".activity.InvitationActivity"
+                android:configChanges="orientation|keyboardHidden|screenSize"
+                android:screenOrientation="portrait">
+
+            </activity>
+            <activity android:name=".activity.InvitationDeatilActivity"
+                android:configChanges="orientation|keyboardHidden|screenSize"
+                android:windowSoftInputMode="adjustPan"
+                android:screenOrientation="portrait">
+                <intent-filter>
+                    <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_RESP_ACTIVITY" />
+                    <category android:name="android.intent.category.DEFAULT" />
+                </intent-filter>
+            </activity>
+            <activity android:name=".activity.AddressManageActivity"
+                android:configChanges="orientation|keyboardHidden|screenSize"
+                android:screenOrientation="portrait">
+
+            </activity>
+            <activity android:name=".activity.CreateAddressActivity"
+                android:configChanges="orientation|keyboardHidden|screenSize"
+                android:screenOrientation="portrait">
+
+            </activity>
+            <activity android:name=".activity.MyOrderFormActivity"
+                android:configChanges="orientation|keyboardHidden|screenSize"
+                android:screenOrientation="portrait">
+
+            </activity>
+            <activity android:name=".activity.MyRedPacketActivity"
+                android:configChanges="orientation|keyboardHidden|screenSize"
+                android:screenOrientation="portrait">
+
+            </activity>
+            <activity android:name=".activity.SetActivity"
+                android:configChanges="orientation|keyboardHidden|screenSize"
+                android:screenOrientation="portrait">
+
+            </activity>
+            <activity android:name=".activity.FeedbackActivity"
+                android:configChanges="orientation|keyboardHidden|screenSize"
+                android:screenOrientation="portrait">
+
+            </activity>
+            <activity android:name=".activity.SomeAdviceActivity"
+                android:configChanges="orientation|keyboardHidden|screenSize"
+                android:screenOrientation="portrait">
+
+            </activity>
+
+
+        <activity android:name=".activity.InvitationAllPinglunActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/AppTranslucentTheme"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity android:name=".activity.GoodsAllPinglunActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+
+        <activity android:name=".activity.HelpDataActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity android:name=".activity.HelpDataTwoActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity android:name=".activity.HelpDataThreeWebActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity android:name=".activity.ItegralSelfActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity android:name=".activity.WalletSelfActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity android:name=".activity.MyCommentActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity android:name=".activity.MyInvitationActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity android:name=".activity.MyNotificationActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity android:name=".activity.MessageCenterActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity android:name=".activity.WebViewUrlActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity android:name=".activity.ShowWebImageActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity android:name=".activity.ShowAnoWebImageActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity android:name=".activity.MakeOutOrderActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity android:name=".activity.SendInvitationActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity android:name=".activity.PayMoneyActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".activity.GoodsAllPinglunSendActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait">
+        </activity>
+
+
+
+
+
+
+
+
+
+
+        <!-- -->
+       <!-- <uses-library android:name="org.simalliance.openmobileapi" android:required="false"/>
+
+
+        <activity
+            android:name="com.unionpay.uppay.PayActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name="com.unionpay.UPPayWapActivity"
+            android:configChanges="orientation|keyboardHidden|fontScale"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" >
+        </activity>
+-->
+
+
+
+
+        <!--微信支付支付完界面-->
+        <activity android:name=".wxapi.WXPayEntryActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTop"
+            android:exported="true"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <!--微信分享回调    登录回调-->
+
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+
+
+
+        <!--QQ登录-->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:noHistory="true"
+            android:launchMode="singleTask" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="tencent1105000062" />
+            </intent-filter>
+        </activity>
+     <!--   SDK_V2.0引入了AssistActivity，-->
+
+        <activity android:name="com.tencent.connect.common.AssistActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            />
+
+
+
+
+
+
+
+        <!--融云客服-->
+        <activity android:name=".activity.ConversationActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="com.smarter.LoveLog"
+                    android:pathPrefix="/conversation/"
+                    android:scheme="rong" />
+            </intent-filter>
+
+        </activity>
+
+
+
+
+
+
+
+
+
+
+
+        <!--shareSdk下的注册的activity-->
+        <activity
+            android:name="com.mob.tools.MobUIShell"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" >
+            <intent-filter>
+                <data android:scheme="tencent1105000062" />
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+
+
+        <!--注册授权页面 新浪微博-->
+        <!-- 必须注册在微博授权，分享微博时候用到 -->
+        <activity
+            android:name=".WBShareActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"
+            android:configChanges="keyboardHidden|orientation"
+            android:windowSoftInputMode="adjustResize"
+            android:exported="false" >
+        </activity>
+
+
+
+
+        <!-- 友盟-->
+        <activity
+            android:name="com.umeng.socialize.editorpage.ShareActivity"
+            android:theme="@style/Theme.UMDefault"
+            android:excludeFromRecents="true"/>
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="570607d6e0f55a1a6900123a" >
+        </meta-data>
+
+
+
+    </application>
+
+</manifest>

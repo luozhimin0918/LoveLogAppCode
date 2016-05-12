@@ -1,0 +1,45 @@
+<!-- [ Mirror metadata ] generatedAt: 1458178605063 -->
+<!-- Generated screen file. Fill the id tags below with content with
+which to populate your previewed layout. For a complete specification
+of sample data, please see http://jimulabs.com/sample-data-specifications/ 
+
+Valid attributes on <screen> tag: theme="@style/someTheme" inEditMode="false" overlay="@drawable/mockup" -->
+<screen>
+    <_content layout="@layout/activity_personal_data_view">
+        <!-- ImageView Examples:
+        <backBUt src="@drawable/image_resource" />
+        <backBUt src="relative_path/image.jpg" /> -->
+        <backBUt />
+        <!-- TextView Examples:
+        <tv_top_title text="@string/string_resource" />
+        <tv_top_title text="Text literal" textSize="14sp" /> -->
+        <tv_top_title />
+        <tv_right_title />
+        <recyclerView layoutManager="linear:vertical">
+        <!-- Examples of valid layoutManager values: "linear", "staggeredGrid:5:horizontal", "staggeredGrid:4" -->
+            <items layout="@android:layout/simple_list_item_1" >
+                <_item>
+                    <text1>Vancouver</text1>
+                </_item>
+                <_item>
+                    <text1>Cairo</text1>
+                </_item>
+                <_item>
+                    <text1>New York</text1>
+                </_item>
+                <_item>
+                    <text1>San Francisco</text1>
+                </_item>
+                <_item>
+                    <text1>Seattle</text1>
+                </_item>
+                <_item>
+                    <text1>Hong Kong</text1>
+                </_item>
+                <_item>
+                    <text1>Tokyo</text1>
+                </_item>
+            </items>
+                </recyclerView>
+    </_content>
+</screen>

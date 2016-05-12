@@ -1,0 +1,23 @@
+<!-- [ Mirror metadata ] generatedAt: 1458178605080 -->
+<!-- Generated screen file. Fill the id tags below with content with
+which to populate your previewed layout. For a complete specification
+of sample data, please see http://jimulabs.com/sample-data-specifications/ 
+
+Valid attributes on <screen> tag: theme="@style/someTheme" inEditMode="false" overlay="@drawable/mockup" -->
+<screen>
+    <_content layout="@layout/adapter_activity_shop_car_item">
+        <!-- ImageView Examples:
+        <isImage src="@drawable/image_resource" />
+        <isImage src="relative_path/image.jpg" /> -->
+        <isImage />
+        <!-- TextView Examples:
+        <nameInfo text="@string/string_resource" />
+        <nameInfo text="Text literal" textSize="14sp" /> -->
+        <nameInfo />
+        <desInfo />
+        <shopPrice />
+        <pop_reduce />
+        <pop_num />
+        <pop_add />
+    </_content>
+</screen>

@@ -1,0 +1,24 @@
+<!-- [ Mirror metadata ] generatedAt: 1458178605071 -->
+<!-- Generated screen file. Fill the id tags below with content with
+which to populate your previewed layout. For a complete specification
+of sample data, please see http://jimulabs.com/sample-data-specifications/ 
+
+Valid attributes on <screen> tag: theme="@style/someTheme" inEditMode="false" overlay="@drawable/mockup" -->
+<screen>
+    <_content layout="@layout/adapter_activity_address_manage_item">
+        <!-- TextView Examples:
+        <nameTextView text="@string/string_resource" />
+        <nameTextView text="Text literal" textSize="14sp" /> -->
+        <nameTextView />
+        <phoneTextview />
+        <default_address />
+        <addressShouhuo />
+        <!-- ImageView Examples:
+        <isImage src="@drawable/image_resource" />
+        <isImage src="relative_path/image.jpg" /> -->
+        <isImage />
+        <default_text />
+        <bianjAddress />
+        <deleteAddress />
+    </_content>
+</screen>
