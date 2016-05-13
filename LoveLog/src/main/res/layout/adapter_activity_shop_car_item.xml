@@ -1,221 +1,265 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.smarter.LoveLog.ui.SlidingButtonView xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+        <TextView
+            android:id="@+id/deleteBut"
+            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:gravity="center"
+            android:layout_toRightOf="@+id/onlay"
+            android:background="@color/red"
+            android:text="删 除"
+            android:textColor="@android:color/white"
+            />
+       <!-- <LinearLayout
+            android:layout_width="80dp"
+            android:layout_toRightOf="@+id/onlay"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/deleteBut"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/red"
+                android:gravity="center"
+                android:text="删除"
+                android:textColor="@android:color/white"/>
+        </LinearLayout>-->
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:gravity="center_vertical"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/isImage"
-            android:layout_marginLeft="@dimen/space_10"
-            android:layout_marginRight="@dimen/space_10"
-            android:background="@mipmap/choice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <!---->
+    <RelativeLayout
+        android:id="@+id/onlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
         <LinearLayout
-            android:orientation="vertical"
+
+            android:orientation="horizontal"
             android:layout_width="fill_parent"
+            android:gravity="center_vertical"
             android:layout_height="wrap_content">
-
             <LinearLayout
-                android:orientation="horizontal"
+                android:id="@+id/isImageLinear"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent">
+                <ImageView
+                    android:id="@+id/isImage"
+                    android:layout_marginLeft="@dimen/space_10"
+                    android:layout_marginRight="@dimen/space_10"
+                    android:background="@mipmap/choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
 
+            <!---->
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_weight="1"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content">
 
-
                 <LinearLayout
-                    android:background="@drawable/zhijiao_bg_white"
-                    android:layout_marginTop="@dimen/space_10"
-                    android:layout_marginBottom="@dimen/space_10"
-                    android:padding="1px"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                    <com.android.volley.toolbox.NetworkImageView
-                        android:id="@+id/iv_adapter_grid_pic"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:layout_gravity="center"
+                    android:orientation="horizontal"
 
-                        android:src="@drawable/loading_small" />
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <LinearLayout
+                        android:background="@drawable/zhijiao_bg_white"
+                        android:layout_marginTop="@dimen/space_10"
+                        android:layout_marginBottom="@dimen/space_10"
+                        android:padding="1px"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <com.android.volley.toolbox.NetworkImageView
+                            android:id="@+id/iv_adapter_grid_pic"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_gravity="center"
+
+                            android:src="@drawable/loading_small" />
+                    </LinearLayout>
+
+
+
+                    <!--编辑购物车-->
+                    <FrameLayout
+                        android:layout_weight="1"
+
+                        android:background="@color/white"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent">
+
+
+                        <!--编辑完成的-->
+                        <LinearLayout
+
+                            android:id="@+id/wanchenProgress"
+                            android:orientation="vertical"
+                            android:gravity="center_vertical"
+                            android:layout_marginLeft="@dimen/space_10"
+                            android:layout_marginRight="@dimen/space_10"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent">
+                            <LinearLayout
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:id="@+id/desInfo"
+                                    android:layout_marginTop="@dimen/space_5"
+                                    android:layout_weight="1"
+                                    android:gravity="bottom"
+                                    android:layout_width="fill_parent"
+                                    android:textColor="#323232"
+                                    android:textSize="16sp"
+                                    android:layout_height="wrap_content"
+                                    android:text="超级超级的补水面级超级的补水面膜"/>
+
+                            </LinearLayout>
+
+
+
+                            <LinearLayout
+                                android:layout_marginTop="@dimen/space_5"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:layout_marginTop="@dimen/space_5"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="￥"
+                                    android:textColor="#5D5D5D"
+                                    android:textSize="13sp" />
+                                <TextView
+                                    android:id="@+id/shopPrice"
+                                    android:layout_weight="1"
+                                    android:layout_marginTop="@dimen/space_5"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="49.00  "
+                                    android:textColor="@color/top_bar_bgColor"
+                                    android:textSize="18sp" />
+
+                                <TextView
+                                    android:layout_weight="1"
+                                    android:visibility="gone"
+                                    android:layout_marginTop="@dimen/space_5"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="版本：青春版"
+                                    android:textColor="#5D5D5D"
+                                    android:textSize="13sp" />
+                                <TextView
+                                    android:layout_marginTop="@dimen/space_5"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="x"
+                                    android:textColor="#5D5D5D"
+                                    android:textSize="12sp" />
+                                <TextView
+                                    android:id="@+id/shopCarNum"
+                                    android:layout_marginTop="@dimen/space_5"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="x5"
+                                    android:textColor="#5D5D5D"
+                                    android:textSize="14sp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <!--编辑中-->
+                        <LinearLayout
+                            android:visibility="gone"
+                            android:id="@+id/bianjiProgress"
+                            android:orientation="horizontal"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent">
+
+                            <LinearLayout
+                                android:layout_weight="1"
+                                android:layout_width="fill_parent"
+                                android:orientation="vertical"
+                                android:gravity="center_vertical"
+                                android:layout_height="fill_parent">
+                                <LinearLayout
+                                    android:layout_width="fill_parent"
+                                    android:padding="@dimen/space_5"
+                                    android:layout_height="wrap_content">
+                                    <TextView
+                                        android:id="@+id/desInfoTwo"
+                                        android:layout_weight="1"
+                                        android:gravity="bottom"
+                                        android:layout_width="fill_parent"
+                                        android:textColor="#323232"
+                                        android:textSize="16sp"
+                                        android:layout_height="wrap_content"
+                                        android:text="超级超级的补水面级超级的补水面膜"/>
+
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="fill_parent"
+                                    android:padding="@dimen/space_5"
+                                    android:layout_height="wrap_content">
+                                    <ImageView
+                                        android:id="@+id/pop_reduce"
+                                        android:background="@drawable/zhijiao_bg_white"
+                                        android:src="@drawable/jian_price_button"
+                                        android:layout_width="35dp"
+                                        android:layout_height="35dp" />
+                                    <TextView
+                                        android:id="@+id/ShopCarNumZhi"
+                                        android:text="5"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
+                                        android:textSize="16sp"
+                                        android:layout_marginLeft="2dp"
+                                        android:layout_marginRight="2dp"
+                                        android:background="@drawable/zhijiao_bg_white"
+                                        android:textColor="@color/black"
+                                        android:layout_width="fill_parent"
+                                        android:layout_height="fill_parent" />
+                                    <ImageView
+                                        android:id="@+id/pop_add"
+                                        android:background="@drawable/zhijiao_bg_white"
+                                        android:src="@drawable/add_price_button"
+                                        android:layout_width="35dp"
+                                        android:layout_height="35dp" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <!--  <TextView
+                                  android:id="@+id/deleteBut"
+                                  android:text="删除"
+                                  android:textSize="16sp"
+                                  android:gravity="center"
+                                  android:background="@color/red"
+                                  android:layout_width="50dp"
+                                  android:layout_height="fill_parent" />-->
+
+                        </LinearLayout>
+
+                    </FrameLayout>
+
+
                 </LinearLayout>
 
 
 
-                  <!--编辑购物车-->
-                  <FrameLayout
-                      android:layout_weight="1"
-
-                      android:background="@color/white"
-                      android:layout_width="1000dp"
-                      android:layout_height="fill_parent">
-
-
-                      <!--编辑完成的-->
-                      <LinearLayout
-
-                          android:id="@+id/wanchenProgress"
-                          android:orientation="vertical"
-                          android:gravity="center_vertical"
-                          android:layout_marginLeft="@dimen/space_10"
-                          android:layout_marginRight="@dimen/space_10"
-                          android:layout_width="fill_parent"
-                          android:layout_height="fill_parent">
-                          <LinearLayout
-                              android:layout_width="fill_parent"
-                              android:layout_height="wrap_content">
-                              <TextView
-                                  android:id="@+id/desInfo"
-                                  android:layout_marginTop="@dimen/space_5"
-                                  android:layout_weight="1"
-                                  android:gravity="bottom"
-                                  android:layout_width="fill_parent"
-                                  android:textColor="#323232"
-                                  android:textSize="16sp"
-                                  android:layout_height="wrap_content"
-                                  android:text="超级超级的补水面级超级的补水面膜"/>
-
-                          </LinearLayout>
-
-
-
-                          <LinearLayout
-                              android:layout_marginTop="@dimen/space_5"
-                              android:layout_width="fill_parent"
-                              android:layout_height="wrap_content">
-                              <TextView
-                                  android:layout_marginTop="@dimen/space_5"
-                                  android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"
-                                  android:text="￥"
-                                  android:textColor="#5D5D5D"
-                                  android:textSize="13sp" />
-                              <TextView
-                                  android:id="@+id/shopPrice"
-                                  android:layout_weight="1"
-                                  android:layout_marginTop="@dimen/space_5"
-                                  android:layout_width="fill_parent"
-                                  android:layout_height="wrap_content"
-                                  android:text="49.00  "
-                                  android:textColor="@color/top_bar_bgColor"
-                                  android:textSize="18sp" />
-
-                              <TextView
-                                  android:layout_weight="1"
-                                  android:visibility="gone"
-                                  android:layout_marginTop="@dimen/space_5"
-                                  android:layout_width="fill_parent"
-                                  android:layout_height="wrap_content"
-                                  android:text="版本：青春版"
-                                  android:textColor="#5D5D5D"
-                                  android:textSize="13sp" />
-                              <TextView
-                                  android:layout_marginTop="@dimen/space_5"
-                                  android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"
-                                  android:text="x"
-                                  android:textColor="#5D5D5D"
-                                  android:textSize="12sp" />
-                              <TextView
-                                  android:id="@+id/shopCarNum"
-                                  android:layout_marginTop="@dimen/space_5"
-                                  android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"
-                                  android:text="x5"
-                                  android:textColor="#5D5D5D"
-                                  android:textSize="14sp" />
-
-                          </LinearLayout>
-
-                      </LinearLayout>
-
-                      <!--编辑中-->
-                      <LinearLayout
-                          android:visibility="gone"
-                          android:id="@+id/bianjiProgress"
-                          android:orientation="horizontal"
-                          android:layout_width="fill_parent"
-                          android:layout_height="fill_parent">
-
-                          <LinearLayout
-                              android:layout_weight="1"
-                              android:layout_width="fill_parent"
-                              android:orientation="vertical"
-                              android:gravity="center_vertical"
-                              android:layout_height="fill_parent">
-                              <LinearLayout
-                                  android:layout_width="fill_parent"
-                                  android:padding="@dimen/space_5"
-                                  android:layout_height="wrap_content">
-                                  <TextView
-                                      android:id="@+id/desInfoTwo"
-                                      android:layout_weight="1"
-                                      android:gravity="bottom"
-                                      android:layout_width="fill_parent"
-                                      android:textColor="#323232"
-                                      android:textSize="16sp"
-                                      android:layout_height="wrap_content"
-                                      android:text="超级超级的补水面级超级的补水面膜"/>
-
-                              </LinearLayout>
-                              <LinearLayout
-                                  android:orientation="horizontal"
-                                  android:layout_width="fill_parent"
-                                  android:padding="@dimen/space_5"
-                                  android:layout_height="wrap_content">
-                                  <ImageView
-                                      android:id="@+id/pop_reduce"
-                                      android:background="@drawable/zhijiao_bg_white"
-                                      android:src="@drawable/jian_price_button"
-                                      android:layout_width="35dp"
-                                      android:layout_height="35dp" />
-                                  <TextView
-                                      android:id="@+id/ShopCarNumZhi"
-                                      android:text="5"
-                                      android:layout_weight="1"
-                                      android:gravity="center"
-                                      android:textSize="16sp"
-                                      android:layout_marginLeft="2dp"
-                                      android:layout_marginRight="2dp"
-                                      android:background="@drawable/zhijiao_bg_white"
-                                      android:textColor="@color/black"
-                                      android:layout_width="fill_parent"
-                                      android:layout_height="fill_parent" />
-                                  <ImageView
-                                      android:id="@+id/pop_add"
-                                      android:background="@drawable/zhijiao_bg_white"
-                                      android:src="@drawable/add_price_button"
-                                      android:layout_width="35dp"
-                                      android:layout_height="35dp" />
-                              </LinearLayout>
-                          </LinearLayout>
-
-                        <!--  <TextView
-                              android:id="@+id/deleteBut"
-                              android:text="删除"
-                              android:textSize="16sp"
-                              android:gravity="center"
-                              android:background="@color/red"
-                              android:layout_width="50dp"
-                              android:layout_height="fill_parent" />-->
-
-                      </LinearLayout>
-
-                  </FrameLayout>
 
 
             </LinearLayout>
-
-
 
 
 
@@ -223,26 +267,14 @@
 
 
 
-    </LinearLayout>
+    </RelativeLayout>
 
 
-    <LinearLayout
-        android:layout_width="80dp"
-        android:layout_height="match_parent">
-        <TextView
-            android:id="@+id/deleteBut"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/red"
-            android:gravity="center"
-            android:text="删除"
-            android:textColor="@android:color/white"/>
-    </LinearLayout>
+    </RelativeLayout>
 
    <!-- <LinearLayout
         android:background="@color/connet_bgColor" android:layout_width="fill_parent" android:layout_height="1dp"></LinearLayout>
 -->
 
-</LinearLayout>
+</com.smarter.LoveLog.ui.SlidingButtonView>
 

@@ -556,6 +556,8 @@ public class ShopCarFragment extends Fragment implements RecycleShopCarAdapter.O
     boolean  idBianji=true;//是否编辑
     boolean  isQuanxuna=true;//是否全选
 
+    LinearItemDecoration  linearItemDecoration=null;
+
     public void initRecycleViewVertical() {
 
 
@@ -643,8 +645,14 @@ public class ShopCarFragment extends Fragment implements RecycleShopCarAdapter.O
             adapter.setOnCheckDefaultListener(this);
 
             mRecyclerView.setAdapter(adapter);
-            mRecyclerView.addItemDecoration(new LinearItemDecoration(Color.parseColor("#f2f2f2")));
-            adapter.setmRecyclerView(mRecyclerView);
+
+            if(linearItemDecoration==null){
+                linearItemDecoration=new LinearItemDecoration(Color.parseColor("#f2f2f2"));
+                mRecyclerView.addItemDecoration(linearItemDecoration);
+            }
+
+
+
         }else{
             xuanfuBar.setVisibility(View.GONE);
             tvRightTitle.setVisibility(View.INVISIBLE);

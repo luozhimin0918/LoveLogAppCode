@@ -1,7 +1,6 @@
 package com.smarter.LoveLog.adapter;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -15,8 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.android.volley.Request;
@@ -24,17 +23,16 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.NetworkImageView;
-import com.jcodecraeer.xrecyclerview.ItemSlideHelper;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.smarter.LoveLog.R;
 import com.smarter.LoveLog.db.AppContextApplication;
 import com.smarter.LoveLog.db.SharedPreUtil;
 import com.smarter.LoveLog.db.SharedPreferences;
 import com.smarter.LoveLog.http.FastJsonRequest;
-import com.smarter.LoveLog.model.PaginationJson;
 import com.smarter.LoveLog.model.loginData.SessionData;
 import com.smarter.LoveLog.model.orderMy.ShopCarOrderInfo;
-import com.smarter.LoveLog.utills.ViewUtill;
+import com.smarter.LoveLog.ui.SlidingButtonView;
+import com.smarter.LoveLog.utills.DeviceUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,9 +45,8 @@ import butterknife.ButterKnife;
 /**
  * Created by Administrator on 2015/12/22.
  */
-public class RecycleShopCarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  implements ItemSlideHelper.Callback{
+public class RecycleShopCarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  implements SlidingButtonView.IonSlidingButtonListener{
 
-    private XRecyclerView mRecyclerView;
     RequestQueue mQueue;
     // 数据集
     List<ShopCarOrderInfo.DataEntity.GoodsListEntity> orderLists;
@@ -60,7 +57,7 @@ public class RecycleShopCarAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     SessionData sessionData;
 
     Context mContxt;
-
+    private SlidingButtonView mMenu = null;
     public RecycleShopCarAdapter(List<ShopCarOrderInfo.DataEntity.GoodsListEntity> orderLists,Context mContxt) {
         super();
         this.orderLists = orderLists;
@@ -70,7 +67,7 @@ public class RecycleShopCarAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         // 创建一个View，简单起见直接使用系统提供的布局，就是一个TextView
         View view = View.inflate(viewGroup.getContext(), R.layout.adapter_activity_shop_car_item, null);
         // 创建一个ViewHolder
@@ -93,6 +90,7 @@ public class RecycleShopCarAdapter extends RecyclerView.Adapter<RecyclerView.Vie
        final ShopCarOrderInfo.DataEntity.GoodsListEntity goodsListOne = orderLists.get(i);
 
         viewHolder.desInfo.setText("");
+        viewHolder.onlay.getLayoutParams().width = DeviceUtil.getWidth((Activity) mContxt);
 
 
 //        if(goodsListOne.getIs_shipping().equals("1")){
@@ -152,6 +150,17 @@ public class RecycleShopCarAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
 
 
+        viewHolder.onlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //判断是否有删除菜单打开
+                if (menuIsOpen()) {
+                    closeMenu();//关闭菜单
+                }
+            }
+        });
+
+
         viewHolder.popAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -178,7 +187,7 @@ public class RecycleShopCarAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             }
         });
 
-        viewHolder.isImage.setOnClickListener(new View.OnClickListener() {
+        viewHolder.isImageLinear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(goodsListOne.is_all_select()){
@@ -264,49 +273,47 @@ public class RecycleShopCarAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
 
+
+
+
+
+
+
     /**
-     * gethorizontalRange  getChildViewolder findTargetView
-     * @param holder
-     * @return
+     * onMenuIsOpen  onDownOrMove   closeMenu  menuIsOpen
      */
     @Override
-    public int getHorizontalRange(RecyclerView.ViewHolder holder) {
-        if(holder.itemView instanceof LinearLayout){
-            ViewGroup viewGroup = (ViewGroup) holder.itemView;
-            if(viewGroup.getChildCount() == 2){
-                return viewGroup.getChildAt(1).getLayoutParams().width;
+    public void onMenuIsOpen(View view) {
+        mMenu = (SlidingButtonView) view;
+    }
+
+    @Override
+    public void onDownOrMove(SlidingButtonView slidingButtonView) {
+        if(menuIsOpen()){
+            if(mMenu != slidingButtonView){
+                closeMenu();
             }
         }
-        return 0;
     }
 
+    /**
+     * 关闭菜单
+     */
+    public void closeMenu() {
+        mMenu.closeMenu();
+        mMenu = null;
 
-
-    @Override
-    public RecyclerView.ViewHolder getChildViewHolder(View childView) {
-        return mRecyclerView.getChildViewHolder(childView);
     }
-
-    @Override
-    public View findTargetView(float x, float y) {
-        return mRecyclerView.findChildViewUnder(x, y);
+    /**
+     * 判断是否有菜单打开
+     */
+    public Boolean menuIsOpen() {
+        if(mMenu != null){
+            return true;
+        }
+        Log.i("asd","mMenu为null");
+        return false;
     }
-
-   /* @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
-        mRecyclerView = (XRecyclerView) recyclerView;
-
-//        mRecyclerView=recyclerView;
-        mRecyclerView.addOnItemTouchListener(new ItemSlideHelper(mContxt, this));
-
-    }*/
-
-    public void setmRecyclerView(XRecyclerView  recyclerView){
-        mRecyclerView=recyclerView;
-        mRecyclerView.addOnItemTouchListener(new ItemSlideHelper(mContxt, this));
-    }
-
 
 
     //回调开始
@@ -328,7 +335,12 @@ public class RecycleShopCarAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         return orderLists.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public  class ViewHolder extends RecyclerView.ViewHolder {
+
+        @Bind(R.id.isImageLinear)
+        LinearLayout isImageLinear;
+        @Bind(R.id.onlay)
+        RelativeLayout onlay;
         @Bind(R.id.isImage)
         ImageView isImage;
         @Bind(R.id.iv_adapter_grid_pic)
@@ -362,24 +374,11 @@ public class RecycleShopCarAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
+            ((SlidingButtonView) view).setSlidingButtonListener(RecycleShopCarAdapter.this);
         }
     }
 
-    /*public static class ViewHolder extends RecyclerView.ViewHolder{
 
-        public TextView desInfo;
-        public NetworkImageView iv_adapter_grid_pic;
-
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-
-            desInfo= (TextView) itemView.findViewById(R.id.desInfo);
-            iv_adapter_grid_pic= (NetworkImageView) itemView.findViewById(R.id.iv_adapter_grid_pic);
-
-
-        }
-    }*/
 
 
     /**
