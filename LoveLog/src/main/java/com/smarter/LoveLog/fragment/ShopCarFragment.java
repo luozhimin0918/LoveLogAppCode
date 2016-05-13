@@ -94,6 +94,10 @@ public class ShopCarFragment extends Fragment implements RecycleShopCarAdapter.O
     @Bind(R.id.xuanfuBar)
     LinearLayout xuanfuBar;
 
+    @Bind(R.id.hejiText)
+    TextView hejiText;
+
+
 
     Context mContext;
 
@@ -217,6 +221,7 @@ public class ShopCarFragment extends Fragment implements RecycleShopCarAdapter.O
 //        ButterKnife.unbind(this);
     }
 
+    boolean   isdeleteOrJiSuan=false;
     @OnClick({R.id.tv_right_title, R.id.isImage, R.id.buy_now})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -224,11 +229,24 @@ public class ShopCarFragment extends Fragment implements RecycleShopCarAdapter.O
                  if(idBianji){
                      idBianji=false;
                      tvRightTitle.setText("完成");
-                     adapter.myNotifiAdapter(false, true,false);
+                     adapter.myNotifiAdapter(false, true, false);
+
+
+
+                     //编辑状态下，编辑栏。。。
+                     hejiText.setVisibility(View.GONE);
+                     isdeleteOrJiSuan=true;
+                     buyNow.setText("删除");
+
                  }else{
                      idBianji=true;
                      tvRightTitle.setText("编辑");
                      adapter.myNotifiAdapter(false, false,false);
+
+                     //未编辑状态下，编辑栏。。。
+                     hejiText.setVisibility(View.VISIBLE);
+                     isdeleteOrJiSuan=false;
+                     buyNow.setText("去结算");
 
                  }
 
@@ -252,7 +270,9 @@ public class ShopCarFragment extends Fragment implements RecycleShopCarAdapter.O
 
                 break;
             case R.id.buy_now:
-
+                      if(isdeleteOrJiSuan){
+                          adapter.myNotifiAdapterDelete();
+                      }
                 break;
         }
     }
@@ -284,6 +304,10 @@ public class ShopCarFragment extends Fragment implements RecycleShopCarAdapter.O
             idBianji=true;
             isQuanxuna=true;
             isImage.setBackgroundResource(R.mipmap.choice);
+            isdeleteOrJiSuan=false;
+            buyNow.setText("去结算(0)");
+            hejiText.setVisibility(View.VISIBLE);
+            hejiText.setText("合计(0)");
 
 
             if(SharedPreUtil.isLogin()){

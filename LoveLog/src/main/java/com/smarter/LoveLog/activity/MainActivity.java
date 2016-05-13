@@ -92,7 +92,7 @@ public class MainActivity extends BaseFragmentActivity  implements ShopCarFragme
      LinearLayout  main_zt_color;
 
     @Bind(R.id.vp_2)
-    CustomViewPager mViewPager;
+    ViewPager mViewPager;
     @Bind(R.id.tl_2)
     CommonTabLayout mTabLayout_2;
 

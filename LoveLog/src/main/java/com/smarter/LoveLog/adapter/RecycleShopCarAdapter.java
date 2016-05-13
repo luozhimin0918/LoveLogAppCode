@@ -524,4 +524,54 @@ public class RecycleShopCarAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
 
     }
+
+
+
+    public void myNotifiAdapterDelete(){
+        if (SharedPreUtil.isLogin()) {
+            if (sessionData != null) {
+                for(int d=0;d<orderLists.size();d++){
+                    if(orderLists.get(d).is_all_select()){
+                        initData(sessionData,orderLists.get(d),"delete");
+                    }
+
+                }
+
+            }
+
+        }else{
+           List<ShopCarOrderInfo.DataEntity.GoodsListEntity> tempDeleteList=new ArrayList<ShopCarOrderInfo.DataEntity.GoodsListEntity>();
+            tempDeleteList.clear();
+            for(int d=0;d<orderLists.size();d++){
+                if(orderLists.get(d).is_all_select()){
+                    tempDeleteList.add(orderLists.get(d));
+                }
+
+            }
+            if(tempDeleteList.size()>0){
+                for(int t=0;t<tempDeleteList.size();t++){
+                    orderLists.remove(tempDeleteList.get(t));
+                    thisNotifyDataSetChanged(tempDeleteList.get(t), true);//保存本地数据
+                }
+
+            }
+
+
+            //广播通知刷新购物车数量
+            Intent intent = new Intent();
+            intent.setAction("UpShopCarNum");
+            intent.putExtra("update", "ok");
+            mContxt.sendBroadcast(intent);
+
+
+            if(orderLists.size()<=0){
+
+                OnCheckDefaultListener.onDeleteAll();
+            }
+
+
+        }
+
+
+    }
 }
