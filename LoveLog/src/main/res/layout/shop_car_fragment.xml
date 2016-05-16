@@ -205,15 +205,25 @@
                 android:paddingLeft="@dimen/space_10"
                 android:text="全选"
                 android:textColor="#FFFFFF"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
+            <TextView
+                android:id="@+id/hejiTop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="@dimen/space_30"
+                android:text="总金额："
+                android:textColor="#FFFFFF"
+                android:textSize="13sp" />
+
             <TextView
                 android:id="@+id/hejiText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="left|center_vertical"
-                android:paddingLeft="@dimen/space_10"
-                android:text="合计：￥49.00  "
-                android:textColor="#FFFFFF"
+                android:paddingLeft="@dimen/space_2"
+                android:text="0.00元"
+                android:textColor="@color/top_bar_bgColor"
                 android:textSize="15sp" />
         </LinearLayout>
 
@@ -225,7 +235,7 @@
             android:layout_weight="0.6"
             android:background="@color/top_bar_bgColor"
             android:gravity="center"
-            android:text="去结算(0)"
+            android:text="去结算"
             android:textColor="#FFFFFF"
             android:textSize="16sp" />
 

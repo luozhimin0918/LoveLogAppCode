@@ -58,6 +58,16 @@ public class RecycleShopCarAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     Context mContxt;
     private SlidingButtonView mMenu = null;
+
+
+    public List<ShopCarOrderInfo.DataEntity.GoodsListEntity> getOrderLists() {
+        return orderLists;
+    }
+
+    public void setOrderLists(List<ShopCarOrderInfo.DataEntity.GoodsListEntity> orderLists) {
+        this.orderLists = orderLists;
+    }
+
     public RecycleShopCarAdapter(List<ShopCarOrderInfo.DataEntity.GoodsListEntity> orderLists,Context mContxt) {
         super();
         this.orderLists = orderLists;
@@ -93,23 +103,23 @@ public class RecycleShopCarAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         viewHolder.onlay.getLayoutParams().width = DeviceUtil.getWidth((Activity) mContxt);
 
 
-//        if(goodsListOne.getIs_shipping().equals("1")){
+        if(goodsListOne.getIs_shipping().equals("1")){
         Bitmap b2 = BitmapFactory.decodeResource(mContxt.getResources(), R.mipmap.free);
         ImageSpan imgSpan2 = new ImageSpan(mContxt, b2);
         SpannableString spanString2 = new SpannableString("免费");
         spanString2.setSpan(imgSpan2, 0, spanString2.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         viewHolder.desInfo.append(spanString2);
         viewHolder.desInfo.append("  ");
-//        }
+        }
 
-//        if(!goodsListOne.getIs_gift().equals("0")){
+        if(!goodsListOne.getIs_gift().equals("0")){
             Bitmap b = BitmapFactory.decodeResource(mContxt.getResources(), R.mipmap.zengpin);
             ImageSpan imgSpan = new ImageSpan(mContxt, b);
             SpannableString spanString = new SpannableString("赠品");
             spanString.setSpan(imgSpan, 0, spanString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             viewHolder.desInfo.append(spanString);
             viewHolder.desInfo.append("  ");
-//        }
+        }
 
         viewHolder.desInfo.append(goodsListOne.getGoods_name());
         viewHolder.desInfoTwo.setText(goodsListOne.getGoods_name());
@@ -167,7 +177,7 @@ public class RecycleShopCarAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 int num = Integer.parseInt(goodsListOne.getGoods_number())+5;
                 goodsListOne.setGoods_number(num + "");
 
-                thisNotifyDataSetChanged(goodsListOne,false);//保存本地数据
+                thisNotifyDataSetChanged(goodsListOne, false);//保存本地数据
 
 
             }
@@ -179,7 +189,7 @@ public class RecycleShopCarAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 if(num>=5){
                     goodsListOne.setGoods_number(num + "");
 
-                    thisNotifyDataSetChanged(goodsListOne,false);//保存本地数据
+                    thisNotifyDataSetChanged(goodsListOne, false);//保存本地数据
 
                 }
 
@@ -201,21 +211,12 @@ public class RecycleShopCarAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     goodsListOne.setIs_all_select(true);
 
 
-                    /**
-                     * list一个个点击全选之后的回调
-                     */
-                    int numOrdeSele=0;
-                    for(int o=0;o<orderLists.size();o++){
-                        if(orderLists.get(o).is_all_select()){
-                            ++numOrdeSele;
-                        }
-                    }
-                    if(numOrdeSele==orderLists.size()){
-                        OnCheckDefaultListener.onAllselectToCanter(false);
-                        isQuxuan=true;//表示全选了
-                    }
-
+                    isQuanHuidiao();//判断全选回调，改变购物车全选图标
                 }
+
+
+                OnCheckDefaultListener.onJisuanZongPrice();//计算总价格
+
 
                 notifyDataSetChanged();
             }
@@ -259,6 +260,23 @@ public class RecycleShopCarAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     }
 
+    private void isQuanHuidiao() {
+        /**
+         * list一个个点击全选之后的回调
+         */
+        int numOrdeSele=0;
+        for(int o=0;o<orderLists.size();o++){
+            if(orderLists.get(o).is_all_select()){
+                ++numOrdeSele;
+            }
+        }
+        if(numOrdeSele==orderLists.size()){
+            OnCheckDefaultListener.onAllselectToCanter(false);
+            isQuxuan=true;//表示全选了
+        }
+
+    }
+
     private void thisNotifyDataSetChanged(ShopCarOrderInfo.DataEntity.GoodsListEntity localData,boolean isDelete) {
 
                if(!SharedPreUtil.isLogin()){
@@ -266,9 +284,14 @@ public class RecycleShopCarAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                        SharedPreUtil.deleteLocalShopCarData(localData);
                    }else{
                    SharedPreUtil.updateLocalShopCarData(localData);
+
+
+
                   }
                }
         notifyDataSetChanged();
+
+        OnCheckDefaultListener.onJisuanZongPrice();//计算总价格
 
     }
 
@@ -320,6 +343,7 @@ public class RecycleShopCarAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public interface OnCheckDefaultListener {
         void oncheckOK(Boolean[] ischeckArray);
         void onAllselectToCanter(boolean isquxiaoQuxian);
+        void onJisuanZongPrice();
         void onDeleteAll();
     }
 
@@ -436,6 +460,10 @@ public class RecycleShopCarAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
                             notifyDataSetChanged();
 
+
+                        OnCheckDefaultListener.onJisuanZongPrice();//计算总价格
+                        isQuanHuidiao();//判断全选回调，改变购物车全选图标
+
                     }
 
 
@@ -471,6 +499,11 @@ public class RecycleShopCarAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                        if(isSelectOrEdit){
                            this.orderLists.get(i).setIs_all_select(isAllSelect);
                            isQuxuan=isAllSelect;
+
+
+
+                           OnCheckDefaultListener.onJisuanZongPrice();//计算总价格
+
                        }else {
                            this.orderLists.get(i).setIs_all_edit(isAllEdit);
                        }
@@ -497,6 +530,7 @@ public class RecycleShopCarAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                                             intent.putExtra("update", "ok");
                                             mContxt.sendBroadcast(intent);
                                         }
+
 
 
 

@@ -43,6 +43,8 @@ import com.smarter.LoveLog.utills.DeviceUtil;
 import com.smarter.LoveLog.utills.ViewUtill;
 
 import java.lang.ref.WeakReference;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -96,6 +98,9 @@ public class ShopCarFragment extends Fragment implements RecycleShopCarAdapter.O
 
     @Bind(R.id.hejiText)
     TextView hejiText;
+    @Bind(R.id.hejiTop)
+    TextView hejiTop;
+
 
 
 
@@ -235,6 +240,7 @@ public class ShopCarFragment extends Fragment implements RecycleShopCarAdapter.O
 
                      //编辑状态下，编辑栏。。。
                      hejiText.setVisibility(View.GONE);
+                     hejiTop.setVisibility(View.GONE);
                      isdeleteOrJiSuan=true;
                      buyNow.setText("删除");
 
@@ -245,6 +251,7 @@ public class ShopCarFragment extends Fragment implements RecycleShopCarAdapter.O
 
                      //未编辑状态下，编辑栏。。。
                      hejiText.setVisibility(View.VISIBLE);
+                     hejiTop.setVisibility(View.VISIBLE);
                      isdeleteOrJiSuan=false;
                      buyNow.setText("去结算");
 
@@ -300,15 +307,15 @@ public class ShopCarFragment extends Fragment implements RecycleShopCarAdapter.O
             AnimationDrawable animationDrawable = (AnimationDrawable) progreView.getDrawable();
             animationDrawable.start();
 
-            tvRightTitle.setText("编辑");
+         /*   tvRightTitle.setText("编辑");
             idBianji=true;
-            isQuanxuna=true;
-            isImage.setBackgroundResource(R.mipmap.choice);
+//            isQuanxuna=true;
+//            isImage.setBackgroundResource(R.mipmap.choice);
             isdeleteOrJiSuan=false;
-            buyNow.setText("去结算(0)");
+            buyNow.setText("去结算");
             hejiText.setVisibility(View.VISIBLE);
-            hejiText.setText("合计(0)");
-
+            hejiText.setText("");
+*/
 
             if(SharedPreUtil.isLogin()){
                 mRecyclerView.setVisibility(View.VISIBLE);
@@ -338,9 +345,16 @@ public class ShopCarFragment extends Fragment implements RecycleShopCarAdapter.O
 
                             orderListList.clear();
                             orderListList.addAll(SharedPreUtil.getLocalShopCarData());
+
+
+
+
                             adapter.notifyDataSetChanged();
                             xuanfuBar.setVisibility(View.VISIBLE);
                             tvRightTitle.setVisibility(View.VISIBLE);
+
+
+                            setAllSelect();//设置全选
 
 
 
@@ -433,9 +447,18 @@ public class ShopCarFragment extends Fragment implements RecycleShopCarAdapter.O
                         orderListList.addAll(myOrderInfo.getData().getGoods_list());
 
                         if (orderListList != null && orderListList.size() > 0) {
+
+
+
+
+
+
                             adapter.notifyDataSetChanged();
                             xuanfuBar.setVisibility(View.VISIBLE);
                             tvRightTitle.setVisibility(View.VISIBLE);
+
+
+                            setAllSelect();//设置全选
 
 
 
@@ -502,8 +525,59 @@ public class ShopCarFragment extends Fragment implements RecycleShopCarAdapter.O
 
     }
 
+    private void setAllSelect() {
 
 
+        adapter.myNotifiAdapter(true, false, true);
+        isQuanxuna=false;
+        isImage.setBackgroundResource(R.mipmap.choiceon);
+
+
+
+        tvRightTitle.setText("编辑");
+        idBianji=true;
+//            isQuanxuna=true;
+//            isImage.setBackgroundResource(R.mipmap.choice);
+        isdeleteOrJiSuan=false;
+        buyNow.setText("去结算");
+        hejiTop.setVisibility(View.VISIBLE);
+        hejiText.setVisibility(View.VISIBLE);
+
+
+
+        jishuZongPrice();
+
+
+
+
+
+
+
+    }
+
+    private void jishuZongPrice() {
+
+        double jinge=0.00d;
+        List<ShopCarOrderInfo.DataEntity.GoodsListEntity> temGoodsList = adapter.getOrderLists();
+
+        if(temGoodsList!=null&&temGoodsList.size()>0){
+            for(int j=0;j<temGoodsList.size();j++){
+
+                if(temGoodsList.get(j).is_all_select()){
+                    int num = Integer.parseInt(temGoodsList.get(j).getGoods_number());
+                    double price =Double.parseDouble(temGoodsList.get(j).getGoods_price().replace("¥", ""));
+                    jinge+=price*num;
+                }
+
+            }
+            BigDecimal   bd   =   new   BigDecimal(jinge);
+            bd   =   bd.setScale(2, BigDecimal.ROUND_HALF_UP);
+            hejiText.setText("¥" + bd + "元");
+        }else{
+            hejiText.setText("¥0.00元");
+        }
+
+    }
 
 
     /**
@@ -741,7 +815,15 @@ public class ShopCarFragment extends Fragment implements RecycleShopCarAdapter.O
           }
 
 
+
+
      }
+
+    @Override
+    public void onJisuanZongPrice() {
+        jishuZongPrice();
+
+    }
 
     @Override
     public void onDeleteAll() {
