@@ -77,7 +77,7 @@ public class BabyPopWindow implements OnDismissListener, OnClickListener {
 
 
     RequestQueue mQueue;
-    private TextView pop_num;
+    private EditText pop_num;
     private TextView pop_ok;
     private ImageView pop_del,pop_reduce,pop_add;
     private LinearLayout outside;
@@ -106,7 +106,7 @@ public class BabyPopWindow implements OnDismissListener, OnClickListener {
 
         pop_add=(ImageView) view.findViewById(R.id.pop_add);
         pop_reduce=(ImageView) view.findViewById(R.id.pop_reduce);
-        pop_num=(TextView) view.findViewById(R.id.pop_num);
+        pop_num=(EditText) view.findViewById(R.id.pop_num);
         pop_ok=(TextView) view.findViewById(R.id.pop_ok);
         pop_del=(ImageView) view.findViewById(R.id.pop_del);
         outside= (LinearLayout) view.findViewById(R.id.outside);
@@ -264,6 +264,8 @@ public class BabyPopWindow implements OnDismissListener, OnClickListener {
                         goodsListEntity.setGoods_price(goodsData.getShop_price());
                         goodsListEntity.setMarket_price(goodsData.getMarket_price());
                         goodsListEntity.setImg_thumb(goodsData.getImg().getThumb());
+                        goodsListEntity.setIs_shipping(goodsData.getIs_shipping());
+                        goodsListEntity.setIs_gift("0");
 
                         SharedPreUtil.saveLocalShopCarData(goodsListEntity);
 

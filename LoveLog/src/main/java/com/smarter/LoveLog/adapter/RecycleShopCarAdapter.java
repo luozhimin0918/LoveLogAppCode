@@ -282,6 +282,7 @@ public class RecycleShopCarAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                if(!SharedPreUtil.isLogin()){
                    if(isDelete){
                        SharedPreUtil.deleteLocalShopCarData(localData);
+                       isQuanHuidiao();//判断全选回调，改变购物车全选图标
                    }else{
                    SharedPreUtil.updateLocalShopCarData(localData);
 
@@ -292,6 +293,7 @@ public class RecycleShopCarAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         notifyDataSetChanged();
 
         OnCheckDefaultListener.onJisuanZongPrice();//计算总价格
+
 
     }
 
