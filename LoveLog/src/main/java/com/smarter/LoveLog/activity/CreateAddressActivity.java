@@ -52,8 +52,8 @@ import butterknife.ButterKnife;
 /**
  * Created by Administrator on 2015/11/30.
  */
-public class CreateAddressActivity extends BaseFragmentActivity implements View.OnClickListener{
-    String Tag= "CreateAddressActivity";
+public class CreateAddressActivity extends BaseFragmentActivity implements View.OnClickListener {
+    String Tag = "CreateAddressActivity";
 
 
     @Bind(R.id.tv_top_title)
@@ -62,8 +62,6 @@ public class CreateAddressActivity extends BaseFragmentActivity implements View.
     TextView tv_right_title;
     @Bind(R.id.backBUt)
     ImageView backBUt;
-
-
 
 
     @Bind(R.id.name)
@@ -82,8 +80,6 @@ public class CreateAddressActivity extends BaseFragmentActivity implements View.
     LinearLayout ShouHuoAddressLinear;//创建/修改收货地址布局
 
 
-
-
     @Bind(R.id.vMasker)
     LinearLayout vMasker;
 
@@ -92,13 +88,10 @@ public class CreateAddressActivity extends BaseFragmentActivity implements View.
     LinearLayout savaAddress;
 
 
-
-
     @Bind(R.id.newName)
     EditText newName;//新用户名
     @Bind(R.id.UserLinear)
     LinearLayout UserLinear;//新用户名布局
-
 
 
     @Bind(R.id.group)
@@ -122,16 +115,12 @@ public class CreateAddressActivity extends BaseFragmentActivity implements View.
     LinearLayout PassLinear;//密码布局
 
 
-
-
-
     OptionsPickerView pvOptions;
+    @Bind(R.id.saveText)
+    TextView saveText;
     private ArrayList<QuanShengAddressData> options1Items = new ArrayList<QuanShengAddressData>();
     private ArrayList<ArrayList<String>> options2Items = new ArrayList<ArrayList<String>>();
     private ArrayList<ArrayList<ArrayList<String>>> options3Items = new ArrayList<ArrayList<ArrayList<String>>>();
-
-
-
 
 
     @Override
@@ -139,7 +128,6 @@ public class CreateAddressActivity extends BaseFragmentActivity implements View.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_address_view);
         ButterKnife.bind(this);
-
 
 
         getDataIntent();
@@ -155,20 +143,19 @@ public class CreateAddressActivity extends BaseFragmentActivity implements View.
         backBUt.setOnClickListener(this);
 
 
-
         group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
-                   case R.id.baomi:
-                       sexStr="0";
+                    case R.id.baomi:
+                        sexStr = "0";
                         break;
                     case R.id.nan:
-                        sexStr="1";
+                        sexStr = "1";
                         break;
                     case R.id.nv:
-                        sexStr="2";
+                        sexStr = "2";
                         break;
 
 
@@ -184,52 +171,50 @@ public class CreateAddressActivity extends BaseFragmentActivity implements View.
     }
 
 
-
     AddressData addressData;//回填数据所有
-    String  isCreatOrUpdate;//是否是修改地址？创建地址
+    String isCreatOrUpdate;//是否是修改地址？创建地址
 
 
-    Boolean  isEditUserName;//是否是修改用户名/昵称
+    Boolean isEditUserName;//是否是修改用户名/昵称
     Boolean isCreateAddressTag;//是否是创建收货地址
-    Boolean  isEditSex;//是否是修改性别
-    String  sexStr;//性别str
-    Boolean  isEditPassword;//是否是修改密码
+    Boolean isOnreateAddress;//是否是第一次创建收货地址，在订单里无地址时使用
+    Boolean isEditSex;//是否是修改性别
+    String sexStr;//性别str
+    Boolean isEditPassword;//是否是修改密码
+
     private void getDataIntent() {
         /**
          * 省市区数据有无判断处理 （创建收货地址和修改收货地址用到）
          */
         //   SharedPreferences.getInstance().putString("quanguo-list", JSON.toJSONString(addressDataInfo.getData()));
-        String quanPro=SharedPreferences.getInstance().getString("quanguo-list", "");
+        String quanPro = SharedPreferences.getInstance().getString("quanguo-list", "");
 
-        if(quanPro!=null&&!quanPro.equals("")){
+        if (quanPro != null && !quanPro.equals("")) {
 
-            QuanProvinceData quanProvinceData= null;
+            QuanProvinceData quanProvinceData = null;
             try {
                 quanProvinceData = JSON.parseObject(quanPro, QuanProvinceData.class);
-                if(quanProvinceData.getProvince()!=null&&quanProvinceData.getProvince().size()>0){
-                    shengList=quanProvinceData.getProvince();
+                if (quanProvinceData.getProvince() != null && quanProvinceData.getProvince().size() > 0) {
+                    shengList = quanProvinceData.getProvince();
                     initpickerView();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-        } else{
+        } else {
             intData();
         }
 
 
-
-
-
         Intent intent = getIntent();
-        if(intent!=null){
+        if (intent != null) {
 //            xiugaiPassword
             /**
              * 修改密码
              */
-             isEditPassword =  intent.getBooleanExtra("xiugaiPassword", false);
-            if( isEditPassword){
+            isEditPassword = intent.getBooleanExtra("xiugaiPassword", false);
+            if (isEditPassword) {
                 PassLinear.setVisibility(View.VISIBLE);
                 ShouHuoAddressLinear.setVisibility(View.GONE);
                 tv_top_title.setText("修改密码");
@@ -238,37 +223,34 @@ public class CreateAddressActivity extends BaseFragmentActivity implements View.
             /**
              * 修改性别
              */
-             isEditSex = intent.getBooleanExtra("xiugaiSex",false);
-             if(isEditSex){
-                  sexStr =intent.getStringExtra("sexValue");
+            isEditSex = intent.getBooleanExtra("xiugaiSex", false);
+            if (isEditSex) {
+                sexStr = intent.getStringExtra("sexValue");
 
-                 group.setVisibility(View.VISIBLE);
-                 ShouHuoAddressLinear.setVisibility(View.GONE);
-                 tv_top_title.setText("修改性别");
+                group.setVisibility(View.VISIBLE);
+                ShouHuoAddressLinear.setVisibility(View.GONE);
+                tv_top_title.setText("修改性别");
 
-                   if(sexStr.equals("男")){
-                         nan.setChecked(true);
-                       sexStr="1";
-                   }else if(sexStr.equals("女")){
-                       nv.setChecked(true);
-                       sexStr="2";
-                   }else{
-                       baomi.setChecked(true);
-                       sexStr="0";
-                   }
-
-
+                if (sexStr.equals("男")) {
+                    nan.setChecked(true);
+                    sexStr = "1";
+                } else if (sexStr.equals("女")) {
+                    nv.setChecked(true);
+                    sexStr = "2";
+                } else {
+                    baomi.setChecked(true);
+                    sexStr = "0";
+                }
 
 
-
-             }
+            }
 
             /**
              * 修改用户名/昵称
              */
-            isEditUserName=intent.getBooleanExtra("xiugaiName", false);
+            isEditUserName = intent.getBooleanExtra("xiugaiName", false);
 
-            if(isEditUserName){
+            if (isEditUserName) {
                 UserLinear.setVisibility(View.VISIBLE);
                 ShouHuoAddressLinear.setVisibility(View.GONE);
                 tv_top_title.setText("修改用户名/昵称");
@@ -277,36 +259,43 @@ public class CreateAddressActivity extends BaseFragmentActivity implements View.
             /**
              * 创建收货地址
              */
+
+            isOnreateAddress = intent.getBooleanExtra("isOnreateAddress", false);
 //            isCreateAddress
-            isCreateAddressTag=intent.getBooleanExtra("isCreateAddress",false);
+            isCreateAddressTag = intent.getBooleanExtra("isCreateAddress", false);
+
+
+            if (isOnreateAddress && isCreateAddressTag) {
+                saveText.setText("保存并使用");
+                tv_right_title.setText("保存并使用");
+            }
 
 
             /**
              * 修改地址
              */
             isCreatOrUpdate = intent.getStringExtra("xiugaiAddress");
-            addressData= (AddressData) intent.getSerializableExtra("AddressData");
+            addressData = (AddressData) intent.getSerializableExtra("AddressData");
 
-            if(isCreatOrUpdate!=null&&!isCreatOrUpdate.equals("")&&addressData!=null){
+            if (isCreatOrUpdate != null && !isCreatOrUpdate.equals("") && addressData != null) {
 
 
                 tv_top_title.setText(isCreatOrUpdate);//topBar标题
 
-                        //地区字符转换
-                        String addText;
-                        if(addressData.getProvince_name().equals(addressData.getCity_name())){
-                            addText=addressData.getProvince_name()+"市"+addressData.getDistrict_name();
-                            addAddressText.setText(addText);//所在地区
-                        }else{
-                            addText=addressData.getProvince_name()+"省"+addressData.getCity_name()+"市"+addressData.getDistrict_name();
-                            addAddressText.setText(addText);//所在地区
-                        }
-                adressAll=addText;//全部地址
-                addresText.setText(addressData.getAddress().replace(addText,"").trim());//详细地址
+                //地区字符转换
+                String addText;
+                if (addressData.getProvince_name().equals(addressData.getCity_name())) {
+                    addText = addressData.getProvince_name() + "市" + addressData.getDistrict_name();
+                    addAddressText.setText(addText);//所在地区
+                } else {
+                    addText = addressData.getProvince_name() + "省" + addressData.getCity_name() + "市" + addressData.getDistrict_name();
+                    addAddressText.setText(addText);//所在地区
+                }
+                adressAll = addText;//全部地址
+                addresText.setText(addressData.getAddress().replace(addText, "").trim());//详细地址
 
                 name.setText(addressData.getConsignee());//姓名
                 phone.setText(addressData.getMobile());//电话
-
 
 
             }
@@ -320,63 +309,61 @@ public class CreateAddressActivity extends BaseFragmentActivity implements View.
 
     @Override
     public void onClick(View v) {
-         switch (v.getId()){
-             case  R.id.addressSelect:
+        switch (v.getId()) {
+            case R.id.addressSelect:
 
-                 if(shengList!=null&& shengList.size()>0){
-                     pvOptions.show();
-                 }else {
-                     Toast.makeText(this,"省市数据没成功请求下来",Toast.LENGTH_SHORT).show();
-                 }
+                if (shengList != null && shengList.size() > 0) {
+                    pvOptions.show();
+                } else {
+                    Toast.makeText(this, "省市数据没成功请求下来", Toast.LENGTH_SHORT).show();
+                }
 
-                 break;
-             case  R.id.savaAddress:
-             case  R.id.tv_right_title:
-                 saveAddress();
+                break;
+            case R.id.savaAddress:
+            case R.id.tv_right_title:
+                saveAddress();
 
-                 break;
-             case R.id.backBUt:
-                 finish();
-                 break;
+                break;
+            case R.id.backBUt:
+                finish();
+                break;
 
-         }
+        }
     }
 
     private void saveAddress() {
-        Boolean isLogin =SharedPreferences.getInstance().getBoolean("islogin", false);
-        if(isLogin){
-            String  sessionString=SharedPreferences.getInstance().getString("session","");
-            SessionData sessionData = JSON.parseObject(sessionString,SessionData.class);
-            if(sessionData!=null){
+        Boolean isLogin = SharedPreferences.getInstance().getBoolean("islogin", false);
+        if (isLogin) {
+            String sessionString = SharedPreferences.getInstance().getString("session", "");
+            SessionData sessionData = JSON.parseObject(sessionString, SessionData.class);
+            if (sessionData != null) {
 
 
                 //session 公用的
-                    SessionData  sessionData1=new SessionData();
-                      sessionData1.setSid(sessionData.getSid());
-                      sessionData1.setUid(sessionData.getUid());
-
-
+                SessionData sessionData1 = new SessionData();
+                sessionData1.setSid(sessionData.getSid());
+                sessionData1.setUid(sessionData.getUid());
 
 
                 String url = "";//
-                String paramStr="";//所有json字符参数
+                String paramStr = "";//所有json字符参数
 
 
-                if(isEditPassword){
-                    String oldPass =oldPassword.getText().toString();
-                    String  newPass=newPassword.getText().toString();
-                    String  anothPass=anotherNewPassword.getText().toString();
-                    PersonParamInfo paramInfo=new PersonParamInfo();
+                if (isEditPassword) {
+                    String oldPass = oldPassword.getText().toString();
+                    String newPass = newPassword.getText().toString();
+                    String anothPass = anotherNewPassword.getText().toString();
+                    PersonParamInfo paramInfo = new PersonParamInfo();
                     paramInfo.setSession(sessionData1);
                     paramInfo.setOld_password(oldPass);
                     paramInfo.setNew_password(newPass);
                     paramInfo.setAction("change_pwd");
-                    String  param= JSON.toJSONString(paramInfo);
+                    String param = JSON.toJSONString(paramInfo);
 
 //                   if(oldPass.length()>=6&&newPass.length()>=6&&anothPass.length()>=6){
 //                       if(anothPass.equals(newPass)){
 
-                           networkEditPassWordInfo(param);
+                    networkEditPassWordInfo(param);
 
 //                       }else{
 //                           Toast.makeText(this,"两次密码不一致",Toast.LENGTH_SHORT).show();
@@ -389,42 +376,42 @@ public class CreateAddressActivity extends BaseFragmentActivity implements View.
                 /**
                  * 修改性别
                  */
-                    if(isEditSex){
-                        PersonParamInfo paramInfo=new PersonParamInfo();
-                        paramInfo.setSession(sessionData1);
-                        paramInfo.setSex(sexStr);
-                        paramInfo.setAction("sex");
-                        String  param= JSON.toJSONString(paramInfo);
+                if (isEditSex) {
+                    PersonParamInfo paramInfo = new PersonParamInfo();
+                    paramInfo.setSession(sessionData1);
+                    paramInfo.setSex(sexStr);
+                    paramInfo.setAction("sex");
+                    String param = JSON.toJSONString(paramInfo);
 
 
-                            networkEditPersonInfo(param);
+                    networkEditPersonInfo(param);
 
-                    }
+                }
 
                 /**
                  * 修改用户名/昵称的参数
                  */
-                 if(isEditUserName){
-                     PersonParamInfo paramInfo=new PersonParamInfo();
-                     paramInfo.setSession(sessionData1);
-                     paramInfo.setUser_name(newName.getText().toString());
-                     paramInfo.setAction("user_name");
-                     String  param= JSON.toJSONString(paramInfo);
+                if (isEditUserName) {
+                    PersonParamInfo paramInfo = new PersonParamInfo();
+                    paramInfo.setSession(sessionData1);
+                    paramInfo.setUser_name(newName.getText().toString());
+                    paramInfo.setAction("user_name");
+                    String param = JSON.toJSONString(paramInfo);
 
-                     if(newName.getText().toString()!=null&&!newName.getText().toString().equals("")){
-                           networkEditPersonInfo(param);
-                     }else{
-                         Toast.makeText(this,"请填写新用户名",Toast.LENGTH_SHORT).show();
-                     }
+                    if (newName.getText().toString() != null && !newName.getText().toString().equals("")) {
+                        networkEditPersonInfo(param);
+                    } else {
+                        Toast.makeText(this, "请填写新用户名", Toast.LENGTH_SHORT).show();
+                    }
 
-                 }
+                }
 
 
                 /**
                  * 创建收货地址的参数
                  */
-                if(isCreateAddressTag){
-                    AddAdreParamInfo adInfo=new AddAdreParamInfo();
+                if (isCreateAddressTag) {
+                    AddAdreParamInfo adInfo = new AddAdreParamInfo();
                     adInfo.setSession(sessionData1);
                     AddAddressParam param = new AddAddressParam();
                     //putong
@@ -444,22 +431,22 @@ public class CreateAddressActivity extends BaseFragmentActivity implements View.
                     param.setSign_building("");
                     param.setTel(phone.getText().toString());
                     adInfo.setAddress(param);
-                  paramStr=JSON.toJSONString(adInfo);
+                    paramStr = JSON.toJSONString(adInfo);
                     url = "http://mapp.aiderizhi.com/?url=/address/add";//
 
-                    if(!name.getText().toString().equals("")&&!phone.getText().toString().equals("")&&
-                            !addAddressText.getText().equals("")&&!addresText.getText().toString().equals("")){
-                        networkAddAddressInfo(url,paramStr);
-                    }else{
-                        Toast.makeText(this,"请完善地址信息",Toast.LENGTH_SHORT).show();
+                    if (!name.getText().toString().equals("") && !phone.getText().toString().equals("") &&
+                            !addAddressText.getText().equals("") && !addresText.getText().toString().equals("")) {
+                        networkAddAddressInfo(url, paramStr);
+                    } else {
+                        Toast.makeText(this, "请完善地址信息", Toast.LENGTH_SHORT).show();
                     }
 
                 }
                 /**
                  * 修改收货地址的参数
                  */
-                if(addressData!=null&&isCreatOrUpdate.equals("修改收货地址")){
-                    AddAdreParamInfo adInfo=new AddAdreParamInfo();
+                if (addressData != null && isCreatOrUpdate.equals("修改收货地址")) {
+                    AddAdreParamInfo adInfo = new AddAdreParamInfo();
                     adInfo.setSession(sessionData1);
                     AddAddressParam param = new AddAddressParam();
                     //putong
@@ -482,21 +469,15 @@ public class CreateAddressActivity extends BaseFragmentActivity implements View.
                     adInfo.setId(addressData.getId());
                     param.setId(addressData.getId());
                     url = "http://mapp.aiderizhi.com/?url=/address/update";//
-                    paramStr=JSON.toJSONString(adInfo);
+                    paramStr = JSON.toJSONString(adInfo);
 
-                    if(!name.getText().toString().equals("")&&!phone.getText().toString().equals("")&&
-                            !addAddressText.getText().equals("")&&!addresText.getText().toString().equals("")){
-                        networkAddAddressInfo(url,paramStr);
-                    }else{
-                        Toast.makeText(this,"请完善地址信息",Toast.LENGTH_SHORT).show();
+                    if (!name.getText().toString().equals("") && !phone.getText().toString().equals("") &&
+                            !addAddressText.getText().equals("") && !addresText.getText().toString().equals("")) {
+                        networkAddAddressInfo(url, paramStr);
+                    } else {
+                        Toast.makeText(this, "请完善地址信息", Toast.LENGTH_SHORT).show();
                     }
                 }
-
-
-
-
-
-
 
 
 //                Log.d("CreateAddressActivity","  Session  "+ sessionData.getUid() + "      "+sessionData.getSid());
@@ -507,13 +488,12 @@ public class CreateAddressActivity extends BaseFragmentActivity implements View.
 
 
     List<QuanShengAddressData> shengList;
-    private void networkShengshiquInfo(String uid,String sid) {
+
+    private void networkShengshiquInfo(String uid, String sid) {
         String url = "http://mapp.aiderizhi.com/?url=/region";//
         Map<String, String> map = new HashMap<String, String>();
-        String  sessinStr ="{\"parent_id\":\"1\"}";
+        String sessinStr = "{\"parent_id\":\"1\"}";
         map.put("json", sessinStr);
-
-
 
 
         Log.d("CreateAddressActivity", sessinStr + "      ");
@@ -526,11 +506,11 @@ public class CreateAddressActivity extends BaseFragmentActivity implements View.
                 DataStatus status = addressDataInfo.getStatus();
                 if (status.getSucceed() == 1) {
                     shengList = addressDataInfo.getData().getProvince();
-                    if(shengList!=null&&shengList.size()>0){
+                    if (shengList != null && shengList.size() > 0) {
                         initpickerView();
 
                         SharedPreferences.getInstance().putString("quanguo-list", JSON.toJSONString(addressDataInfo.getData()));
-                        Log.d("CreateAddressActivity", "全国省市区信息：   " + JSON.toJSONString(shengList)+ "++++succeed");
+                        Log.d("CreateAddressActivity", "全国省市区信息：   " + JSON.toJSONString(shengList) + "++++succeed");
                     }
 
 
@@ -559,38 +539,33 @@ public class CreateAddressActivity extends BaseFragmentActivity implements View.
     }
 
 
+    String province, city, district, adressAll;
 
-
-
-
-
-    String province,city,district,adressAll;
     private void initpickerView() {
         //选项选择器
         pvOptions = new OptionsPickerView(this);
 
         //选项1
-        if(shengList!=null&& shengList.size()>0){
-            for(int i=0;i<shengList.size();i++){
+        if (shengList != null && shengList.size() > 0) {
+            for (int i = 0; i < shengList.size(); i++) {
                 options1Items.add(shengList.get(i));
-                List<QuanShiAddressData>  shiList=shengList.get(i).getCity();
+                List<QuanShiAddressData> shiList = shengList.get(i).getCity();
 
-                ArrayList<String> options2Items_01=new ArrayList<String>();
+                ArrayList<String> options2Items_01 = new ArrayList<String>();
                 ArrayList<ArrayList<String>> options3Items_01 = new ArrayList<ArrayList<String>>();
-                for(int j=0;j<shiList.size();j++){
+                for (int j = 0; j < shiList.size(); j++) {
 
                     options2Items_01.add(shiList.get(j).getName());
 
 
-                    List<QuanQuOrXianAddressData> qulist=shiList.get(j).getDistrict();
+                    List<QuanQuOrXianAddressData> qulist = shiList.get(j).getDistrict();
 
-                    ArrayList<String> options3Items_01_01=new ArrayList<String>();
-                    for(int k=0;k<qulist.size();k++){
+                    ArrayList<String> options3Items_01_01 = new ArrayList<String>();
+                    for (int k = 0; k < qulist.size(); k++) {
 
                         options3Items_01_01.add(qulist.get(k).getName());
                     }
                     options3Items_01.add(options3Items_01_01);
-
 
 
                 }
@@ -600,7 +575,6 @@ public class CreateAddressActivity extends BaseFragmentActivity implements View.
 
             }
         }
-
 
 
         //三级联动效果
@@ -617,39 +591,39 @@ public class CreateAddressActivity extends BaseFragmentActivity implements View.
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
                 //返回的分别是三个级别的选中位置
-                String sheng=options1Items.get(options1).getPickerViewText();
-                String shi=options2Items.get(options1).get(option2);
-                String qu=options3Items.get(options1).get(option2).get(options3);
-                String tx="";
-                if(sheng.equals(shi)){
-                    tx =  shi+"市"+ qu;
-                }else{
-                    tx = sheng+"省"+ shi+"市"+ qu;
+                String sheng = options1Items.get(options1).getPickerViewText();
+                String shi = options2Items.get(options1).get(option2);
+                String qu = options3Items.get(options1).get(option2).get(options3);
+                String tx = "";
+                if (sheng.equals(shi)) {
+                    tx = shi + "市" + qu;
+                } else {
+                    tx = sheng + "省" + shi + "市" + qu;
                 }
 
 
-                for(int i=0;i<shengList.size();i++){
-                       if(shengList.get(i).getName().equals(sheng)){
-                           province=shengList.get(i).getId();
-                           List<QuanShiAddressData> shilist=shengList.get(i).getCity();
-                           for(int j=0;j<shilist.size();j++){
-                                if(shilist.get(j).getName().equals(shi)){
-                                    city=shilist.get(j).getId();
-                                    List<QuanQuOrXianAddressData> quList=shilist.get(j).getDistrict();
-                                       for (int k=0;k<quList.size();k++){
-                                            if(quList.get(k).getName().equals(qu)){
-                                                district=quList.get(k).getId();
-                                            }
-                                       }
-
-
+                for (int i = 0; i < shengList.size(); i++) {
+                    if (shengList.get(i).getName().equals(sheng)) {
+                        province = shengList.get(i).getId();
+                        List<QuanShiAddressData> shilist = shengList.get(i).getCity();
+                        for (int j = 0; j < shilist.size(); j++) {
+                            if (shilist.get(j).getName().equals(shi)) {
+                                city = shilist.get(j).getId();
+                                List<QuanQuOrXianAddressData> quList = shilist.get(j).getDistrict();
+                                for (int k = 0; k < quList.size(); k++) {
+                                    if (quList.get(k).getName().equals(qu)) {
+                                        district = quList.get(k).getId();
+                                    }
                                 }
-                           }
-                       }
+
+
+                            }
+                        }
+                    }
 
                 }
 
-                adressAll=tx;
+                adressAll = tx;
 
                 addAddressText.setText(adressAll);
                 vMasker.setVisibility(View.GONE);
@@ -662,10 +636,11 @@ public class CreateAddressActivity extends BaseFragmentActivity implements View.
 
     /**
      * 创建和修改收货地址信息
+     *
      * @param url
      * @param param
      */
-    private void networkAddAddressInfo(String url,String  param) {
+    private void networkAddAddressInfo(String url, String param) {
 
         Map<String, String> map = new HashMap<String, String>();
         map.put("json", param);
@@ -676,16 +651,21 @@ public class CreateAddressActivity extends BaseFragmentActivity implements View.
         FastJsonRequest<DataStatusOne> fastJsonCommunity = new FastJsonRequest<DataStatusOne>(Request.Method.POST, url, DataStatusOne.class, null, new Response.Listener<DataStatusOne>() {
             @Override
             public void onResponse(DataStatusOne dataStatusOne) {
-                  DataStatus  dataStatus=dataStatusOne.getStatus();
+                DataStatus dataStatus = dataStatusOne.getStatus();
                 if (dataStatus.getSucceed() == 1) {
 
 
+                    if (isOnreateAddress && isCreateAddressTag) {
+                        //回传给MakeOutOrderActivity
+                        Intent aintent = new Intent(CreateAddressActivity.this, MakeOutOrderActivity.class);
+                        aintent.putExtra("consignee", dataStatusOne.getData().getAddress_id() + "");
+                        setResult(RESULT_OK, aintent);
 
+                    }
 
                     Toast.makeText(getApplicationContext(), "保存成功", Toast.LENGTH_SHORT).show();
                     finish();
-                        Log.d("CreateAddressActivity", "保存返回的信息：   " + JSON.toJSONString(dataStatus)+ "++++succeed");
-
+                    Log.d("CreateAddressActivity", "保存返回的信息：   " + JSON.toJSONString(dataStatus) + "++++succeed");
 
 
                 } else {
@@ -713,19 +693,15 @@ public class CreateAddressActivity extends BaseFragmentActivity implements View.
     }
 
 
-
-
-
     /**
      * 修改用户名
      */
     User userTou;
+
     private void networkEditPersonInfo(String paramNet) {
         String url = "http://mapp.aiderizhi.com/?url=/user/modify";//
         Map<String, String> mapTou = new HashMap<String, String>();
         mapTou.put("json", paramNet);
-
-
 
 
         Log.d("CreateAddressActivity", paramNet + "      ");
@@ -738,28 +714,28 @@ public class CreateAddressActivity extends BaseFragmentActivity implements View.
                 DataStatus status = personalDataInfo.getStatus();
                 if (status.getSucceed() == 1) {
                     userTou = personalDataInfo.getData();
-                    if(userTou!=null){
+                    if (userTou != null) {
 
-                        String toastStr="";
-                        if(isEditSex){
-                            toastStr="修改性别成功";
+                        String toastStr = "";
+                        if (isEditSex) {
+                            toastStr = "修改性别成功";
                         }
 
-                        if(isEditUserName){
-                            toastStr="修改用户名成功";
+                        if (isEditUserName) {
+                            toastStr = "修改用户名成功";
                         }
 
-                        if(isEditPassword){
-                            toastStr="修改密码成功";
+                        if (isEditPassword) {
+                            toastStr = "修改密码成功";
                         }
                         Toast.makeText(getApplicationContext(), toastStr, Toast.LENGTH_LONG).show();
 
-                        String username =SharedPreferences.getInstance().getString("usename","");
-                        String password=SharedPreferences.getInstance().getString("password", "");
-                        if(username!=null&&!username.equals("")&&password!=null&&!password.equals("")){
-                            RepeatLoginBut(username,password,"","");
+                        String username = SharedPreferences.getInstance().getString("usename", "");
+                        String password = SharedPreferences.getInstance().getString("password", "");
+                        if (username != null && !username.equals("") && password != null && !password.equals("")) {
+                            RepeatLoginBut(username, password, "", "");
                         }
-                        Log.d("CreateAddressActivity", "modift 成功返回信息：   " + JSON.toJSONString(userTou)+ "++++succeed");
+                        Log.d("CreateAddressActivity", "modift 成功返回信息：   " + JSON.toJSONString(userTou) + "++++succeed");
                     }
 
 
@@ -792,15 +768,16 @@ public class CreateAddressActivity extends BaseFragmentActivity implements View.
      * 重新登录方法
      */
     public LoginDataActi loginDataActi;
-    private void RepeatLoginBut( String user,String pass,String uid,String sid) {
+
+    private void RepeatLoginBut(String user, String pass, String uid, String sid) {
         String url = "http://mapp.aiderizhi.com/?url=/user/signin";//
-        Map<String, String>   mapTou = new HashMap<String, String>();
-        String  sessinStr ="{\"session\":{\"uid\":\""+uid+"\",\"sid\":\""+sid+"\"}}";
+        Map<String, String> mapTou = new HashMap<String, String>();
+        String sessinStr = "{\"session\":{\"uid\":\"" + uid + "\",\"sid\":\"" + sid + "\"}}";
         mapTou.put("json", sessinStr);
 
 
         Map<String, String> map = new HashMap<String, String>();
-        String  value="{\"account\":\""+user+"\",\"password\":\""+pass+"\"}";
+        String value = "{\"account\":\"" + user + "\",\"password\":\"" + pass + "\"}";
         map.put("json", value);
 
         Log.d("CreateAddressActivity", sessinStr + "      " + value);
@@ -813,18 +790,17 @@ public class CreateAddressActivity extends BaseFragmentActivity implements View.
                 DataStatus status = loginDataInfo.getStatus();
                 if (status.getSucceed() == 1) {
                     loginDataActi = loginDataInfo.getData();
-                    if(loginDataActi!=null){
+                    if (loginDataActi != null) {
                         SharedPreferences.getInstance().putBoolean("islogin", true);
                         SharedPreferences.getInstance().putString("session", JSON.toJSONString(loginDataActi.getSession()));
                         SharedPreferences.getInstance().putString("user", JSON.toJSONString(loginDataActi.getUser()));
 //                        Toast.makeText(getApplicationContext(), "重新登录成功", Toast.LENGTH_SHORT).show();
 
 
+                        finish();
 
-                            finish();
 
-
-                        Log.d("CreateAddressActivity", "登录信息：   "+JSON.toJSONString(loginDataActi.getSession())+"" + JSON.toJSONString(loginDataActi.getUser())+ "++++succeed");
+                        Log.d("CreateAddressActivity", "登录信息：   " + JSON.toJSONString(loginDataActi.getSession()) + "" + JSON.toJSONString(loginDataActi.getUser()) + "++++succeed");
                     }
 
 
@@ -852,8 +828,6 @@ public class CreateAddressActivity extends BaseFragmentActivity implements View.
     }
 
 
-
-
     /**
      * 修改密码，
      */
@@ -861,8 +835,6 @@ public class CreateAddressActivity extends BaseFragmentActivity implements View.
         String url = "http://mapp.aiderizhi.com/?url=/user/modify";//
         Map<String, String> mapTou = new HashMap<String, String>();
         mapTou.put("json", paramNet);
-
-
 
 
         Log.d("CreateAddressActivity", paramNet + "      ");
@@ -874,20 +846,20 @@ public class CreateAddressActivity extends BaseFragmentActivity implements View.
 
                 DataStatus status = statusJsonInfo.getStatus();
                 if (status.getSucceed() == 1) {
-                   String toastStr="";
-                        if(isEditPassword){
-                            toastStr="修改密码成功";
-                            SharedPreferences.getInstance().putString("password",newPassword.getText().toString());
-                        }
-                        Toast.makeText(getApplicationContext(), toastStr, Toast.LENGTH_LONG).show();
+                    String toastStr = "";
+                    if (isEditPassword) {
+                        toastStr = "修改密码成功";
+                        SharedPreferences.getInstance().putString("password", newPassword.getText().toString());
+                    }
+                    Toast.makeText(getApplicationContext(), toastStr, Toast.LENGTH_LONG).show();
 
 
-                       String username =SharedPreferences.getInstance().getString("usename","");
-                        String password=SharedPreferences.getInstance().getString("password", "");
-                        if(username!=null&&!username.equals("")&&password!=null&&!password.equals("")){
-                            RepeatLoginBut(username,password,"","");
-                        }
-                        Log.d("CreateAddressActivity", "modift 成功返回信息：   " + JSON.toJSONString(userTou) + "++++succeed");
+                    String username = SharedPreferences.getInstance().getString("usename", "");
+                    String password = SharedPreferences.getInstance().getString("password", "");
+                    if (username != null && !username.equals("") && password != null && !password.equals("")) {
+                        RepeatLoginBut(username, password, "", "");
+                    }
+                    Log.d("CreateAddressActivity", "modift 成功返回信息：   " + JSON.toJSONString(userTou) + "++++succeed");
 
 
                 } else {

@@ -145,7 +145,7 @@ public class RecycleAddressAdapter extends RecyclerView.Adapter<RecycleAddressAd
         viewHolder.addressLinearbut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OnCheckDefaultListener.onClickAddressItem();
+                OnCheckDefaultListener.onClickAddressItem(addrelit.get(i).getId());
             }
         });
 
@@ -155,7 +155,7 @@ public class RecycleAddressAdapter extends RecyclerView.Adapter<RecycleAddressAd
     //回调开始
     public interface OnCheckDefaultListener {
         void oncheckOK(List<AddressData>  ischeckArray);
-        void onClickAddressItem();
+        void onClickAddressItem(String addrId);
     }
     private OnCheckDefaultListener OnCheckDefaultListener;
 

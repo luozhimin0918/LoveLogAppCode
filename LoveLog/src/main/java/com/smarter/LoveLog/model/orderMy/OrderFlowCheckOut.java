@@ -1,5 +1,6 @@
 package com.smarter.LoveLog.model.orderMy;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -77,7 +78,7 @@ public class OrderFlowCheckOut {
         }
     }
 
-    public static class DataEntity {
+    public static class DataEntity implements Serializable {
         /**
          * address_id : 2470
          * consignee : 曲强

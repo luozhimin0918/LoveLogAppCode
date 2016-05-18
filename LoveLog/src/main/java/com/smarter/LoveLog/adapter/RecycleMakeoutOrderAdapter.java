@@ -24,7 +24,7 @@ public class RecycleMakeoutOrderAdapter extends RecyclerView.Adapter<RecycleMake
 
 
     // 数据集
-    List<OrderFlowCheckOut.DataEntity.GoodsListEntity> goodsListEntityList;
+   static List<OrderFlowCheckOut.DataEntity.GoodsListEntity> goodsListEntityList;
     RequestQueue mQueue;
 
     public RecycleMakeoutOrderAdapter(List<OrderFlowCheckOut.DataEntity.GoodsListEntity> goodsListEntityList,RequestQueue mQueue) {
@@ -60,6 +60,8 @@ public class RecycleMakeoutOrderAdapter extends RecyclerView.Adapter<RecycleMake
 
 
         viewHolder.goodDes.setText(goodsListEntityList.get(i).getGoods_name());
+        viewHolder.shopCarNum.setText(goodsListEntityList.get(i).getGoods_number());
+        viewHolder.shopPrice.setText(goodsListEntityList.get(i).getGoods_price());
     }
 
     @Override
@@ -72,7 +74,7 @@ public class RecycleMakeoutOrderAdapter extends RecyclerView.Adapter<RecycleMake
 
     //回调开始
     public interface OnItemClickListener {
-        void onItemClickAdapter(int ischeckArray);
+        void onItemClickAdapter(String ischeckArray);
     }
 
     public static OnItemClickListener setOnItemClickListener;
@@ -86,12 +88,10 @@ public class RecycleMakeoutOrderAdapter extends RecyclerView.Adapter<RecycleMake
         NetworkImageView ivAdapterGridPic;
         @Bind(R.id.goodDes)
         TextView goodDes;
-        @Bind(R.id.numBer)
-        TextView numBer;
-        @Bind(R.id.goodsType)
-        TextView goodsType;
         @Bind(R.id.shopPrice)
         TextView shopPrice;
+        @Bind(R.id.shopCarNum)
+        TextView shopCarNum;
 
         ViewHolder(View view) {
             super(view);
@@ -99,7 +99,7 @@ public class RecycleMakeoutOrderAdapter extends RecyclerView.Adapter<RecycleMake
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    setOnItemClickListener.onItemClickAdapter(getPosition());
+                    setOnItemClickListener.onItemClickAdapter(goodsListEntityList.get(getPosition()).getGoods_id());
                     Log.d("RecycleMakeoutAdapter", "当前点击的位置：" + getPosition());
                 }
             });

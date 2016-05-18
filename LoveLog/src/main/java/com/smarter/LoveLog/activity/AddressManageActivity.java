@@ -1,6 +1,7 @@
 package com.smarter.LoveLog.activity;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.smarter.LoveLog.R;
 import com.smarter.LoveLog.adapter.RecycleAddressAdapter;
 import com.smarter.LoveLog.adapter.RecyclePersonAdapter;
+import com.smarter.LoveLog.db.SharedPreUtil;
 import com.smarter.LoveLog.db.SharedPreferences;
 import com.smarter.LoveLog.http.FastJsonRequest;
 import com.smarter.LoveLog.model.address.AddressData;
@@ -28,6 +30,7 @@ import com.smarter.LoveLog.model.community.User;
 import com.smarter.LoveLog.model.home.DataStatus;
 import com.smarter.LoveLog.model.loginData.PersonalDataInfo;
 import com.smarter.LoveLog.model.loginData.SessionData;
+import com.smarter.LoveLog.model.orderMy.OrderFlowCheckOut;
 import com.smarter.LoveLog.utills.TestUtil;
 import com.smarter.LoveLog.utills.ViewUtill;
 
@@ -50,7 +53,7 @@ public class AddressManageActivity extends BaseFragmentActivity implements View.
     @Bind(R.id.backButon)
     ImageView backButon;
 
-
+   Activity  mActivity;
 
 
 
@@ -63,7 +66,7 @@ public class AddressManageActivity extends BaseFragmentActivity implements View.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address_manage_view);
         ButterKnife.bind(this);
-
+        mActivity=this;
 
 
         getDataIntent();
@@ -82,16 +85,15 @@ public class AddressManageActivity extends BaseFragmentActivity implements View.
         addAddressTop.setOnClickListener(this);
         backButon.setOnClickListener(this);
     }
-
+    SessionData sessionData ;
     private void intData() {
 
 
 
 
-        Boolean isLogin =SharedPreferences.getInstance().getBoolean("islogin", false);
-        if(isLogin){
-            String  sessionString=SharedPreferences.getInstance().getString("session","");
-            SessionData sessionData = JSON.parseObject(sessionString, SessionData.class);
+        if(SharedPreUtil.isLogin()){
+            sessionData=SharedPreUtil.LoginSessionData();
+
             if(sessionData!=null){
 
                 networkAddreessInfo(sessionData.getUid(), sessionData.getSid());
@@ -169,14 +171,28 @@ public class AddressManageActivity extends BaseFragmentActivity implements View.
     }
 
     @Override
-    public void onClickAddressItem() {
+    public void onClickAddressItem(String addrId) {
         if(isSelectAddress){
+            //回传给MakeOutOrderActivity
+            Intent aintent = new Intent(AddressManageActivity.this,MakeOutOrderActivity.class);
+            aintent.putExtra("consignee",addrId);
+            mActivity.setResult(RESULT_OK, aintent);
+
+
             finish();
+
+
         }
     }
 
 
     List<AddressData> addressDataList;
+
+    /**
+     * 获取所有地址数据，其实只有最多五个
+     * @param uid
+     * @param sid
+     */
     private void networkAddreessInfo(String uid,String sid) {
         String url = "http://mapp.aiderizhi.com/?url=/address/list";//
         Map<String, String> mapTou = new HashMap<String, String>();
@@ -232,5 +248,17 @@ public class AddressManageActivity extends BaseFragmentActivity implements View.
         fastJsonCommunity.setShouldCache(true);
         mQueue.add(fastJsonCommunity);
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

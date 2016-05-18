@@ -1,7 +1,5 @@
 package com.smarter.LoveLog.model.home;
 
-import com.smarter.LoveLog.model.home.DataStatus;
-
 import java.io.Serializable;
 
 /**
@@ -9,6 +7,12 @@ import java.io.Serializable;
  */
 public class DataStatusOne implements Serializable {
   private DataStatus status ;
+    /**
+     * address_id : 2611
+     */
+
+    private DataEntity data;
+
 
     public DataStatus getStatus() {
         return status;
@@ -16,5 +20,25 @@ public class DataStatusOne implements Serializable {
 
     public void setStatus(DataStatus status) {
         this.status = status;
+    }
+
+    public void setData(DataEntity data) {
+        this.data = data;
+    }
+
+    public DataEntity getData() {
+        return data;
+    }
+
+    public static class DataEntity {
+        private int address_id;
+
+        public void setAddress_id(int address_id) {
+            this.address_id = address_id;
+        }
+
+        public int getAddress_id() {
+            return address_id;
+        }
     }
 }
