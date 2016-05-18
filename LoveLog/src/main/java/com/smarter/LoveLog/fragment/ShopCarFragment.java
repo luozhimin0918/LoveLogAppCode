@@ -29,6 +29,7 @@ import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.smarter.LoveLog.R;
 import com.smarter.LoveLog.activity.LoginActivity;
+import com.smarter.LoveLog.activity.MakeOutOrderActivity;
 import com.smarter.LoveLog.adapter.RecycleShopCarAdapter;
 import com.smarter.LoveLog.db.AppContextApplication;
 import com.smarter.LoveLog.db.SharedPreUtil;
@@ -279,6 +280,20 @@ public class ShopCarFragment extends Fragment implements RecycleShopCarAdapter.O
             case R.id.buy_now:
                       if(isdeleteOrJiSuan){
                           adapter.myNotifiAdapterDelete();
+                      }else{
+
+                          if(SharedPreUtil.isLogin()){
+                              Intent intent = new Intent(mContext, MakeOutOrderActivity.class);
+                              Bundle bundle = new Bundle();
+                              ShopCarOrderInfo.DataEntity.GoodsListEntity  oneGoodsEntity =adapter.getOrderLists().get(0);
+                              bundle.putSerializable("session", sessionData);
+                              bundle.putSerializable("goods",oneGoodsEntity);
+                              intent.putExtras(bundle);
+                              mContext.startActivity(intent);
+                          }else{
+                              ViewUtill.ShowAlertDialog(mContext);
+                          }
+
                       }
                 break;
         }

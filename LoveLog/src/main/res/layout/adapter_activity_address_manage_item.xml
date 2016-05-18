@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/addressLinearbut"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white">
+    android:clickable="true"
+    android:background="@drawable/button_press_gray_white_select"
+    >
 
     <LinearLayout
         android:background="@color/connet_bgColor" android:layout_width="fill_parent" android:layout_height="10dp"></LinearLayout>

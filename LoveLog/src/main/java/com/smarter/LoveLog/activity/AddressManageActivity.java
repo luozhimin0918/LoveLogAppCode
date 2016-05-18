@@ -130,11 +130,12 @@ public class AddressManageActivity extends BaseFragmentActivity implements View.
 
     }
 
-
+    Boolean  isSelectAddress;
     private void getDataIntent() {
         Intent intent = getIntent();
         if(intent!=null){
             String  str = intent.getStringExtra("ObjectData");
+            isSelectAddress=intent.getBooleanExtra("isSelectAddress",false);
            // Toast.makeText(this,str+"",Toast.LENGTH_LONG).show();
         }
 
@@ -167,8 +168,12 @@ public class AddressManageActivity extends BaseFragmentActivity implements View.
         adapter.notifyDataSetChanged();
     }
 
-
-
+    @Override
+    public void onClickAddressItem() {
+        if(isSelectAddress){
+            finish();
+        }
+    }
 
 
     List<AddressData> addressDataList;

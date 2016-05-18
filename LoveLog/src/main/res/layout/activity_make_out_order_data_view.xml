@@ -46,7 +46,7 @@
 
        <com.smarter.LoveLog.ui.McoySnapPageLayout.McoyScrollView
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:fadeScrollbars="true"
             android:scrollbars="none"
             android:focusable="true"
@@ -59,7 +59,7 @@
 
 
 
-                    <LinearLayout   android:orientation="horizontal"  android:gravity="center_vertical" android:layout_marginTop="@dimen/space_10"  android:id="@+id/addressRelatiBut"  android:padding="10dp" android:layout_width="fill_parent"  android:layout_height="wrap_content"  android:background="@mipmap/adressbg"  >
+                    <LinearLayout    android:orientation="horizontal"  android:gravity="center_vertical" android:layout_marginTop="@dimen/space_10"  android:id="@+id/addressRelatiBut"  android:padding="10dp" android:layout_width="fill_parent"  android:layout_height="wrap_content"  android:background="@mipmap/adressbg"  >
 
                         <LinearLayout
                             android:layout_width="fill_parent"
@@ -82,6 +82,7 @@
                                           android:layout_marginTop="@dimen/space_3"
                                           android:layout_height="wrap_content" android:background="@mipmap/name_order" />
                                       <TextView
+                                          android:id="@+id/consignee"
                                           android:layout_marginLeft="@dimen/space_10"
                                           android:layout_width="wrap_content"
                                           android:textColor="#323232"
@@ -100,6 +101,7 @@
                                           android:layout_width="wrap_content"
                                           android:layout_height="wrap_content" android:background="@mipmap/phone_order" />
                                       <TextView
+                                          android:id="@+id/mobile"
                                           android:layout_marginLeft="@dimen/space_10"
                                           android:layout_width="wrap_content"
                                           android:textColor="#323232"
@@ -146,8 +148,13 @@
 
 
 
-
-                    <LinearLayout  android:orientation="horizontal"  android:gravity="center_vertical" android:layout_marginTop="@dimen/space_10"  android:padding="10dp" android:layout_width="fill_parent"  android:layout_height="wrap_content"  android:background="@color/white"  >
+               <android.support.v7.widget.RecyclerView
+                   android:id="@+id/recyclerView"
+                   android:overScrollMode="never"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:scrollbars="vertical" />
+                   <!-- <LinearLayout  android:orientation="horizontal"  android:gravity="center_vertical" android:layout_marginTop="@dimen/space_10"  android:padding="10dp" android:layout_width="fill_parent"  android:layout_height="wrap_content"  android:background="@color/white"  >
 
                         <LinearLayout
                             android:layout_width="fill_parent"
@@ -217,7 +224,7 @@
                             android:layout_height="wrap_content" android:background="@mipmap/more" />
                     </LinearLayout>
 
-
+-->
 
 
                     <LinearLayout android:orientation="horizontal"  android:gravity="center_vertical" android:layout_marginTop="@dimen/space_10"  android:padding="10dp" android:layout_width="fill_parent"  android:layout_height="wrap_content"  android:background="@color/white"  >

@@ -195,6 +195,8 @@
                                            android:layout_width="60dp"
                                            android:layout_height="fill_parent"
                                            android:gravity="center"
+                                           android:focusable="false"
+                                           android:clickable="false"
                                            android:textColor="#313131"
                                            android:textSize="18sp"
                                            android:text="5" />

@@ -4,6 +4,8 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,26 +14,36 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.NetworkImageView;
 import com.smarter.LoveLog.R;
 import com.smarter.LoveLog.adapter.ImagePagerAdapter;
+import com.smarter.LoveLog.adapter.RecycleMakeoutOrderAdapter;
+import com.smarter.LoveLog.adapter.RecyclePersonAdapter;
 import com.smarter.LoveLog.db.AppContextApplication;
-import com.smarter.LoveLog.db.SharedPreferences;
-import com.smarter.LoveLog.model.goods.GoodsData;
+import com.smarter.LoveLog.db.SharedPreUtil;
+import com.smarter.LoveLog.http.FastJsonRequest;
 import com.smarter.LoveLog.model.loginData.SessionData;
+import com.smarter.LoveLog.model.orderMy.OrderFlowCheckOut;
+import com.smarter.LoveLog.model.orderMy.ShopCarOrderInfo;
+import com.smarter.LoveLog.ui.SyLinearLayoutManager;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Administrator on 2015/11/30.
  */
-public class MakeOutOrderActivity extends BaseFragmentActivity implements View.OnClickListener {
+public class MakeOutOrderActivity extends BaseFragmentActivity implements View.OnClickListener,RecycleMakeoutOrderAdapter.OnItemClickListener {
     String Tag = "MakeOutOrderActivity";
-    @Bind(R.id.iv_adapter_grid_pic)
-    NetworkImageView iv_adapter_grid_pic;
-    @Bind(R.id.goodDes)
-    TextView goodDes;
+
     @Bind(R.id.backBUt)
     ImageView backBUt;
     @Bind(R.id.tv_top_title)
@@ -42,16 +54,17 @@ public class MakeOutOrderActivity extends BaseFragmentActivity implements View.O
     TextView addressStr;
     @Bind(R.id.addressRelatiBut)
     LinearLayout addressRelatiBut;
-    @Bind(R.id.numBer)
-    TextView numBer;
-    @Bind(R.id.goodsType)
-    TextView goodsType;
-    @Bind(R.id.shopPrice)
-    TextView shopPrice;
+
     @Bind(R.id.buy_now)
     TextView buyNow;
     @Bind(R.id.xuanfuBar)
     LinearLayout xuanfuBar;
+    @Bind(R.id.consignee)
+    TextView consignee;
+    @Bind(R.id.mobile)
+    TextView mobile;
+    @Bind(R.id.recyclerView)
+    RecyclerView recyclerView;
 
 
     @Override
@@ -61,34 +74,23 @@ public class MakeOutOrderActivity extends BaseFragmentActivity implements View.O
         ButterKnife.bind(this);
 
 
-        getDataIntent();
-
-        setListen();
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        getDataIntent();
     }
 
-    private void setListen() {
-        backBUt.setOnClickListener(this);
-        buyNow.setOnClickListener(this);
-    }
-
-    SessionData sessionData;
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void intData() {
 
-        Boolean isLogin = SharedPreferences.getInstance().getBoolean("islogin", false);
-        if (isLogin) {
-            String sessionString = SharedPreferences.getInstance().getString("session", "");
-            sessionData = JSON.parseObject(sessionString, SessionData.class);
+        if (SharedPreUtil.isLogin()) {
+
             if (sessionData != null) {
 
-//                networkPersonl(sessionData.getUid(), sessionData.getSid());
+                networkFlowCheckout(sessionData.getUid(), sessionData.getSid());
 
                 Log.d("MakeOutOrderActivity", "  Session  " + sessionData.getUid() + "      " + sessionData.getSid());
             }
@@ -100,86 +102,82 @@ public class MakeOutOrderActivity extends BaseFragmentActivity implements View.O
 
     }
 
-    GoodsData goodsData;
+    ShopCarOrderInfo.DataEntity.GoodsListEntity goodsData;
+
+    SessionData sessionData;
 
     private void getDataIntent() {
         Intent intent = getIntent();
         if (intent != null) {
-            goodsData = (GoodsData) intent.getSerializableExtra("goods");
+            goodsData = (ShopCarOrderInfo.DataEntity.GoodsListEntity) intent.getSerializableExtra("goods");
+            sessionData = (SessionData) intent.getSerializableExtra("session");
             // Toast.makeText(this,str+"",Toast.LENGTH_LONG).show();
-            if (goodsData != null) {
-                initRecycleViewVertical();
+            if (sessionData != null) {
+                intData();
+
             }
         }
 
 
     }
 
+    OrderFlowCheckOut.DataEntity.ConsigneeEntity consigneeEntity;
+    List<OrderFlowCheckOut.DataEntity.GoodsListEntity> goodsListEntityList;
+
     public void initRecycleViewVertical() {
 
-        //产品图片
-        iv_adapter_grid_pic.setDefaultImageResId(R.drawable.loading_small);
-        iv_adapter_grid_pic.setErrorImageResId(R.drawable.loading_small);
-        String UserimageUrl = "";
-        if (goodsData.getImg().getThumb() != null) {
-            UserimageUrl = goodsData.getImg().getThumb();
-        }
-
-        if (mQueue.getCache().get(UserimageUrl) == null) {
-            iv_adapter_grid_pic.startAnimation(ImagePagerAdapter.getInAlphaAnimation(2000));
-        }
-        iv_adapter_grid_pic.setImageUrl(UserimageUrl, AppContextApplication.getInstance().getmImageLoader());
+        consigneeEntity = dataEntity.getConsignee();
+        consignee.setText(consigneeEntity.getConsignee());//收货人
+        mobile.setText(consigneeEntity.getMobile());//手机号
+        addressStr.setText(consigneeEntity.getAddress());//收货地址
 
 
-        goodDes.setText(goodsData.getGoods_name());
-    }
+
+        goodsListEntityList=dataEntity.getGoods_list();
+        // 创建一个线性布局管理器
+        SyLinearLayoutManager layoutManager = new SyLinearLayoutManager(this);
+        layoutManager.setOrientation(SyLinearLayoutManager.VERTICAL);
 
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
+        // 设置布局管理器
+        recyclerView.setLayoutManager(layoutManager);
+        // 创建Adapter，并指定数据集
+        RecycleMakeoutOrderAdapter adapter = new RecycleMakeoutOrderAdapter(goodsListEntityList,mQueue);
+        // 设置Adapter
+        recyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(this);
 
-            case R.id.backBUt:
-                finish();
-                break;
-            case R.id.buy_now:
-                Intent intent = new Intent(this, PayMoneyActivity.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable("goods",goodsData);
-//                intent.putExtras(bundle);
-                this.startActivity(intent);
-                break;
-        }
+
+
+
     }
 
 
     /**
-     * 获取个人资料
-     *//*
-    User  user;
-    private void networkPersonl(String uid,String sid) {
-        String url = "http://mapp.aiderizhi.com/?url=/user/info";//
+     * 获取订单数据
+     */
+    OrderFlowCheckOut.DataEntity dataEntity;
+
+    private void networkFlowCheckout(String uid, String sid) {
+        String url = "http://mapp.aiderizhi.com/?url=/flow/checkout";//
         Map<String, String> mapTou = new HashMap<String, String>();
-        String  sessinStr ="{\"session\":{\"uid\":\""+uid+"\",\"sid\":\""+sid+"\"}}";
+        String sessinStr = "{\"session\":{\"uid\":\"" + uid + "\",\"sid\":\"" + sid + "\"}}";
         mapTou.put("json", sessinStr);
-
-
 
 
         Log.d("MakeOutOrderActivity", sessinStr + "      ");
 
 
-        FastJsonRequest<PersonalDataInfo> fastJsonCommunity = new FastJsonRequest<PersonalDataInfo>(Request.Method.POST, url, PersonalDataInfo.class, null, new Response.Listener<PersonalDataInfo>() {
+        FastJsonRequest<OrderFlowCheckOut> fastJsonCommunity = new FastJsonRequest<OrderFlowCheckOut>(Request.Method.POST, url, OrderFlowCheckOut.class, null, new Response.Listener<OrderFlowCheckOut>() {
             @Override
-            public void onResponse(PersonalDataInfo personalDataInfo) {
+            public void onResponse(OrderFlowCheckOut orderFlowCheckOut) {
 
-                DataStatus status = personalDataInfo.getStatus();
+                OrderFlowCheckOut.StatusEntity status = orderFlowCheckOut.getStatus();
                 if (status.getSucceed() == 1) {
-                    user = personalDataInfo.getData();
-                    if(user!=null){
-                        SharedPreferences.getInstance().putString("user",JSON.toJSONString(user));
-                        initRecycleViewVertical();//ok
-                        Log.d("MakeOutOrderActivity", "用户信息：   " + JSON.toJSONString(user)+ "++++succeed");
+                    dataEntity = orderFlowCheckOut.getData();
+                    if (dataEntity != null) {
+                        initRecycleViewVertical();
+                        Log.d("MakeOutOrderActivity", "flow/checkout：   " + "++++succeed");
                     }
 
 
@@ -199,14 +197,48 @@ public class MakeOutOrderActivity extends BaseFragmentActivity implements View.O
                 Log.d("MakeOutOrderActivity", "errror" + volleyError.toString() + "");
             }
         });
-        fastJsonCommunity.setRetryPolicy(new DefaultRetryPolicy(5000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        //fastJsonCommunity.setTag(TAG);
+
         fastJsonCommunity.setParams(mapTou);
-        fastJsonCommunity.setShouldCache(true);
         mQueue.add(fastJsonCommunity);
     }
-*/
 
 
+    @OnClick({R.id.backBUt, R.id.buy_now, R.id.addressRelatiBut})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.backBUt:
+                finish();
+                break;
+            case R.id.buy_now:
+                Intent intent = new Intent(this, PayMoneyActivity.class);
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable("goods",goodsData);
+//                intent.putExtras(bundle);
+                this.startActivity(intent);
+                break;
+            case R.id.addressRelatiBut:
+
+                if (consigneeEntity == null) {
+                    Intent intent2 = new Intent(this, CreateAddressActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean("isCreateAddress", true);
+                    intent2.putExtras(bundle);
+                    this.startActivity(intent2);
+                } else {
+                    //挑战到地址管理界面
+                    Intent intent2 = new Intent(this, AddressManageActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean("isSelectAddress", true);
+                    intent2.putExtras(bundle);
+                    this.startActivity(intent2);
+                }
+                break;
+        }
+    }
+
+
+    @Override
+    public void onItemClickAdapter(int ischeckArray) {
+
+    }
 }

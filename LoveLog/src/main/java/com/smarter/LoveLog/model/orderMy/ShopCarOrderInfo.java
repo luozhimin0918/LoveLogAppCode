@@ -1,5 +1,6 @@
 package com.smarter.LoveLog.model.orderMy;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -171,7 +172,7 @@ public class ShopCarOrderInfo {
             }
         }
 
-        public static class GoodsListEntity {
+        public static class GoodsListEntity implements Serializable {
 
 
             /**

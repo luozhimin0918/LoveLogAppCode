@@ -142,12 +142,20 @@ public class RecycleAddressAdapter extends RecyclerView.Adapter<RecycleAddressAd
             }
         });
 
+        viewHolder.addressLinearbut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OnCheckDefaultListener.onClickAddressItem();
+            }
+        });
+
     }
 
 
     //回调开始
     public interface OnCheckDefaultListener {
         void oncheckOK(List<AddressData>  ischeckArray);
+        void onClickAddressItem();
     }
     private OnCheckDefaultListener OnCheckDefaultListener;
 
@@ -163,7 +171,7 @@ public class RecycleAddressAdapter extends RecyclerView.Adapter<RecycleAddressAd
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
         public TextView nameTextView,phoneTextview,addressShouhuo,default_address,default_text,deleteAddress,bianjAddress;
-        public LinearLayout idDefaul;
+        public LinearLayout idDefaul,addressLinearbut;
         public ImageView isImage;
 
         public ViewHolder(View itemView) {
@@ -171,6 +179,7 @@ public class RecycleAddressAdapter extends RecyclerView.Adapter<RecycleAddressAd
             nameTextView = (TextView) itemView.findViewById(R.id.nameTextView);
             phoneTextview = (TextView) itemView.findViewById(R.id.phoneTextview);
             idDefaul= (LinearLayout) itemView.findViewById(R.id.idDefaul);
+            addressLinearbut= (LinearLayout) itemView.findViewById(R.id.addressLinearbut);
             addressShouhuo= (TextView) itemView.findViewById(R.id.addressShouhuo);
             default_address= (TextView) itemView.findViewById(R.id.default_address);
             default_text= (TextView) itemView.findViewById(R.id.default_text);
