@@ -66,6 +66,8 @@ public class MakeOutOrderActivity extends BaseFragmentActivity implements View.O
     LinearLayout addressCreatAddLine;
     @Bind(R.id.isDefault)
     TextView isDefault;
+    @Bind(R.id.dingdanConnect)
+    LinearLayout dingdanConnect;
 
 
     @Override
@@ -73,13 +75,18 @@ public class MakeOutOrderActivity extends BaseFragmentActivity implements View.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_out_order_data_view);
         ButterKnife.bind(this);
-        getDataIntent();
 
+        dingdanConnect.setVisibility(View.GONE);
+        xuanfuBar.setVisibility(View.GONE);
+
+        getDataIntent();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
+
 
     }
 
@@ -153,7 +160,6 @@ public class MakeOutOrderActivity extends BaseFragmentActivity implements View.O
         consigneeEntity = data.getConsignee();
 
 
-
         if (consigneeEntity == null) {
             addressCreatAddLine.setVisibility(View.VISIBLE);
             addressReceiptLiner.setVisibility(View.GONE);
@@ -162,9 +168,9 @@ public class MakeOutOrderActivity extends BaseFragmentActivity implements View.O
             addressReceiptLiner.setVisibility(View.VISIBLE);
             consignee.setText(consigneeEntity.getConsignee());//收货人
             mobile.setText(consigneeEntity.getMobile());//手机号
-            if(consigneeEntity.getIs_default()==1){
+            if (consigneeEntity.getIs_default() == 1) {
                 isDefault.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 isDefault.setVisibility(View.GONE);
             }
 
@@ -197,6 +203,8 @@ public class MakeOutOrderActivity extends BaseFragmentActivity implements View.O
                 if (status.getSucceed() == 1) {
                     dataEntity = orderFlowCheckOut.getData();
                     if (dataEntity != null) {
+                        dingdanConnect.setVisibility(View.VISIBLE);
+                        xuanfuBar.setVisibility(View.VISIBLE);
                         initRecycleViewVertical();
                         Log.d("MakeOutOrderActivity", "flow/checkout：   " + "++++succeed");
                     }
@@ -254,6 +262,7 @@ public class MakeOutOrderActivity extends BaseFragmentActivity implements View.O
                     Intent intent2 = new Intent(this, AddressManageActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putBoolean("isSelectAddress", true);
+                    bundle.putString("makeout_addrId",consigneeEntity.getAddress_id());
                     intent2.putExtras(bundle);
 
                     startActivityForResult(intent2, AddManage);
@@ -270,12 +279,13 @@ public class MakeOutOrderActivity extends BaseFragmentActivity implements View.O
            /* PromotePostsData postsData=new PromotePostsData();
             postsData.setId(param);
             intent.putExtra("PromotePostsData",postsData);*/
-        intent.putExtra("param",ischeckArray);
+        intent.putExtra("param", ischeckArray);
         this.startActivity(intent);
 
     }
 
 
+    boolean  isDefaultOrSelect;//在地址管理有没有选择地址
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
@@ -283,8 +293,31 @@ public class MakeOutOrderActivity extends BaseFragmentActivity implements View.O
                 if (resultCode == RESULT_OK) {
 
                     String addrId = data.getStringExtra("consignee");
-                    if (sessionData != null && addrId != null && !addrId.equals("")) {
-                        networkFlowChangeConsignee(sessionData.getUid(), sessionData.getSid(), addrId);
+                    isDefaultOrSelect=data.getBooleanExtra("isDefaultOrSelect",false);
+
+
+
+                    if(isDefaultOrSelect){
+
+                        if(!addrId.equals(consigneeEntity.getAddress_id())){
+                            consigneeEntity.setIs_default(0);
+                            dataEntity.setConsignee(consigneeEntity);
+                            initAddressInfo(dataEntity);
+                        }else{
+                            consigneeEntity.setIs_default(1);
+                            dataEntity.setConsignee(consigneeEntity);
+                            initAddressInfo(dataEntity);
+                        }
+
+
+
+                    }else{
+
+
+
+                        if (sessionData != null && addrId != null && !addrId.equals("")) {
+                            networkFlowChangeConsignee(sessionData.getUid(), sessionData.getSid(), addrId);
+                        }
                     }
 
                 }
@@ -331,7 +364,7 @@ public class MakeOutOrderActivity extends BaseFragmentActivity implements View.O
 
                         dataEntity.setConsignee(dataEntityNew.getConsignee());
                         dataEntity.setShipping_list(dataEntityNew.getShipping_list());
-                        initAddressInfo(dataEntityNew);//初始化收货地址信息
+                        initAddressInfo(dataEntity);//初始化收货地址信息
 
                         Log.d("MakeOutOrderActivity", "/flow/change_consignee：   " + "++++succeed");
                     }

@@ -41,7 +41,7 @@
 
 
 
-    <LinearLayout  android:layout_width="fill_parent" android:orientation="vertical" android:layout_height="fill_parent"  android:background="@color/connet_bgColor" android:layout_weight="1">
+    <LinearLayout  android:id="@+id/dingdanConnect"  android:layout_width="fill_parent" android:orientation="vertical" android:layout_height="fill_parent"  android:background="@color/connet_bgColor" android:layout_weight="1">
 
 
        <com.smarter.LoveLog.ui.McoySnapPageLayout.McoyScrollView

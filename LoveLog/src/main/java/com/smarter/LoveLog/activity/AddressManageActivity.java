@@ -1,15 +1,15 @@
 package com.smarter.LoveLog.activity;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,18 +20,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.smarter.LoveLog.R;
 import com.smarter.LoveLog.adapter.RecycleAddressAdapter;
-import com.smarter.LoveLog.adapter.RecyclePersonAdapter;
 import com.smarter.LoveLog.db.SharedPreUtil;
 import com.smarter.LoveLog.db.SharedPreferences;
 import com.smarter.LoveLog.http.FastJsonRequest;
 import com.smarter.LoveLog.model.address.AddressData;
 import com.smarter.LoveLog.model.address.AddressDataInfo;
-import com.smarter.LoveLog.model.community.User;
 import com.smarter.LoveLog.model.home.DataStatus;
-import com.smarter.LoveLog.model.loginData.PersonalDataInfo;
 import com.smarter.LoveLog.model.loginData.SessionData;
-import com.smarter.LoveLog.model.orderMy.OrderFlowCheckOut;
-import com.smarter.LoveLog.utills.TestUtil;
 import com.smarter.LoveLog.utills.ViewUtill;
 
 import java.util.HashMap;
@@ -44,8 +39,8 @@ import butterknife.ButterKnife;
 /**
  * Created by Administrator on 2015/11/30.
  */
-public class AddressManageActivity extends BaseFragmentActivity implements View.OnClickListener,RecycleAddressAdapter.OnCheckDefaultListener{
-    String Tag= "AddressManageActivity";
+public class AddressManageActivity extends BaseFragmentActivity implements View.OnClickListener, RecycleAddressAdapter.OnCheckDefaultListener {
+    String Tag = "AddressManageActivity";
     @Bind(R.id.recyclerView)
     RecyclerView recyclerView;
     @Bind(R.id.addAddressTop)
@@ -53,12 +48,11 @@ public class AddressManageActivity extends BaseFragmentActivity implements View.
     @Bind(R.id.backButon)
     ImageView backButon;
 
-   Activity  mActivity;
-
-
-
-
-
+    Activity mActivity;
+    @Bind(R.id.addAddress)
+    LinearLayout addAddress;
+    @Bind(R.id.okRelaLiner)
+    RelativeLayout okRelaLiner;
 
 
     @Override
@@ -66,7 +60,7 @@ public class AddressManageActivity extends BaseFragmentActivity implements View.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address_manage_view);
         ButterKnife.bind(this);
-        mActivity=this;
+        mActivity = this;
 
 
         getDataIntent();
@@ -84,20 +78,21 @@ public class AddressManageActivity extends BaseFragmentActivity implements View.
     private void setListen() {
         addAddressTop.setOnClickListener(this);
         backButon.setOnClickListener(this);
+        addAddress.setOnClickListener(this);
     }
-    SessionData sessionData ;
+
+    SessionData sessionData;
+
     private void intData() {
 
 
+        if (SharedPreUtil.isLogin()) {
+            sessionData = SharedPreUtil.LoginSessionData();
 
-
-        if(SharedPreUtil.isLogin()){
-            sessionData=SharedPreUtil.LoginSessionData();
-
-            if(sessionData!=null){
+            if (sessionData != null) {
 
                 networkAddreessInfo(sessionData.getUid(), sessionData.getSid());
-                Log.d("AddressManageActivity","  Session  "+ sessionData.getUid() + "      "+sessionData.getSid());
+                Log.d("AddressManageActivity", "  Session  " + sessionData.getUid() + "      " + sessionData.getSid());
             }
 
         }
@@ -105,16 +100,9 @@ public class AddressManageActivity extends BaseFragmentActivity implements View.
     }
 
 
-
-
-
-    // 创建数据集
-//    String[] dataset = new String[]{"张三","美女","拉丁","弟弟","火热","额额"};
-//    String[] dataValue=new String[]{"15083806689","15083806689","15083806689","15083806689","15083806689","15083806689"};
-//    Boolean[] isdefuals=new Boolean[]{true,false,false,false,false,false};
-    // 创建Adapter，并指定数据集
     RecycleAddressAdapter adapter;
-    public void initRecycleViewVertical(){
+
+    public void initRecycleViewVertical() {
 
         // 创建一个线性布局管理器
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -125,20 +113,28 @@ public class AddressManageActivity extends BaseFragmentActivity implements View.
 
 
         // 创建Adapter，并指定数据集
-       adapter = new RecycleAddressAdapter(addressDataList,this);
+        adapter = new RecycleAddressAdapter(addressDataList, this,isSelectAddress,makeout_addrId);
         adapter.setOnCheckDefaultListener(this);
         // 设置Adapter
         recyclerView.setAdapter(adapter);
 
     }
 
-    Boolean  isSelectAddress;
+    boolean isSelectAddress;
+    String makeout_addrId;
+
     private void getDataIntent() {
         Intent intent = getIntent();
-        if(intent!=null){
-            String  str = intent.getStringExtra("ObjectData");
-            isSelectAddress=intent.getBooleanExtra("isSelectAddress",false);
-           // Toast.makeText(this,str+"",Toast.LENGTH_LONG).show();
+        if (intent != null) {
+            String str = intent.getStringExtra("ObjectData");
+            isSelectAddress = intent.getBooleanExtra("isSelectAddress", false);
+            makeout_addrId=intent.getStringExtra("makeout_addrId");
+            // Toast.makeText(this,str+"",Toast.LENGTH_LONG).show();
+        }
+
+        if(isSelectAddress){//选择地址显示确定按钮
+            okRelaLiner.setVisibility(View.VISIBLE);
+            addrIdActivity=makeout_addrId;
         }
 
 
@@ -147,41 +143,76 @@ public class AddressManageActivity extends BaseFragmentActivity implements View.
 
     @Override
     public void onClick(View v) {
-         switch (v.getId()){
-             case  R.id.addAddressTop:
-                 //挑战到创建收货地址
-                 // 界面
-                 Intent intent2 = new Intent(this, CreateAddressActivity.class);
-               Bundle bundle = new Bundle();
-                bundle.putBoolean("isCreateAddress",true);
+        switch (v.getId()) {
+            case R.id.addAddressTop:
+                //挑战到创建收货地址
+                // 界面
+                Intent intent2 = new Intent(this, CreateAddressActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("isCreateAddress", true);
                 intent2.putExtras(bundle);
-                 this.startActivity(intent2);
-                 break;
-             case R.id.backButon:
-                 finish();
-                 break;
-         }
+                this.startActivity(intent2);
+                break;
+            case R.id.backButon:
+                setResultTo();
+//                finish();
+                break;
+            case R.id.addAddress:
+                if(!addrIdActivity.equals("null")){
+                    //回传给MakeOutOrderActivity
+                    Intent aintent = new Intent(AddressManageActivity.this, MakeOutOrderActivity.class);
+                    aintent.putExtra("consignee", addrIdActivity);
+                    mActivity.setResult(RESULT_OK, aintent);
+
+
+                    finish();
+                }
+                break;
+        }
     }
 
 
     @Override
     public void oncheckOK(List<AddressData> addressDataLis) {
-        addressDataList=addressDataLis;
+        addressDataList = addressDataLis;
         adapter.notifyDataSetChanged();
     }
 
+    String addrIdActivity="null";
+    boolean  isDefaultOrSelect;
     @Override
-    public void onClickAddressItem(String addrId) {
-        if(isSelectAddress){
-            //回传给MakeOutOrderActivity
-            Intent aintent = new Intent(AddressManageActivity.this,MakeOutOrderActivity.class);
-            aintent.putExtra("consignee",addrId);
-            mActivity.setResult(RESULT_OK, aintent);
+    public void onClickAddressItem(String addrId, Boolean isDefaultOrSelect) {
+        if (isSelectAddress) {
+           this.addrIdActivity=addrId;
+            this.isDefaultOrSelect=isDefaultOrSelect;
+
+        }
+    }
 
 
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+       setResultTo();
+    }
+
+
+    /**
+     * 设置默认而改变默认标记
+     */
+    private void setResultTo() {
+        if(isDefaultOrSelect&&isSelectAddress){
+            if(!addrIdActivity.equals("null")){
+                //回传给MakeOutOrderActivity
+                Intent aintent = new Intent(AddressManageActivity.this, MakeOutOrderActivity.class);
+                aintent.putExtra("consignee", addrIdActivity);
+                aintent.putExtra("isDefaultOrSelect",isDefaultOrSelect);
+                mActivity.setResult(RESULT_OK, aintent);
+
+                finish();
+            }
+        }else{
             finish();
-
-
         }
     }
 
@@ -190,16 +221,15 @@ public class AddressManageActivity extends BaseFragmentActivity implements View.
 
     /**
      * 获取所有地址数据，其实只有最多五个
+     *
      * @param uid
      * @param sid
      */
-    private void networkAddreessInfo(String uid,String sid) {
+    private void networkAddreessInfo(String uid, String sid) {
         String url = "http://mapp.aiderizhi.com/?url=/address/list";//
         Map<String, String> mapTou = new HashMap<String, String>();
-        String  sessinStr ="{\"session\":{\"uid\":\""+uid+"\",\"sid\":\""+sid+"\"}}";
+        String sessinStr = "{\"session\":{\"uid\":\"" + uid + "\",\"sid\":\"" + sid + "\"}}";
         mapTou.put("json", sessinStr);
-
-
 
 
         Log.d("AddressManageActivity", sessinStr + "      ");
@@ -212,10 +242,10 @@ public class AddressManageActivity extends BaseFragmentActivity implements View.
                 DataStatus status = addressDataInfo.getStatus();
                 if (status.getSucceed() == 1) {
                     addressDataList = addressDataInfo.getData();
-                    if(addressDataList!=null&&addressDataList.size()>0){
+                    if (addressDataList != null && addressDataList.size() > 0) {
                         SharedPreferences.getInstance().putString("address-list", JSON.toJSONString(addressDataList));
                         initRecycleViewVertical();//ok
-                        Log.d("AddressManageActivity", "地址list信息：   " + JSON.toJSONString(addressDataList)+ "++++succeed");
+                        Log.d("AddressManageActivity", "地址list信息：   " + JSON.toJSONString(addressDataList) + "++++succeed");
                     }
 
 
@@ -226,8 +256,8 @@ public class AddressManageActivity extends BaseFragmentActivity implements View.
                     Toast.makeText(getApplicationContext(), "" + status.getError_desc(), Toast.LENGTH_SHORT).show();
 
 
-                    if(status.getError_code()==1000){
-                        SharedPreferences.getInstance().putBoolean("islogin",false);
+                    if (status.getError_code() == 1000) {
+                        SharedPreferences.getInstance().putBoolean("islogin", false);
                         ViewUtill.ShowAlertDialog(getApplicationContext());
                     }
 
@@ -248,17 +278,6 @@ public class AddressManageActivity extends BaseFragmentActivity implements View.
         fastJsonCommunity.setShouldCache(true);
         mQueue.add(fastJsonCommunity);
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

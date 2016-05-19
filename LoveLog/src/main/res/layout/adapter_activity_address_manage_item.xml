@@ -11,53 +11,94 @@
     <LinearLayout
         android:background="@color/connet_bgColor" android:layout_width="fill_parent" android:layout_height="10dp"></LinearLayout>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_marginTop="@dimen/space_10"
-        android:layout_marginLeft="@dimen/space_10"
-        android:layout_marginRight="@dimen/space_10"
-        android:layout_width="fill_parent"
+
+
+    <RelativeLayout
+        android:id="@+id/relativeLine"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/nameTextView"
-            android:layout_width="wrap_content"
-            android:textColor="#333333"
-            android:textSize="18sp"
-            android:layout_height="wrap_content" android:text="张三"/>
-        <TextView
-            android:id="@+id/phoneTextview"
-            android:layout_marginLeft="@dimen/space_10"
-            android:layout_width="wrap_content"
-            android:textColor="#333333"
-            android:textSize="18sp"
-            android:layout_height="wrap_content" android:text="1312554544646"/>
-        <TextView
-            android:id="@+id/default_address"
-            android:layout_marginLeft="@dimen/space_10"
-            android:layout_width="wrap_content"
-            android:textColor="#C6606D"
-            android:textSize="14sp"
-            android:layout_height="wrap_content" android:text="默认地址"/>
-    </LinearLayout>
-    <LinearLayout
-        android:orientation="horizontal"
-       android:layout_margin="@dimen/space_10"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
-        <!---->
-        <TextView
-            android:id="@+id/addressShouhuo"
-            android:layout_width="fill_parent"
-            android:textColor="#696969"
-            android:textSize="14sp"
-            android:layout_height="wrap_content"
-            android:text="上海市浦东新区金科路2889弄长泰广场C栋804室"/>
-        </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+
+                        android:id="@+id/leftRelativeLine"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content">
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_marginTop="@dimen/space_10"
+                            android:layout_marginLeft="@dimen/space_10"
+                            android:layout_marginRight="@dimen/space_10"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:id="@+id/nameTextView"
+                                android:layout_width="wrap_content"
+                                android:textColor="#333333"
+                                android:textSize="18sp"
+                                android:layout_height="wrap_content" android:text="张三"/>
+                            <TextView
+                                android:id="@+id/phoneTextview"
+                                android:layout_marginLeft="@dimen/space_10"
+                                android:layout_width="wrap_content"
+                                android:textColor="#333333"
+                                android:textSize="18sp"
+                                android:layout_height="wrap_content" android:text="1312554544646"/>
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:orientation="horizontal"
+                           android:layout_margin="@dimen/space_10"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content">
+                            <!---->
+                            <TextView
+                                android:id="@+id/addressShouhuo"
+                                android:layout_width="fill_parent"
+                                android:textColor="#696969"
+                                android:textSize="14sp"
+                                android:layout_height="wrap_content"
+                                android:text="上海市浦东新区金科路2889弄长泰广场C栋804室"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/isDefaultLinarTow"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+                        <ImageView
+                            android:id="@+id/isImageTwo"
+                            android:visibility="gone"
+                            android:layout_marginRight="33dp"
+                            android:background="@mipmap/check_icon"
+                            android:layout_width="30dp"
+                            android:layout_height="20dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+
+
+    </RelativeLayout>
+
+
+
+
+
     <LinearLayout
         android:orientation="vertical"
         android:background="@mipmap/line_xuan"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"></LinearLayout>
+
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
@@ -82,6 +123,12 @@
             android:textColor="#696969"
             android:textSize="14sp"
             android:layout_height="wrap_content" android:text="设为默认地址"/>
+        <TextView
+            android:id="@+id/default_address"
+            android:layout_width="wrap_content"
+            android:textColor="#C6606D"
+            android:textSize="14sp"
+            android:layout_height="wrap_content" android:text="默认地址"/>
         <LinearLayout
             android:layout_weight="1"
             android:orientation="horizontal"

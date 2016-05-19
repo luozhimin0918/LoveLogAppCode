@@ -19,20 +19,6 @@
             android:text="删 除"
             android:textColor="@android:color/white"
             />
-       <!-- <LinearLayout
-            android:layout_width="80dp"
-            android:layout_toRightOf="@+id/onlay"
-            android:layout_height="match_parent">
-            <TextView
-                android:id="@+id/deleteBut"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/red"
-                android:gravity="center"
-                android:text="删除"
-                android:textColor="@android:color/white"/>
-        </LinearLayout>-->
 
     <RelativeLayout
         android:id="@+id/onlay"

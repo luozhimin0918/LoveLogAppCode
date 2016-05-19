@@ -48,12 +48,16 @@ public class RecycleAddressAdapter extends RecyclerView.Adapter<RecycleAddressAd
     RequestQueue mQueue;
     SessionData sessionData;
     Context mContext;
+    Boolean isSelectAddress;
+    String makeout_addrId;
 
-    public RecycleAddressAdapter(List<AddressData> addressDataList_InitRecycle,Context mContext) {
+    public RecycleAddressAdapter(List<AddressData> addressDataList_InitRecycle,Context mContext,Boolean isSelectAddress,String makeout_addrId) {
         super();
         mQueue= AppContextApplication.getInstance().getmRequestQueue();
         this.addrelit=addressDataList_InitRecycle;
         this.mContext=mContext;
+        this.isSelectAddress=isSelectAddress;
+        this.makeout_addrId=makeout_addrId;
     }
 
     @Override
@@ -63,6 +67,8 @@ public class RecycleAddressAdapter extends RecyclerView.Adapter<RecycleAddressAd
         // 创建一个ViewHolder
         ViewHolder holder = new ViewHolder(view);
 
+
+        OnCheckDefaultListener.onClickAddressItem(makeout_addrId,false);
 
 
         Boolean isLogin = SharedPreferences.getInstance().getBoolean("islogin", false);
@@ -75,7 +81,7 @@ public class RecycleAddressAdapter extends RecyclerView.Adapter<RecycleAddressAd
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, final int i) {
+    public void onBindViewHolder(final ViewHolder viewHolder, final int i) {
         // 绑定数据到ViewHolder上
         viewHolder.nameTextView.setText(addrelit.get(i).getConsignee());
         viewHolder.phoneTextview.setText(addrelit.get(i).getMobile());
@@ -145,9 +151,23 @@ public class RecycleAddressAdapter extends RecyclerView.Adapter<RecycleAddressAd
         viewHolder.addressLinearbut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OnCheckDefaultListener.onClickAddressItem(addrelit.get(i).getId());
+                makeout_addrId=addrelit.get(i).getId();
+                notifyDataSetChanged();
+                OnCheckDefaultListener.onClickAddressItem(makeout_addrId,false);
             }
         });
+
+
+        if(isSelectAddress){
+
+                if(addrelit.get(i).getId().equals(makeout_addrId)){
+                    viewHolder.isImageTwo.setVisibility(View.VISIBLE);
+                }else{
+                    viewHolder.isImageTwo.setVisibility(View.GONE);
+                }
+
+        }
+
 
     }
 
@@ -155,7 +175,7 @@ public class RecycleAddressAdapter extends RecyclerView.Adapter<RecycleAddressAd
     //回调开始
     public interface OnCheckDefaultListener {
         void oncheckOK(List<AddressData>  ischeckArray);
-        void onClickAddressItem(String addrId);
+        void onClickAddressItem(String addrId,Boolean isDefaultOrSelect);
     }
     private OnCheckDefaultListener OnCheckDefaultListener;
 
@@ -171,8 +191,8 @@ public class RecycleAddressAdapter extends RecyclerView.Adapter<RecycleAddressAd
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
         public TextView nameTextView,phoneTextview,addressShouhuo,default_address,default_text,deleteAddress,bianjAddress;
-        public LinearLayout idDefaul,addressLinearbut;
-        public ImageView isImage;
+        public LinearLayout idDefaul,addressLinearbut,isDefaultLinarTow;
+        public ImageView isImage,isImageTwo;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -180,12 +200,14 @@ public class RecycleAddressAdapter extends RecyclerView.Adapter<RecycleAddressAd
             phoneTextview = (TextView) itemView.findViewById(R.id.phoneTextview);
             idDefaul= (LinearLayout) itemView.findViewById(R.id.idDefaul);
             addressLinearbut= (LinearLayout) itemView.findViewById(R.id.addressLinearbut);
+            isDefaultLinarTow= (LinearLayout) itemView.findViewById(R.id.isDefaultLinarTow);
             addressShouhuo= (TextView) itemView.findViewById(R.id.addressShouhuo);
             default_address= (TextView) itemView.findViewById(R.id.default_address);
             default_text= (TextView) itemView.findViewById(R.id.default_text);
             deleteAddress= (TextView) itemView.findViewById(R.id.deleteAddress);
             bianjAddress =(TextView) itemView.findViewById(R.id.bianjAddress);
             isImage= (ImageView) itemView.findViewById(R.id.isImage);
+            isImageTwo=(ImageView) itemView.findViewById(R.id.isImageTwo);
 
         }
     }
@@ -234,6 +256,7 @@ public class RecycleAddressAdapter extends RecyclerView.Adapter<RecycleAddressAd
 
                          }
                          OnCheckDefaultListener.oncheckOK(addrelit);
+//                         OnCheckDefaultListener.onClickAddressItem(addrelit.get(i).getId(), true);//设置成默认的了，和选择地址一起执行
                          Toast.makeText(mContext,"设置默认成功",Toast.LENGTH_SHORT).show();
                      }
 
