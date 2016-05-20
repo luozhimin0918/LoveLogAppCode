@@ -24,6 +24,7 @@ import com.smarter.LoveLog.model.loginData.SessionData;
 import com.smarter.LoveLog.model.orderMy.OrderFlowCheckOut;
 import com.smarter.LoveLog.model.orderMy.ShopCarOrderInfo;
 import com.smarter.LoveLog.ui.SyLinearLayoutManager;
+import com.smarter.LoveLog.utills.ViewUtill;
 
 import java.util.HashMap;
 import java.util.List;
@@ -104,21 +105,25 @@ public class MakeOutOrderActivity extends BaseFragmentActivity implements View.O
             }
 
         } else {
-            Toast.makeText(getApplicationContext(), "未登录，请先登录", Toast.LENGTH_SHORT).show();
+            ViewUtill.ShowAlertDialog(this);
+//            Toast.makeText(getApplicationContext(), "未登录，请先登录", Toast.LENGTH_SHORT).show();
         }
 
 
     }
 
-    ShopCarOrderInfo.DataEntity.GoodsListEntity goodsData;
 
     SessionData sessionData;
 
     private void getDataIntent() {
         Intent intent = getIntent();
         if (intent != null) {
-            goodsData = (ShopCarOrderInfo.DataEntity.GoodsListEntity) intent.getSerializableExtra("goods");
-            sessionData = (SessionData) intent.getSerializableExtra("session");
+
+
+
+            if(SharedPreUtil.isLogin()){
+                sessionData=SharedPreUtil.LoginSessionData();
+            }
             // Toast.makeText(this,str+"",Toast.LENGTH_LONG).show();
             if (sessionData != null) {
                 intData();
@@ -285,7 +290,7 @@ public class MakeOutOrderActivity extends BaseFragmentActivity implements View.O
     }
 
 
-    boolean  isDefaultOrSelect;//在地址管理有没有选择地址
+    boolean  isDefaultOrSelect;//在地址管理有没有选择默认地址
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {

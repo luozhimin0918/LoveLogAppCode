@@ -68,7 +68,6 @@ public class RecycleAddressAdapter extends RecyclerView.Adapter<RecycleAddressAd
         ViewHolder holder = new ViewHolder(view);
 
 
-        OnCheckDefaultListener.onClickAddressItem(makeout_addrId,false);
 
 
         Boolean isLogin = SharedPreferences.getInstance().getBoolean("islogin", false);
@@ -256,7 +255,7 @@ public class RecycleAddressAdapter extends RecyclerView.Adapter<RecycleAddressAd
 
                          }
                          OnCheckDefaultListener.oncheckOK(addrelit);
-//                         OnCheckDefaultListener.onClickAddressItem(addrelit.get(i).getId(), true);//设置成默认的了，和选择地址一起执行
+                         OnCheckDefaultListener.onClickAddressItem(addrelit.get(i).getId(), true);//设置成默认的了，和选择地址一起执行
                          Toast.makeText(mContext,"设置默认成功",Toast.LENGTH_SHORT).show();
                      }
 

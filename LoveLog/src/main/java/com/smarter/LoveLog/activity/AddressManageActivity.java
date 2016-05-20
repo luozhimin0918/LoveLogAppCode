@@ -49,10 +49,7 @@ public class AddressManageActivity extends BaseFragmentActivity implements View.
     ImageView backButon;
 
     Activity mActivity;
-    @Bind(R.id.addAddress)
-    LinearLayout addAddress;
-    @Bind(R.id.okRelaLiner)
-    RelativeLayout okRelaLiner;
+
 
 
     @Override
@@ -78,7 +75,6 @@ public class AddressManageActivity extends BaseFragmentActivity implements View.
     private void setListen() {
         addAddressTop.setOnClickListener(this);
         backButon.setOnClickListener(this);
-        addAddress.setOnClickListener(this);
     }
 
     SessionData sessionData;
@@ -132,10 +128,7 @@ public class AddressManageActivity extends BaseFragmentActivity implements View.
             // Toast.makeText(this,str+"",Toast.LENGTH_LONG).show();
         }
 
-        if(isSelectAddress){//选择地址显示确定按钮
-            okRelaLiner.setVisibility(View.VISIBLE);
-            addrIdActivity=makeout_addrId;
-        }
+
 
 
     }
@@ -157,17 +150,7 @@ public class AddressManageActivity extends BaseFragmentActivity implements View.
                 setResultTo();
 //                finish();
                 break;
-            case R.id.addAddress:
-                if(!addrIdActivity.equals("null")){
-                    //回传给MakeOutOrderActivity
-                    Intent aintent = new Intent(AddressManageActivity.this, MakeOutOrderActivity.class);
-                    aintent.putExtra("consignee", addrIdActivity);
-                    mActivity.setResult(RESULT_OK, aintent);
 
-
-                    finish();
-                }
-                break;
         }
     }
 
@@ -185,6 +168,20 @@ public class AddressManageActivity extends BaseFragmentActivity implements View.
         if (isSelectAddress) {
            this.addrIdActivity=addrId;
             this.isDefaultOrSelect=isDefaultOrSelect;
+
+            if(!addrIdActivity.equals("null")){
+
+                if(!isDefaultOrSelect){
+                    //回传给MakeOutOrderActivity
+                    Intent aintent = new Intent(AddressManageActivity.this, MakeOutOrderActivity.class);
+                    aintent.putExtra("consignee", addrIdActivity);
+                    mActivity.setResult(RESULT_OK, aintent);
+
+
+                    finish();
+                }
+
+            }
 
         }
     }

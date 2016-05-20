@@ -284,11 +284,11 @@ public class ShopCarFragment extends Fragment implements RecycleShopCarAdapter.O
 
                           if(SharedPreUtil.isLogin()){
                               Intent intent = new Intent(mContext, MakeOutOrderActivity.class);
-                              Bundle bundle = new Bundle();
-                              ShopCarOrderInfo.DataEntity.GoodsListEntity  oneGoodsEntity =adapter.getOrderLists().get(0);
-                              bundle.putSerializable("session", sessionData);
-                              bundle.putSerializable("goods",oneGoodsEntity);
-                              intent.putExtras(bundle);
+//                              Bundle bundle = new Bundle();
+//                              ShopCarOrderInfo.DataEntity.GoodsListEntity  oneGoodsEntity =adapter.getOrderLists().get(0);
+//                              bundle.putSerializable("session", sessionData);
+//                              bundle.putSerializable("goods",oneGoodsEntity);
+//                              intent.putExtras(bundle);
                               mContext.startActivity(intent);
                           }else{
                               ViewUtill.ShowAlertDialog(mContext);

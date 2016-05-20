@@ -487,7 +487,7 @@ public class MainActivity extends BaseFragmentActivity  implements ShopCarFragme
         }*/
        public void update(int item) {
            Fragment fragment = null;
-           if(tagList.size()>0){
+           if(tagList.size()>0&&item<tagList.size()){
                 fragment = fm.findFragmentByTag(tagList.get(item));
            }
 
