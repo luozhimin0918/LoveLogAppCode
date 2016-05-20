@@ -20,6 +20,7 @@ import com.android.volley.VolleyError;
 import com.smarter.LoveLog.R;
 import com.smarter.LoveLog.activity.AddressManageActivity;
 import com.smarter.LoveLog.activity.CreateAddressActivity;
+import com.smarter.LoveLog.activity.LoginActivity;
 import com.smarter.LoveLog.db.AppContextApplication;
 import com.smarter.LoveLog.db.SharedPreferences;
 import com.smarter.LoveLog.http.FastJsonRequest;
@@ -28,6 +29,8 @@ import com.smarter.LoveLog.model.address.QuanProvinceData;
 import com.smarter.LoveLog.model.home.DataStatus;
 import com.smarter.LoveLog.model.home.DataStatusOne;
 import com.smarter.LoveLog.model.loginData.SessionData;
+import com.smarter.LoveLog.ui.popwindow.AlertDialog;
+import com.smarter.LoveLog.utills.ViewUtill;
 
 import java.util.HashMap;
 import java.util.List;
@@ -104,11 +107,27 @@ public class RecycleAddressAdapter extends RecyclerView.Adapter<RecycleAddressAd
        viewHolder.deleteAddress.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               if (sessionData != null) {
-                   String url = "http://mapp.aiderizhi.com/?url=/address/delete";//
-                   String param =" {\"session\":{\"uid\":\""+sessionData.getUid()+"\",\"sid\":\""+sessionData.getSid()+"\"},\"id\":\""+addrelit.get(i).getId()+"\"}";
-                   networkAddAddressInfo(url,param,i);
-               }
+
+               new AlertDialog(mContext).builder().setTitle("提示")
+                       .setMsg("确定要删除这1条数据?")
+                       .setPositiveButton("确认", new View.OnClickListener() {
+                           @Override
+                           public void onClick(View v) {
+                               if (sessionData != null) {
+                                   String url = "http://mapp.aiderizhi.com/?url=/address/delete";//
+                                   String param =" {\"session\":{\"uid\":\""+sessionData.getUid()+"\",\"sid\":\""+sessionData.getSid()+"\"},\"id\":\""+addrelit.get(i).getId()+"\"}";
+                                   networkAddAddressInfo(url,param,i);
+                               }
+
+                           }
+                       }).setNegativeButton("取消", new View.OnClickListener() {
+                   @Override
+                   public void onClick(View v) {
+
+                   }
+               }).show();
+
+
 
            }
        });

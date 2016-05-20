@@ -157,8 +157,7 @@ public class AddressManageActivity extends BaseFragmentActivity implements View.
 
     @Override
     public void oncheckOK(List<AddressData> addressDataLis) {
-        addressDataList = addressDataLis;
-        adapter.notifyDataSetChanged();
+        intData();
     }
 
     String addrIdActivity="null";
