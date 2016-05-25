@@ -1,0 +1,177 @@
+<com.smarter.LoveLog.ui.SildingFinishLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sildingFinishLayout"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:fitsSystemWindows="true"
+              android:background="@color/top_bar_bgColor"
+              android:orientation="vertical" >
+
+
+
+
+
+
+
+    <LinearLayout
+
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+                android:layout_width="fill_parent" android:layout_height="@dimen/head_height" android:orientation="horizontal">
+
+            <ImageView
+                    android:id="@+id/backBUt"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:paddingRight="25dp"
+                    android:src="@mipmap/back" />
+
+            <TextView
+                    android:id="@+id/centerTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:gravity="center"
+                    android:text="测试"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+            <TextView
+                    android:id="@+id/rightTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+
+        </LinearLayout>
+
+        <com.smarter.LoveLog.ui.McoySnapPageLayout.McoyScrollView
+            android:id="@+id/productDetail_scrollview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:fadeScrollbars="true"
+            android:scrollbars="none"
+            android:overScrollMode="never"
+            android:focusable="true"
+            android:fillViewport="true"
+            android:layout_weight="1"
+
+            >
+    <!--connte-->
+        <LinearLayout  android:id="@+id/allLinear" android:layout_width="fill_parent" android:orientation="vertical" android:layout_height="fill_parent"  android:background="@color/connet_bgColor" android:layout_weight="1">
+
+            <com.jcodecraeer.xrecyclerview.XRecyclerView
+                    android:id="@+id/recyclerview"
+                    android:layout_weight="1"
+                    android:scrollbars="horizontal"
+                    android:overScrollMode="never"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" >
+
+                </com.jcodecraeer.xrecyclerview.XRecyclerView>
+
+            //网络未连接提示
+            <LinearLayout
+                android:id="@+id/networkInfo"
+                android:visibility="gone"
+                android:orientation="vertical"
+                android:gravity="top|center_horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+                <ImageView
+                    android:id="@+id/errorInfo"
+                    android:src="@mipmap/error_default"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <LinearLayout
+                    android:id="@+id/newLoading"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:background="@drawable/login_button"
+                    android:layout_width="100dp"
+                    android:layout_height="40dp">
+                    <TextView
+                        android:text="重新加载"
+                        android:textSize="18sp"
+                        android:textColor="@color/white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/loadingTextLinear"
+                    android:layout_marginTop="20dp"
+                    android:visibility="gone"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:layout_width="100dp"
+                    android:layout_height="40dp">
+                    <TextView
+                        android:id="@+id/loadingText"
+                        android:text="暂无内容"
+                        android:textSize="18sp"
+                        android:textColor="#B5B6B6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+
+            //加载进度条
+            <LinearLayout
+                android:id="@+id/progressLinear"
+                android:visibility="gone"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                >
+
+
+                <ImageView
+                    android:id="@+id/progreView"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/progressing_anima"
+                    android:contentDescription="@string/app_name" />
+                <TextView
+                    android:text="加载中"
+                    android:layout_marginTop="@dimen/space_5"
+                    android:textSize="12sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+        </com.smarter.LoveLog.ui.McoySnapPageLayout.McoyScrollView>
+
+
+        <!--悬浮栏-->
+        <LinearLayout
+            android:id="@+id/xuanfuBar"
+            android:layout_width="fill_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <!-- 聊天输入框 -->
+         <!--  <include
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/custom_facerelativelayout" />-->
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+   </com.smarter.LoveLog.ui.SildingFinishLayout>

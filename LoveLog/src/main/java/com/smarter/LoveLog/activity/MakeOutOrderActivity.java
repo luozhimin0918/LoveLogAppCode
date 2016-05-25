@@ -1,6 +1,7 @@
 package com.smarter.LoveLog.activity;
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,10 +23,10 @@ import com.smarter.LoveLog.db.SharedPreUtil;
 import com.smarter.LoveLog.http.FastJsonRequest;
 import com.smarter.LoveLog.model.loginData.SessionData;
 import com.smarter.LoveLog.model.orderMy.OrderFlowCheckOut;
-import com.smarter.LoveLog.model.orderMy.ShopCarOrderInfo;
 import com.smarter.LoveLog.ui.SyLinearLayoutManager;
 import com.smarter.LoveLog.utills.ViewUtill;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +40,7 @@ import butterknife.OnClick;
  */
 public class MakeOutOrderActivity extends BaseFragmentActivity implements View.OnClickListener, RecycleMakeoutOrderAdapter.OnItemClickListener {
     String Tag = "MakeOutOrderActivity";
-
+    Context mContext;
     @Bind(R.id.backBUt)
     ImageView backBUt;
     @Bind(R.id.tv_top_title)
@@ -69,6 +70,12 @@ public class MakeOutOrderActivity extends BaseFragmentActivity implements View.O
     TextView isDefault;
     @Bind(R.id.dingdanConnect)
     LinearLayout dingdanConnect;
+    @Bind(R.id.distriText)
+    TextView distriText;
+    @Bind(R.id.paydistLinear)
+    LinearLayout paydistLinear;
+    @Bind(R.id.paymentTypeText)
+    TextView paymentTypeText;
 
 
     @Override
@@ -76,7 +83,7 @@ public class MakeOutOrderActivity extends BaseFragmentActivity implements View.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_out_order_data_view);
         ButterKnife.bind(this);
-
+        mContext = this;
         dingdanConnect.setVisibility(View.GONE);
         xuanfuBar.setVisibility(View.GONE);
 
@@ -86,7 +93,6 @@ public class MakeOutOrderActivity extends BaseFragmentActivity implements View.O
     @Override
     protected void onResume() {
         super.onResume();
-
 
 
     }
@@ -120,9 +126,8 @@ public class MakeOutOrderActivity extends BaseFragmentActivity implements View.O
         if (intent != null) {
 
 
-
-            if(SharedPreUtil.isLogin()){
-                sessionData=SharedPreUtil.LoginSessionData();
+            if (SharedPreUtil.isLogin()) {
+                sessionData = SharedPreUtil.LoginSessionData();
             }
             // Toast.makeText(this,str+"",Toast.LENGTH_LONG).show();
             if (sessionData != null) {
@@ -135,27 +140,34 @@ public class MakeOutOrderActivity extends BaseFragmentActivity implements View.O
     }
 
     OrderFlowCheckOut.DataEntity.ConsigneeEntity consigneeEntity = new OrderFlowCheckOut.DataEntity.ConsigneeEntity();
-    List<OrderFlowCheckOut.DataEntity.GoodsListEntity> goodsListEntityList;
+    List<OrderFlowCheckOut.DataEntity.GoodsListEntity> goodsListEntityList = new ArrayList<OrderFlowCheckOut.DataEntity.GoodsListEntity>();
+    List<OrderFlowCheckOut.DataEntity.ShippingListEntity> shipping_list = new ArrayList<OrderFlowCheckOut.DataEntity.ShippingListEntity>();
+    List<OrderFlowCheckOut.DataEntity.PaymentTypeEntity> paymentTypeEntityList=new ArrayList<OrderFlowCheckOut.DataEntity.PaymentTypeEntity>();
 
     public void initRecycleViewVertical() {
 
+//初始化收货地址信息
+        initAddressInfo(dataEntity);
 
-        initAddressInfo(dataEntity);//初始化收货地址信息
-
-
+//订单产品list数据
         goodsListEntityList = dataEntity.getGoods_list();
-        // 创建一个线性布局管理器
-        SyLinearLayoutManager layoutManager = new SyLinearLayoutManager(this);
-        layoutManager.setOrientation(SyLinearLayoutManager.VERTICAL);
+        if (goodsListEntityList != null) {
+            // 创建一个线性布局管理器
+            SyLinearLayoutManager layoutManager = new SyLinearLayoutManager(this);
+            layoutManager.setOrientation(SyLinearLayoutManager.VERTICAL);
+            // 设置布局管理器
+            recyclerView.setLayoutManager(layoutManager);
+            // 创建Adapter，并指定数据集
+            RecycleMakeoutOrderAdapter adapter = new RecycleMakeoutOrderAdapter(goodsListEntityList, mQueue);
+            // 设置Adapter
+            recyclerView.setAdapter(adapter);
+            adapter.setOnItemClickListener(this);
+        }
 
 
-        // 设置布局管理器
-        recyclerView.setLayoutManager(layoutManager);
-        // 创建Adapter，并指定数据集
-        RecycleMakeoutOrderAdapter adapter = new RecycleMakeoutOrderAdapter(goodsListEntityList, mQueue);
-        // 设置Adapter
-        recyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(this);
+        //初始化支付配送信息
+        initPayShipMehth(dataEntity,true);
+
 
 
     }
@@ -184,6 +196,43 @@ public class MakeOutOrderActivity extends BaseFragmentActivity implements View.O
 
     }
 
+
+    private void initPayShipMehth(OrderFlowCheckOut.DataEntity data,boolean isInitData){
+        //选择配送方式
+        shipping_list = data.getShipping_list();
+        if(shipping_list!=null&&shipping_list.size()>0){
+            if(isInitData){
+                shipping_list.get(0).setIsSelceteItem(true);
+                distriText.setText(shipping_list.get(0).getShipping_name());
+            }else{
+                for(OrderFlowCheckOut.DataEntity.ShippingListEntity sh:shipping_list){
+                    if(sh.isSelceteItem()){
+                        distriText.setText(sh.getShipping_name());
+                    }
+                }
+            }
+
+
+        }
+
+
+//选择支付方式
+        paymentTypeEntityList=data.getPayment_type();
+        if(paymentTypeEntityList!=null&&paymentTypeEntityList.size()>0){
+            if(isInitData){
+                paymentTypeEntityList.get(0).setIsSelceteItem(true);
+                paymentTypeText.setText(paymentTypeEntityList.get(0).getName());
+            }else{
+                for(OrderFlowCheckOut.DataEntity.PaymentTypeEntity pa:paymentTypeEntityList){
+                    if(pa.isSelceteItem()){
+                        paymentTypeText.setText(pa.getName());
+                    }
+                }
+            }
+
+        }
+
+    }
 
     /**
      * 获取订单数据
@@ -238,8 +287,10 @@ public class MakeOutOrderActivity extends BaseFragmentActivity implements View.O
 
     private static final int AddManage = 0;
     private static final int CreatAdd = 1;
+    private static final int PayDist = 2;
 
-    @OnClick({R.id.backBUt, R.id.buy_now, R.id.addressRelatiBut})
+
+    @OnClick({R.id.backBUt, R.id.buy_now, R.id.addressRelatiBut, R.id.paydistLinear})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.backBUt:
@@ -267,11 +318,28 @@ public class MakeOutOrderActivity extends BaseFragmentActivity implements View.O
                     Intent intent2 = new Intent(this, AddressManageActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putBoolean("isSelectAddress", true);
-                    bundle.putString("makeout_addrId",consigneeEntity.getAddress_id());
+                    bundle.putString("makeout_addrId", consigneeEntity.getAddress_id());
                     intent2.putExtras(bundle);
 
                     startActivityForResult(intent2, AddManage);
 //                    this.startActivity(intent2);
+                }
+                break;
+            case R.id.paydistLinear:
+
+
+                if (consigneeEntity == null) {
+                    Toast.makeText(mContext, "请先完善您的配送地址", Toast.LENGTH_SHORT).show();
+                } else {
+                    //支付配送界面
+                    if (shipping_list != null && shipping_list.size() > 0) {
+                        Intent intent4 = new Intent(this, PayDistModeActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("shipping_list", dataEntity);
+                        intent4.putExtras(bundle);
+                        startActivityForResult(intent4, PayDist);
+                    }
+
                 }
                 break;
         }
@@ -290,7 +358,10 @@ public class MakeOutOrderActivity extends BaseFragmentActivity implements View.O
     }
 
 
-    boolean  isDefaultOrSelect;//在地址管理有没有选择默认地址
+    boolean isDefaultOrSelect;//在地址管理有没有选择默认地址
+
+    OrderFlowCheckOut.DataEntity.PaymentTypeEntity paymentTypeEntity;//选中的支付方式
+    OrderFlowCheckOut.DataEntity.ShippingListEntity shippingListEntity;//选中的配送方式
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
@@ -298,26 +369,23 @@ public class MakeOutOrderActivity extends BaseFragmentActivity implements View.O
                 if (resultCode == RESULT_OK) {
 
                     String addrId = data.getStringExtra("consignee");
-                    isDefaultOrSelect=data.getBooleanExtra("isDefaultOrSelect",false);
+                    isDefaultOrSelect = data.getBooleanExtra("isDefaultOrSelect", false);
 
 
+                    if (isDefaultOrSelect) {
 
-                    if(isDefaultOrSelect){
-
-                        if(!addrId.equals(consigneeEntity.getAddress_id())){
+                        if (!addrId.equals(consigneeEntity.getAddress_id())) {
                             consigneeEntity.setIs_default(0);
                             dataEntity.setConsignee(consigneeEntity);
                             initAddressInfo(dataEntity);
-                        }else{
+                        } else {
                             consigneeEntity.setIs_default(1);
                             dataEntity.setConsignee(consigneeEntity);
                             initAddressInfo(dataEntity);
                         }
 
 
-
-                    }else{
-
+                    } else {
 
 
                         if (sessionData != null && addrId != null && !addrId.equals("")) {
@@ -335,6 +403,19 @@ public class MakeOutOrderActivity extends BaseFragmentActivity implements View.O
                     if (sessionData != null && addrId != null && !addrId.equals("")) {
                         networkFlowChangeConsignee(sessionData.getUid(), sessionData.getSid(), addrId);
                     }
+
+                }
+                break;
+
+            case PayDist:
+                if (resultCode == RESULT_OK) {
+
+                    paymentTypeEntity = (OrderFlowCheckOut.DataEntity.PaymentTypeEntity) data.getSerializableExtra("pay_type");
+                    shippingListEntity= (OrderFlowCheckOut.DataEntity.ShippingListEntity) data.getSerializableExtra("shipping_id");
+                    OrderFlowCheckOut.DataEntity  ps_data_entity = (OrderFlowCheckOut.DataEntity) data.getSerializableExtra("ps_data_entity");
+                    dataEntity.setPayment_type(ps_data_entity.getPayment_type());
+                    dataEntity.setShipping_list(ps_data_entity.getShipping_list());
+                    initPayShipMehth(dataEntity,false);
 
                 }
                 break;

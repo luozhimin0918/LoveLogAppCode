@@ -66,4 +66,5 @@ dependencies {
     compile project(':umenglib')
     compile files('libs/weiboSDKCore_3.1.4.jar')
     compile files('libs/volley.jar')
+    compile project(':flowtag')
 }
