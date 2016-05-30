@@ -67,4 +67,5 @@ dependencies {
     compile files('libs/weiboSDKCore_3.1.4.jar')
     compile files('libs/volley.jar')
     compile project(':flowtag')
+    compile 'com.leaking.slideswitch:slideswitch:1.0.0'
 }

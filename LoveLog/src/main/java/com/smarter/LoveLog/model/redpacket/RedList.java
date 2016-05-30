@@ -17,6 +17,25 @@ public class RedList implements Serializable {
     private String start_time;
     private String end_time;
 
+    //个人
+    private boolean isSelect;
+    private boolean isCanselect;//是否可选红包
+
+    public boolean isCanselect() {
+        return isCanselect;
+    }
+
+    public void setIsCanselect(boolean isCanselect) {
+        this.isCanselect = isCanselect;
+    }
+
+    public boolean isSelect() {
+        return isSelect;
+    }
+
+    public void setIsSelect(boolean isSelect) {
+        this.isSelect = isSelect;
+    }
 
     public String getId() {
         return id;

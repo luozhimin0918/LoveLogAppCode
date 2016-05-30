@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.flyco.tablayout.SlidingTabLayout;
 import com.flyco.tablayout.listener.OnTabSelectListener;
@@ -17,26 +18,30 @@ import com.smarter.LoveLog.R;
 import com.smarter.LoveLog.fragment.RedpacketHaveExpiredFragment;
 import com.smarter.LoveLog.fragment.RedpacketUnusedFragment;
 import com.smarter.LoveLog.fragment.RedpacketUsedFragment;
+import com.smarter.LoveLog.model.orderMy.OrderFlowCheckOut;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Administrator on 2015/11/30.
  */
-public class MyRedPacketActivity extends BaseFragmentActivity implements View.OnClickListener,OnTabSelectListener{
-    String Tag= "MyRedPacketActivity";
-   @Bind(R.id.tl_2)
-   SlidingTabLayout tabLayout_2;
+public class MyRedPacketActivity extends BaseFragmentActivity implements OnTabSelectListener {
+    String Tag = "MyRedPacketActivity";
+    @Bind(R.id.tl_2)
+    SlidingTabLayout tabLayout_2;
     @Bind(R.id.view_pager)
     ViewPager vp;
 
 
     @Bind(R.id.back_but)
     ImageView back_but;
+    @Bind(R.id.tv_right_title)
+    TextView tvRightTitle;
 
     private List<Fragment> list_fragment;                                //定义要装fragment的列表
     private List<String> list_title;                                     //tab名称列表
@@ -53,33 +58,34 @@ public class MyRedPacketActivity extends BaseFragmentActivity implements View.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_red_packet_view);
         ButterKnife.bind(this);
-        mActivity=this;
-        mContext=this;
+        mActivity = this;
+        mContext = this;
 
         getDataIntent();
         intData();
-        setListen();
 
     }
 
-    private void setListen() {
-        back_but.setOnClickListener(this);
-    }
 
     private void intData() {
-        //fragment List
-        redpacketUnusedFragment=new RedpacketUnusedFragment();
-        redpacketUsedFragment=new RedpacketUsedFragment();
-        redpacketHaveExpiredFragment=new RedpacketHaveExpiredFragment();
 
-        list_fragment=new ArrayList<Fragment>();
+        if(isOrdeSelectRed){
+            tvRightTitle.setVisibility(View.VISIBLE);
+        }
+
+                //fragment List
+                redpacketUnusedFragment = new RedpacketUnusedFragment(this,isOrdeSelectRed,UseRedId,dataEntityRed);
+        redpacketUsedFragment = new RedpacketUsedFragment();
+        redpacketHaveExpiredFragment = new RedpacketHaveExpiredFragment();
+
+        list_fragment = new ArrayList<Fragment>();
         list_fragment.add(redpacketUnusedFragment);
 
         list_fragment.add(redpacketUsedFragment);
         list_fragment.add(redpacketHaveExpiredFragment);
 
         //tab title List
-        list_title=new ArrayList<String>();
+        list_title = new ArrayList<String>();
         list_title.add("未使用");
         list_title.add("已使用");
         list_title.add("已过期");
@@ -94,7 +100,6 @@ public class MyRedPacketActivity extends BaseFragmentActivity implements View.On
 //        tabLayout_2.setMsgMargin(1, 12.0f, 10.0f);
 
 
-
     }
 
     @Override
@@ -106,6 +111,27 @@ public class MyRedPacketActivity extends BaseFragmentActivity implements View.On
     public void onTabReselect(int position) {
 //        Toast.makeText(mContext, "onTabReselect&position--->" + position, Toast.LENGTH_SHORT).show();
     }
+
+    @OnClick({R.id.back_but, R.id.tv_right_title})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.back_but:
+                finish();
+                break;
+            case R.id.tv_right_title:
+                String  redId =redpacketUnusedFragment.getSelectRedId();
+                String  redMoney=redpacketUnusedFragment.getSelectRedMoney();
+                //回传给MakeOutOrderActivity
+                   Intent aintent = new Intent(mActivity, MakeOutOrderActivity.class);
+                    aintent.putExtra("red_id", redId);
+                    aintent.putExtra("red_money",redMoney);
+                    setResult(mActivity.RESULT_OK, aintent);
+                   finish();
+
+                break;
+        }
+    }
+
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
         public MyPagerAdapter(FragmentManager fm) {
@@ -129,29 +155,24 @@ public class MyRedPacketActivity extends BaseFragmentActivity implements View.On
     }
 
 
+    boolean isOrdeSelectRed;//是否是红包选择界面
+    String UseRedId;//已使用红包id
+    OrderFlowCheckOut.DataEntity  dataEntityRed;//包含可用红包list
 
 
     private void getDataIntent() {
         Intent intent = getIntent();
-        if(intent!=null){
-            String  str = intent.getStringExtra("ObjectData");
-           // Toast.makeText(this,str+"",Toast.LENGTH_LONG).show();
+        if (intent != null) {
+//            String  str = intent.getStringExtra("ObjectData");
+            // Toast.makeText(this,str+"",Toast.LENGTH_LONG).show();
+
+            isOrdeSelectRed = intent.getBooleanExtra("isOrdeSelectRed", false);
+           UseRedId= intent.getStringExtra("isUseRedPacketValue");
+            dataEntityRed= (OrderFlowCheckOut.DataEntity) intent.getSerializableExtra("bonusList");
         }
 
 
     }
-
-
-    @Override
-    public void onClick(View v) {
-         switch (v.getId()){
-             case R.id.back_but:
-                 finish();
-                 break;
-
-         }
-    }
-
 
 
 }

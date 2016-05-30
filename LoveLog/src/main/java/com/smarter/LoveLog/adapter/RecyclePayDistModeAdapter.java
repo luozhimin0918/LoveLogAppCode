@@ -101,7 +101,11 @@ public class RecyclePayDistModeAdapter extends RecyclerView.Adapter<RecyclePayDi
                                 p.setIsSelceteItem(false);
                             }
                             paymentTypeEntityList.get(s).setIsSelceteItem(true);
+
                             paymentTypeEntity=paymentTypeEntityList.get(s);//保存选择值
+                            dataEntityAdpter.setDefault_pay_type_id(Integer.parseInt(paymentTypeEntity.getId()));
+                            dataEntityAdpter.setDefault_pay_type_name(paymentTypeEntity.getName());
+
                             viewHolder.PaydesInfo.setText(paymentTypeEntityList.get(s).getDesc());
 //                            Log.d("nnnnn", sb.toString() + "      " + paymentTypeEntityList.get(s).isSelceteItem() + "  " + paymentTypeEntityList.get(s).getName());
 
@@ -114,6 +118,8 @@ public class RecyclePayDistModeAdapter extends RecyclerView.Adapter<RecyclePayDi
                             }
                             shippingListEntityList.get(s).setIsSelceteItem(true);
                             shippingListEntity=shippingListEntityList.get(s);//保存选择值
+                            dataEntityAdpter.setDefault_shipping_id(Integer.parseInt(shippingListEntity.getShipping_id()));
+                            dataEntityAdpter.setDefault_shipping_name(shippingListEntity.getShipping_name());
                             viewHolder.PaydesInfo.setText(shippingListEntityList.get(s).getShipping_desc());
 
 //                            Log.d("nnnnn", sb.toString() + "      " + shippingListEntityList.get(s).isSelceteItem() + "  " + shippingListEntityList.get(s).getShipping_name());

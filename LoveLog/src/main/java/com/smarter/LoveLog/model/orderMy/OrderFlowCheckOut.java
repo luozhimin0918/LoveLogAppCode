@@ -28,7 +28,11 @@ public class OrderFlowCheckOut implements Serializable {
      * default_shipping_id : 0
      * default_shipping_name :
      * total : {"real_goods_count":1,"gift_amount":0,"goods_price":750,"market_price":750,"discount":0,"pack_fee":0,"card_fee":0,"shipping_fee":0,"shipping_insure":0,"integral_money":0,"bonus":0,"surplus":0,"cod_fee":0,"pay_fee":0,"tax":0,"saving":0,"save_rate":"0%","goods_price_formated":"¥750.00","market_price_formated":"¥750.00","saving_formated":"¥0.00","free_shipping_left":-711,"discount_formated":"¥0.00","tax_formated":"¥0.00","pack_fee_formated":"¥0.00","card_fee_formated":"¥0.00","bonus_formated":"¥0.00"}
+     *
+     * used_integral  （使用的积分数） 积分接口才有的参数
+     * deductible_amount （直接抵扣的金额）
      */
+
 
     private DataEntity data;
 
@@ -79,6 +83,36 @@ public class OrderFlowCheckOut implements Serializable {
     }
 
     public static class DataEntity implements Serializable{
+//自填积分
+       int  used_integral;
+        String deductible_amount;
+//自填红包
+        String used_bouns_id;
+
+        public String getUsed_bouns_id() {
+            return used_bouns_id;
+        }
+
+        public void setUsed_bouns_id(String used_bouns_id) {
+            this.used_bouns_id = used_bouns_id;
+        }
+
+        public int getUsed_integral() {
+            return used_integral;
+        }
+
+        public void setUsed_integral(int used_integral) {
+            this.used_integral = used_integral;
+        }
+
+        public String getDeductible_amount() {
+            return deductible_amount;
+        }
+
+        public void setDeductible_amount(String deductible_amount) {
+            this.deductible_amount = deductible_amount;
+        }
+
         /**
          * address_id : 2655
          * consignee : 樊康鹏
@@ -96,6 +130,8 @@ public class OrderFlowCheckOut implements Serializable {
          * is_default : 1
          */
 
+
+
         private ConsigneeEntity consignee;
         private int allow_use_bonus;
         private String user_integral;
@@ -104,6 +140,16 @@ public class OrderFlowCheckOut implements Serializable {
         private String default_pay_type_name;
         private int default_shipping_id;
         private String default_shipping_name;
+        private int default_bonus_id;
+
+        public int getDefault_bonus_id() {
+            return default_bonus_id;
+        }
+
+        public void setDefault_bonus_id(int default_bonus_id) {
+            this.default_bonus_id = default_bonus_id;
+        }
+
         /**
          * real_goods_count : 1
          * gift_amount : 0

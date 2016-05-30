@@ -254,7 +254,7 @@ public class AddressManageActivity extends BaseFragmentActivity implements View.
 
                     if (status.getError_code() == 1000) {
                         SharedPreferences.getInstance().putBoolean("islogin", false);
-                        ViewUtill.ShowAlertDialog(getApplicationContext());
+                        ViewUtill.ShowAlertDialog(mActivity);
                     }
 
                 }

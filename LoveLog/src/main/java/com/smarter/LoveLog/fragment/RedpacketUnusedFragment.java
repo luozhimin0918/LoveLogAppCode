@@ -1,5 +1,6 @@
 package com.smarter.LoveLog.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
@@ -31,6 +32,7 @@ import com.smarter.LoveLog.http.FastJsonRequest;
 import com.smarter.LoveLog.model.PaginationJson;
 import com.smarter.LoveLog.model.home.DataStatus;
 import com.smarter.LoveLog.model.loginData.SessionData;
+import com.smarter.LoveLog.model.orderMy.OrderFlowCheckOut;
 import com.smarter.LoveLog.model.redpacket.RedList;
 import com.smarter.LoveLog.model.redpacket.RedPacketInfo;
 import com.smarter.LoveLog.utills.DeviceUtil;
@@ -47,7 +49,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Administrator on 2015/11/30.
  */
-public class RedpacketUnusedFragment extends Fragment implements RecycleOrderAllAdapter.OnCheckDefaultListener {
+public class RedpacketUnusedFragment extends Fragment implements RecycleRedpacketUnusedAdapter.onSelectRedPacketListener  {
     protected WeakReference<View> mRootView;
     private View view;
 
@@ -75,6 +77,19 @@ public class RedpacketUnusedFragment extends Fragment implements RecycleOrderAll
     ImageView progreView;
 
     Context mContext;
+    Activity mActivity;
+    boolean isOrdeSelectRed;//是否是红包选择界面
+    String  UseRedId;//已使用红包Id
+    OrderFlowCheckOut.DataEntity dataEntityRed;//包含可用红包list
+    String SelectRedId;
+    String  SelectRedMoney;
+    public RedpacketUnusedFragment(Activity mActivity,boolean isOrdeSelectRed,String  UseRedId,OrderFlowCheckOut.DataEntity dataEntityRed) {
+        super();
+        this.isOrdeSelectRed=isOrdeSelectRed;
+        this.UseRedId=UseRedId;
+        this.dataEntityRed=dataEntityRed;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -82,6 +97,7 @@ public class RedpacketUnusedFragment extends Fragment implements RecycleOrderAll
             view = inflater.inflate(R.layout.comment_receive_fragment, null);
             mRootView = new WeakReference<View>(view);
             mContext=getContext();
+            mActivity=getActivity();
             ButterKnife.bind(this,view);
             isLogiin();
         } else {
@@ -319,15 +335,39 @@ public class RedpacketUnusedFragment extends Fragment implements RecycleOrderAll
 
 
         if(redListList!=null&&redListList.size()>0){
-            mAdapter = new RecycleRedpacketUnusedAdapter(redListList);
+            mAdapter = new RecycleRedpacketUnusedAdapter(redListList,mActivity,isOrdeSelectRed,UseRedId,dataEntityRed);
 
             mRecyclerView.setAdapter(mAdapter);
         }
 
+        mAdapter.setOnCheckDefaultListener(this);
     }
 
+    @Override
+    public void returnRedId(String redId,String redMoney) {
 
-   /* // 创建数据集
+        SelectRedId=redId;
+        SelectRedMoney=redMoney;
+
+    }
+
+    public String getSelectRedMoney() {
+        return SelectRedMoney;
+    }
+
+    public void setSelectRedMoney(String selectRedMoney) {
+        SelectRedMoney = selectRedMoney;
+    }
+
+    public String getSelectRedId() {
+        return SelectRedId;
+    }
+
+    public void setSelectRedId(String selectRedId) {
+        SelectRedId = selectRedId;
+    }
+
+    /* // 创建数据集
     String[] dataset = new String[]{"张三","美女","拉丁","弟弟","火热","额额"};
     String[] dataValue=new String[]{"15083806689","15083806689","15083806689","15083806689","15083806689","15083806689"};
     // 创建Adapter，并指定数据集
@@ -350,8 +390,5 @@ public class RedpacketUnusedFragment extends Fragment implements RecycleOrderAll
 
     }*/
 
-    @Override
-    public void oncheckOK(Boolean[] ischeckArray) {
-//        adapter.notifyDataSetChanged();
-    }
+
 }

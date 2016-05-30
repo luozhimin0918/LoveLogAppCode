@@ -284,11 +284,12 @@ public class ShopCarFragment extends Fragment implements RecycleShopCarAdapter.O
 
                           if(SharedPreUtil.isLogin()){
                               Intent intent = new Intent(mContext, MakeOutOrderActivity.class);
-//                              Bundle bundle = new Bundle();
+                              Bundle bundle = new Bundle();
 //                              ShopCarOrderInfo.DataEntity.GoodsListEntity  oneGoodsEntity =adapter.getOrderLists().get(0);
 //                              bundle.putSerializable("session", sessionData);
 //                              bundle.putSerializable("goods",oneGoodsEntity);
-//                              intent.putExtras(bundle);
+                              bundle.putString("moneyZong",hejinMoney);
+                              intent.putExtras(bundle);
                               mContext.startActivity(intent);
                           }else{
                               ViewUtill.ShowAlertDialog(mContext);
@@ -570,6 +571,7 @@ public class ShopCarFragment extends Fragment implements RecycleShopCarAdapter.O
 
     }
 
+    String hejinMoney;
     private void jishuZongPrice() {
 
         double jinge=0.00d;
@@ -587,6 +589,7 @@ public class ShopCarFragment extends Fragment implements RecycleShopCarAdapter.O
             }
             BigDecimal   bd   =   new   BigDecimal(jinge);
             bd   =   bd.setScale(2, BigDecimal.ROUND_HALF_UP);
+            hejinMoney="¥" + bd;
             hejiText.setText("¥" + bd + "元");
         }else{
             hejiText.setText("¥0.00元");

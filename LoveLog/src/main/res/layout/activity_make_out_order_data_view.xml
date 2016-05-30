@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:slideswitch="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -41,7 +42,7 @@
 
 
 
-    <LinearLayout  android:id="@+id/dingdanConnect"  android:layout_width="fill_parent" android:orientation="vertical" android:layout_height="fill_parent"  android:background="@color/connet_bgColor" android:layout_weight="1">
+    <LinearLayout   android:layout_width="fill_parent" android:orientation="vertical" android:layout_height="fill_parent"  android:background="@color/connet_bgColor" android:layout_weight="1">
 
 
        <com.smarter.LoveLog.ui.McoySnapPageLayout.McoyScrollView
@@ -53,6 +54,7 @@
             android:fillViewport="true"
             >
            <LinearLayout
+               android:id="@+id/dingdanConnect"
                android:orientation="vertical"
                android:layout_width="fill_parent"
                android:layout_height="wrap_content">
@@ -74,9 +76,9 @@
                                   android:layout_width="fill_parent"
                                   android:layout_height="wrap_content">
                                   <LinearLayout
-                                      android:layout_width="fill_parent"
-                                      android:layout_weight="1.2"
+                                      android:layout_width="wrap_content"
                                       android:gravity="center_vertical"
+                                      android:layout_marginRight="@dimen/space_10"
                                       android:layout_height="wrap_content">
                                       <ImageView
                                           android:layout_width="wrap_content"
@@ -209,7 +211,7 @@
                                          android:layout_width="wrap_content"
                                          android:textColor="#323232"
                                          android:textSize="16sp"
-                                         android:layout_height="wrap_content" android:text="在线支付"/>
+                                         android:layout_height="wrap_content" android:text="XXXXX"/>
                                      <TextView
                                          android:id="@+id/distriText"
                                          android:layout_marginLeft="@dimen/space_10"
@@ -217,7 +219,7 @@
                                          android:layout_width="wrap_content"
                                          android:textColor="#323232"
                                          android:textSize="16sp"
-                                         android:layout_height="wrap_content" android:text="申通支付"/>
+                                         android:layout_height="wrap_content" android:text="XXXXX"/>
                                  </LinearLayout>
                                  <ImageView
                                      android:layout_width="wrap_content"
@@ -235,7 +237,7 @@
 
 
 
-                    <LinearLayout android:orientation="horizontal"  android:gravity="center_vertical" android:layout_marginTop="@dimen/space_10"  android:padding="10dp" android:layout_width="fill_parent"  android:layout_height="wrap_content"  android:background="@color/white"  >
+                    <LinearLayout android:orientation="horizontal" android:visibility="gone"  android:gravity="center_vertical" android:layout_marginTop="@dimen/space_10"  android:padding="10dp" android:layout_width="fill_parent"  android:layout_height="wrap_content"  android:background="@color/white"  >
 
                         <LinearLayout
                             android:layout_width="fill_parent"
@@ -290,25 +292,74 @@
 
 
 
-                    <LinearLayout android:orientation="horizontal"  android:gravity="center_vertical" android:layout_marginTop="@dimen/space_10"  android:padding="15dp" android:layout_width="fill_parent"  android:layout_height="wrap_content"  android:background="@color/white"  >
+                    <LinearLayout android:orientation="vertical"  android:gravity="center_vertical" android:layout_marginTop="@dimen/space_10"   android:layout_width="fill_parent"  android:layout_height="wrap_content"  android:background="@color/white"  >
 
+
+                       //积分
                         <LinearLayout
+                            android:orientation="horizontal"
+                            android:padding="15dp"
+                            android:gravity="center_vertical"
                             android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:id="@+id/user_integral"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="积分"
+                                android:textColor="#5D5D5D"
+                                android:textSize="16sp" />
                             <LinearLayout
+                                android:visibility="gone"
                                 android:orientation="horizontal"
-                                android:gravity="center_vertical"
+                                android:id="@+id/edit_integral_linear"
+                                android:gravity="left|center_vertical"
                                 android:layout_width="fill_parent"
+                                android:layout_weight="1"
                                 android:layout_height="wrap_content">
+
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="我的红包"
+                                    android:text="使用"
                                     android:textColor="#5D5D5D"
                                     android:textSize="16sp" />
+                                <EditText
+                                    android:background="@drawable/zhijiao_bg_white"
+                                    android:id="@+id/edit_integral_area_text"
+                                    android:layout_width="wrap_content"
+                                    android:maxWidth="90dp"
+                                    android:gravity="center"
+                                    android:layout_marginLeft="@dimen/space_5"
+                                    android:layout_marginRight="@dimen/space_5"
+                                    android:text="0"
+                                    android:layout_height="25dp"
+                                    android:inputType="number"
+                                    android:paddingLeft="@dimen/space_10"
+                                    android:paddingRight="@dimen/space_10"
+                                    android:singleLine="true"
+                                    android:textColor="@color/top_bar_bgColor"
+                                    android:textColorHint="#D4D4D4"
+                                    android:textSize="14.0sp" />
                                 <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="积分"
+                                    android:textColor="#5D5D5D"
+                                    android:textSize="16sp" />
+
+                            </LinearLayout>
+
+
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:gravity="right|center_vertical"
+                                android:layout_width="fill_parent"
+                                android:layout_weight="2"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:visibility="gone"
                                     android:background="@drawable/yuanjiao_love_red_bg"
                                     android:layout_width="wrap_content"
                                     android:textColor="@color/white"
@@ -318,20 +369,70 @@
                                     android:paddingBottom="@dimen/space_2"
                                     android:paddingTop="@dimen/space_2"
                                     android:textSize="12sp"
-                                    android:text="1张可用"
+                                    android:text="未使用"
                                     android:layout_height="wrap_content" />
+
+
+
+                            <com.leaking.slideswitch.SlideSwitch
+                                android:id="@+id/slideSwitchBut"
+                                android:layout_width="60dp"
+                                android:layout_marginLeft="@dimen/space_10"
+                                android:layout_height="25dip"
+                                slideswitch:isOpen="false"
+                                slideswitch:themeColor="@color/green" >
+                            </com.leaking.slideswitch.SlideSwitch>
+                          <!--  <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_height="wrap_content" android:background="@mipmap/more" />-->
+                                </LinearLayout>
+
+
+                        </LinearLayout>
+
+                        //我的红包
+                            <LinearLayout
+                                android:id="@+id/RedPacketButLinear"
+                                android:background="@drawable/button_press_gray_white_select"
+                                android:orientation="horizontal"
+                                android:padding="15dp"
+                                android:gravity="center_vertical"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="红包"
+                                    android:textColor="#5D5D5D"
+                                    android:textSize="16sp" />
+
                                 <LinearLayout
-                                    android:orientation="vertical"
+                                    android:orientation="horizontal"
                                     android:gravity="right|center_vertical"
                                     android:layout_width="fill_parent"
                                     android:layout_weight="1"
                                     android:layout_height="wrap_content">
                                     <TextView
+                                        android:id="@+id/redPacketText"
+                                        android:background="@drawable/yuanjiao_love_red_bg"
+                                        android:layout_width="wrap_content"
+                                        android:textColor="@color/white"
+                                        android:layout_marginLeft="@dimen/space_5"
+                                        android:paddingLeft="@dimen/space_5"
+                                        android:paddingRight="@dimen/space_5"
+                                        android:paddingBottom="@dimen/space_2"
+                                        android:paddingTop="@dimen/space_2"
+                                        android:textSize="12sp"
+                                        android:text="无可用"
+                                        android:layout_height="wrap_content" />
+                                    <TextView
+                                        android:id="@+id/redTishiText"
                                         android:layout_marginLeft="@dimen/space_10"
                                         android:layout_width="wrap_content"
                                         android:textColor="#323232"
                                         android:textSize="16sp"
-                                        android:layout_height="wrap_content" android:text="未使用"/>
+                                        android:layout_height="wrap_content" android:text=""/>
 
                                 </LinearLayout>
                                 <ImageView
@@ -342,7 +443,6 @@
 
 
 
-                        </LinearLayout>
 
 
                     </LinearLayout>
@@ -350,7 +450,17 @@
 
 
 
-                    <LinearLayout android:orientation="horizontal"  android:gravity="center_vertical" android:layout_marginTop="@dimen/space_10"  android:padding="10dp" android:layout_width="fill_parent"  android:layout_height="wrap_content"  android:background="@color/white"  >
+
+               <android.support.v7.widget.RecyclerView
+                   android:id="@+id/recyclerViewMoney"
+                   android:overScrollMode="never"
+                   android:layout_marginTop="@dimen/space_10"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:scrollbars="vertical" />
+
+<!--
+                    <LinearLayout android:orientation="horizontal"  android:gravity="center_vertical"   android:padding="10dp" android:layout_width="fill_parent"  android:layout_height="wrap_content"  android:background="@color/white"  >
 
                         <LinearLayout
                             android:layout_width="fill_parent"
@@ -376,33 +486,11 @@
 
 
                             </RelativeLayout>
-                            <RelativeLayout
-                                android:layout_marginTop="@dimen/space_10"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:textColor="#5D5D5D"
-                                    android:textSize="16sp"
-                                    android:layout_height="wrap_content" android:text="商品金额"/>
-                                <TextView
-                                    android:layout_alignParentRight="true"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="￥49.00  "
-                                    android:textColor="@color/top_bar_bgColor"
-                                    android:textSize="18sp" />
-
-
-                            </RelativeLayout>
-
-
 
                         </LinearLayout>
 
 
-                    </LinearLayout>
+                    </LinearLayout>-->
 
 
             </LinearLayout>
@@ -428,28 +516,64 @@
         android:id="@+id/xuanfuBar"
         android:layout_width="fill_parent" android:layout_height="@dimen/bottom_height" android:background="@color/white" android:orientation="horizontal">
 
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/orderIntegralToolLinear"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:background="@color/connet_bgColor"
+            android:layout_height="fill_parent">
+            <TextView
+                android:id="@+id/cancel_integralTools"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="@dimen/space_10"
+                android:text="取消"
+                android:textColor="@color/top_bar_bgColor"
+                android:textSize="17sp" />
+            <TextView
+                android:id="@+id/true_integralTools"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="right|center_vertical"
+                android:paddingRight="@dimen/space_10"
+                android:text="确定"
+                android:textColor="@color/top_bar_bgColor"
+                android:textSize="17sp" />
+        </LinearLayout>
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1.2"
-            android:background="@mipmap/alloptbg"
-            android:gravity="left|center_vertical"
-            android:paddingLeft="@dimen/space_10"
-            android:text="实付款：￥49.00  "
-            android:textColor="#FFFFFF"
-            android:textSize="15sp" />
 
-        <TextView
-            android:id="@+id/buy_now"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.6"
-            android:background="@color/top_bar_bgColor"
-            android:gravity="center"
-            android:text="提交订单"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp" />
+        <LinearLayout
+            android:id="@+id/orderXuanfuLinear"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.2"
+                android:background="@mipmap/alloptbg"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="@dimen/space_10"
+                android:text="实付款：￥49.00  "
+                android:textColor="#FFFFFF"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/buy_now"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.6"
+                android:background="@color/top_bar_bgColor"
+                android:gravity="center"
+                android:text="提交订单"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
+
+        </LinearLayout>
 
 
     </LinearLayout>
