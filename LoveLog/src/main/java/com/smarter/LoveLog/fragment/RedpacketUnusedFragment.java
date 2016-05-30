@@ -83,11 +83,21 @@ public class RedpacketUnusedFragment extends Fragment implements RecycleRedpacke
     OrderFlowCheckOut.DataEntity dataEntityRed;//包含可用红包list
     String SelectRedId;
     String  SelectRedMoney;
-    public RedpacketUnusedFragment(Activity mActivity,boolean isOrdeSelectRed,String  UseRedId,OrderFlowCheckOut.DataEntity dataEntityRed) {
-        super();
-        this.isOrdeSelectRed=isOrdeSelectRed;
-        this.UseRedId=UseRedId;
-        this.dataEntityRed=dataEntityRed;
+
+
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle args = getArguments();
+        if (args != null) {
+            this.isOrdeSelectRed=args.getBoolean("args_isOrdeSelectRed");
+            this.UseRedId=args.getString("args_UseRedId");
+            this.dataEntityRed= (OrderFlowCheckOut.DataEntity) args.getSerializable("args_dataEntityRed");
+
+        }
+
     }
 
     @Nullable

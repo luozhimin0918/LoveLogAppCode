@@ -74,7 +74,13 @@ public class MyRedPacketActivity extends BaseFragmentActivity implements OnTabSe
         }
 
                 //fragment List
-                redpacketUnusedFragment = new RedpacketUnusedFragment(this,isOrdeSelectRed,UseRedId,dataEntityRed);
+                redpacketUnusedFragment = new RedpacketUnusedFragment();//this,isOrdeSelectRed,UseRedId,dataEntityRed
+        Bundle args = new Bundle();
+        args.putBoolean("args_isOrdeSelectRed", isOrdeSelectRed);
+        args.putString("args_UseRedId", UseRedId);
+        args.putSerializable("args_dataEntityRed",dataEntityRed);
+        redpacketUnusedFragment.setArguments(args);
+
         redpacketUsedFragment = new RedpacketUsedFragment();
         redpacketHaveExpiredFragment = new RedpacketHaveExpiredFragment();
 
