@@ -12,7 +12,7 @@ buildscript {
 
         //xrecyclerview项目包要用到的  plugin （下两个）
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.0'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.3'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.3' // Add this line
     }
 }
 
