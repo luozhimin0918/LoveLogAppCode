@@ -25,6 +25,7 @@ allprojects {
             url 'https://dl.bintray.com/leaking/maven'
 
         }
+        maven { url "https://jitpack.io" }
     }
 
 
