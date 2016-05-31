@@ -3,7 +3,8 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
 version = "1.2.4"
-group = "com.jcodecraeer"
+//group = "com.jcodecraeer"
+group='com.github.luozhimin0918'
 
 def siteUrl = 'https://github.com/jianghejie/XRecyclerView'
 def gitUrl = 'https://github.com/jianghejie/XRecyclerView.git'
@@ -64,6 +65,9 @@ install {
         }
     }
 }
+
+
+//如果需要增加javadocs ,加入下面代码:
 task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
     classifier = 'sources'
@@ -80,6 +84,11 @@ artifacts {
     archives javadocJar
     archives sourcesJar
 }
+
+
+
+
+
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 bintray {
