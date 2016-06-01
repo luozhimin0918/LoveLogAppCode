@@ -1,17 +1,4 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:1.5.0'
-
-    }
-}
 apply plugin: 'com.android.application'
-
-repositories {
-    jcenter()
-}
 
 android {
     compileSdkVersion 23
@@ -69,4 +56,9 @@ dependencies {
     compile project(':flowtag')
     compile 'com.leaking.slideswitch:slideswitch:1.0.0'//滑动开关
     compile 'com.github.zhaokaiqiang.klog:library:1.1.0'//凯子哥KLog打印Log
+    compile 'com.github.luozhimin0918:JitPackDemo:v1.0'//我的Android 写自己的开源库，发布到 JitPack.io
 }
+
+
+
+

@@ -18,6 +18,7 @@ import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.luo.mylibrary.JitPackUtil;
 import com.smarter.LoveLog.R;
 import com.smarter.LoveLog.adapter.RecycleAddressAdapter;
 import com.smarter.LoveLog.db.SharedPreUtil;
@@ -113,6 +114,8 @@ public class AddressManageActivity extends BaseFragmentActivity implements View.
         adapter.setOnCheckDefaultListener(this);
         // 设置Adapter
         recyclerView.setAdapter(adapter);
+        JitPackUtil.isJitpack();
+
 
     }
 
