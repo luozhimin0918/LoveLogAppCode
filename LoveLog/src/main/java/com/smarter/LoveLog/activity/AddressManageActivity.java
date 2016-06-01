@@ -114,7 +114,10 @@ public class AddressManageActivity extends BaseFragmentActivity implements View.
         adapter.setOnCheckDefaultListener(this);
         // 设置Adapter
         recyclerView.setAdapter(adapter);
-        JitPackUtil.isJitpack();
+        JitPackUtil.isJitpack();//我的开源库测试
+
+
+
 
 
     }
