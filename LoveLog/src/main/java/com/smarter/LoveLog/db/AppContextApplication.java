@@ -8,7 +8,9 @@ import android.content.Context;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
+import com.smarter.LoveLog.BuildConfig;
 import com.smarter.LoveLog.model.loginData.LoginDataActi;
+import com.socks.library.KLog;
 import com.umeng.socialize.PlatformConfig;
 
 import java.util.LinkedList;
@@ -73,6 +75,7 @@ public class AppContextApplication extends Application {
         PlatformConfig.setSinaWeibo("3044356740", "8c7505d85cfb487bb2c0b51988fe97ac");
 
 
+        KLog.init(BuildConfig.LOG_DEBUG);
 
     }
 

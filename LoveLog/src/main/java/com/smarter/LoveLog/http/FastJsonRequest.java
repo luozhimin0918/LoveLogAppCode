@@ -5,6 +5,7 @@ import android.util.Log;
 import com.alibaba.fastjson.JSON;
 import com.android.volley.*;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.socks.library.KLog;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
@@ -44,7 +45,8 @@ public class FastJsonRequest<T> extends Request<T> {
     protected Response<T> parseNetworkResponse(NetworkResponse response) {
         try {
             String json = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
-            Log.d("FastJsonRequest",json);
+//            Log.d("FastJsonRequest",json);
+            KLog.json(json);
             return Response.success(JSON.parseObject(json, mClazz),
                     HttpHeaderParser.parseCacheHeaders(response));
         } catch (UnsupportedEncodingException e) {
