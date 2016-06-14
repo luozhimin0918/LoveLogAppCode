@@ -75,9 +75,7 @@ dependencies {
     //    compile 'com.github.zhaokaiqiang.klog:library:1.4.0'
     compile project(':kloglibrary')
     //凯子哥KLog打印Log
-    compile 'com.github.luozhimin0918:JitPackDemo:v1.0'
     //我的Android 写自己的开源库，发布到 JitPack.io
-
 }
 
 
