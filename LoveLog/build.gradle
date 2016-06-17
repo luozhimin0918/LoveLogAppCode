@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        mYconfig {
+            keyAlias 'lovelog'
+            keyPassword 'lovelog'
+            storeFile file('E:/AndroidStudioProjects/DachengKeji/LoveLog/keystore/loveLog.jks')
+            storePassword 'lovelog'
+        }
+    }
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
     defaultConfig {
@@ -28,16 +36,16 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.mYconfig
         }
-
         release {
             buildConfigField "boolean", "LOG_DEBUG", "false"
             //支持自动去除没有使用的资源。 minifyEnabled shrinkResources 配合使用
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.mYconfig
         }
-
     }
 }
 
