@@ -15,3 +15,41 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+
+
+
+-dontwarn butterknife.internal.**
+-keep class butterknife.internal..** { *;}
+-keep interface butterknife.internal.** { *; }
+
+-dontwarn com.alibaba.fastjson.support.**
+-keep class com.alibaba.fastjson.support.** { *;}
+-keep interface com.alibaba.fastjson.support.** { *; }
+
+
+-dontwarn io.realm.processor.**
+-keep class io.realm.processor.** { *;}
+-keep interface io.realm.processor.** { *; }
+
+
+
+-dontwarn com.alibaba.fastjson.**
+-keep class com.alibaba.fastjson.** { *;}
+-keep interface com.alibaba.fastjson.** { *; }
+
+
+
+-dontwarn com.alipay.android.**
+-keep class com.alipay.android.** { *;}
+-keep interface com.alipay.android.** { *; }
+
+
+-dontwarn com.tencent.connect.**
+-keep class com.tencent.connect.** { *;}
+-keep interface com.tencent.connect.** { *; }
+
+
+-dontwarn uk.co.senab.photoview.**
+-keep class uk.co.senab.photoview.** { *;}
+-keep interface uk.co.senab.photoview.** { *; }
