@@ -5,14 +5,14 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.2'
+        classpath 'com.android.tools.build:gradle:2.2.2'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
 
         //要发布自己的library 到 bintray    jitpack   要使用的   plugin （下两个）
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.0'//bintray
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.3' // jitpack  Add this line
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5' // jitpack  Add this line
     }
 }
 
